@@ -21,28 +21,29 @@
   background: rgba(0,0,0,.23);
 }
 
-.ready .gs_w:not(.player):not(.preview-holder) {
+.ready .gs_w:not(.player):not(.preview-holder):not(.ui-draggable-dragging) {
   -webkit-transition: left .3s, top .3s;
   -moz-transition: left .3s, top .3s;
   -o-transition: left .3s, top .3s;
 }
 
-.gridster.dragging .support-grid {
-  z-index: 5;
-}
-
-.gridster.dragging .ui-sortable-helper{
-  z-index: 10;
+.gridster.dragging .ui-sortable-helper {
+  z-index: 9;
 }
 
 .gridster .preview-holder {
-    border: 2px dashed #333 ;
+    border: 2px dashed #333;
     border-radius: 5px;
     z-index: 1;
     background:#FFF;
     position: absolute;
 }
 
-.gridster .player {
-  z-index: 10!important;
+.gridster .ui-draggable-dragging {
+    z-index: 10!important;
 }
+
+ /*uncomment this if you draggable.helper option to "clone"*/
+/*.gridster .player {
+  display: none!important;
+}*/

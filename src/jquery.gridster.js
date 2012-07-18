@@ -49,7 +49,8 @@
 
     var throttle = function(func, wait) {
         var context, args, timeout, throttling, more, result;
-        var whenDone = debounce(function(){ more = throttling = false; }, wait, true);
+        var whenDone = debounce(
+            function(){ more = throttling = false; }, wait, true);
         return function() {
           context = this; args = arguments;
           var later = function() {
@@ -229,7 +230,8 @@
 
 
     /**
-    * Creates the grid coords object representing the widget a add it to the mapped array of positions
+    * Creates the grid coords object representing the widget a add it to the
+    * mapped array of positions.
     *
     * @method register_widget
     * @return {Array} Returns the instance of the Gridster class.
@@ -323,6 +325,9 @@
             // containment : this.$wrapper,
             start: function(event, ui) {
                 self.$player = $(this);
+                self.$helper = self.options.draggable.helper === 'clone' ?
+                    $(ui.helper) : self.$player;
+
                 self.on_start_drag.call(self, event, ui);
             },
             stop: function(event, ui) {
@@ -353,7 +358,6 @@
         this.player_grid_data = this.$player.coords().grid;
         this.placeholder_grid_data = $.extend({}, this.player_grid_data);
 
-
         //set new grid height along the dragging period
         this.$el.css('height', this.$el.height() +
           (this.player_grid_data.size_y * this.min_widget_height));
@@ -361,14 +365,17 @@
         var colliders = this.faux_grid;
         var coords = this.$player.data('coords').coords;
 
-        this.cells_occupied_by_player = this.get_cells_occupied(this.player_grid_data);
-        this.cells_occupied_by_placeholder = this.get_cells_occupied(this.placeholder_grid_data);
+        this.cells_occupied_by_player = this.get_cells_occupied(
+            this.player_grid_data);
+        this.cells_occupied_by_placeholder = this.get_cells_occupied(
+            this.placeholder_grid_data);
 
         this.last_cols = [];
         this.last_rows = [];
 
         // see jquery.collision.js
-        this.drag_api = this.$player.collision(colliders, this.options.collision);
+        this.drag_api = this.$helper.collision(
+            colliders, this.options.collision);
 
         this.$preview_holder = $('<li />', {
               'class': 'preview-holder',
@@ -433,7 +440,7 @@
             this.on_stop_overlapping_row
         );
 
-        this.$player.attr({
+        this.$player.add(this.$helper).attr({
             'data-col': this.placeholder_grid_data.col,
             'data-row': this.placeholder_grid_data.row
         }).css({
@@ -629,7 +636,8 @@
 
 
     /**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in ascending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in ascending way.
     *
     * @method sort_by_row_asc
     * @param {Array} widgets Array of grid coords objects
@@ -648,7 +656,8 @@
 
 
     /**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in descending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in descending way.
     *
     * @method sort_by_row_desc
     * @param {Array} widgets Array of grid coords objects
@@ -666,7 +675,8 @@
 
 
     /**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in descending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in descending way.
     *
     * @method manage_movements
     * @param {HTMLElements} $widgets A jQuery collection of HTMLElements
@@ -723,7 +733,7 @@
     fn.is_player = function(col_or_el, row) {
         if (row && !this.gridmap[col_or_el]) { return false; }
         var $w = row ? this.gridmap[col_or_el][row] : col_or_el;
-        return $w && $w.is(this.$player);
+        return $w && ($w.is(this.$player) || $w.is(this.$helper));
     };
 
 
@@ -905,7 +915,8 @@
 
         if (moved_down || changed_column) {
             $nexts.each($.proxy(function(i, widget){
-                this.move_widget_up( $(widget) , this.placeholder_grid_data.col - col + phgd.size_y );
+                this.move_widget_up(
+                    $(widget), this.placeholder_grid_data.col - col + phgd.size_y);
             }, this));
         }
 
@@ -937,7 +948,8 @@
 
             while (--r > 0){
                 if (this.is_empty(tcol, r) || this.is_player(tcol, r) ||
-                    this.is_widget(tcol, r) && grid_col[r].is($widgets_under_player)
+                    this.is_widget(tcol, r) &&
+                    grid_col[r].is($widgets_under_player)
                 ) {
                     upper_rows[tcol].push(r);
                     min_row = r < min_row ? r : min_row;
