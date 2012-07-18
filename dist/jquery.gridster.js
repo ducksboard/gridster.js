@@ -509,7 +509,7 @@
     /**
     * Creates the grid coords object representing the widget a add it to the mapped array of positions
     *
-    * @method serialize_changed
+    * @method register_widget
     * @return {Array} Returns the instance of the Gridster class.
     */
     fn.register_widget = function($el) {
@@ -1034,22 +1034,15 @@
     };
 
 
-    fn.is_placeholder_in_col = function(col, row) {
-        return $.inArray(col, this.cells_occupied_by_placeholder.cols) >= 0;
-    };
-
-
     /**
-    * Determines if the placeholder is currently over the row and col given.
+    * Determines if the placeholder is currently over the column given.
     *
-    * @method is_placeholder_in
+    * @method is_placeholder_in_col
     * @param {Number} col The column to check.
-    * @param {Number} row The row to check.
     * @return {Boolean} Returns true or false.
     */
-    fn.is_placeholder_in = function(col, row) {
-        var c = this.cells_occupied_by_placeholder || [];
-        return $.inArray(col, c.cols) >= 0 && $.inArray(row, c.rows) >= 0;
+    fn.is_placeholder_in_col = function(col) {
+        return $.inArray(col, this.cells_occupied_by_placeholder.cols) >= 0;
     };
 
 
@@ -1877,7 +1870,7 @@
     * Iterate over the cells occupied by a widget executing a function for
     * each one.
     *
-    * @method for_each_column_occupied
+    * @method for_each_cell_occupied
     * @param {Object} el_grid_data The grid coords object that represents the
     *  widget.
     * @param {Function} callback The function to execute on each column
@@ -2103,7 +2096,7 @@
     /**
     * Injects the given CSS as string to the head of the document.
     *
-    * @method generate_stylesheet
+    * @method add_style_tag
     * @param {String} css The styles to apply.
     * @return {Object} Returns the instance of the Gridster class.
     */

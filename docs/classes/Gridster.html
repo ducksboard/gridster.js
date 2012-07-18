@@ -437,6 +437,13 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_add_style_tag">add_style_tag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_add_to_gridmap">add_to_gridmap</a>
 
                                 
@@ -493,7 +500,7 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_for_each_column_occupied">for_each_column_occupied</a>
+                                <a href="#method_for_each_cell_occupied">for_each_cell_occupied</a>
 
                                 
                                 
@@ -536,13 +543,6 @@
                         
                             <li class="index-item method">
                                 <a href="#method_generate_grid_and_stylesheet">generate_grid_and_stylesheet</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_generate_stylesheet">generate_stylesheet</a>
 
                                 
                                 
@@ -633,7 +633,7 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_is_placeholder_in">is_placeholder_in</a>
+                                <a href="#method_is_placeholder_in_col">is_placeholder_in_col</a>
 
                                 
                                 
@@ -759,6 +759,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_register_widget">register_widget</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_remove_from_gridmap">remove_from_gridmap</a>
 
                                 
@@ -774,13 +781,6 @@
                         
                             <li class="index-item method">
                                 <a href="#method_serialize">serialize</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_serialize_changed">serialize_changed</a>
 
                                 
                                 
@@ -870,6 +870,110 @@
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_add_style_tag" class="method item">
+    <h3 class="name"><code>add_style_tag</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>css</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1818"><code>src&#x2F;jquery.gridster.js:1818</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Injects the given CSS as string to the head of the document.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">css</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The styles to apply.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    Returns the instance of the Gridster class.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method_add_to_gridmap" class="method item">
@@ -1192,7 +1296,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l922"><code>src&#x2F;jquery.gridster.js:922</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l915"><code>src&#x2F;jquery.gridster.js:915</code></a>
         
         </p>
 
@@ -1310,7 +1414,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1328"><code>src&#x2F;jquery.gridster.js:1328</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1321"><code>src&#x2F;jquery.gridster.js:1321</code></a>
         
         </p>
 
@@ -1447,7 +1551,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l970"><code>src&#x2F;jquery.gridster.js:970</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l963"><code>src&#x2F;jquery.gridster.js:963</code></a>
         
         </p>
 
@@ -1565,7 +1669,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1500"><code>src&#x2F;jquery.gridster.js:1500</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1493"><code>src&#x2F;jquery.gridster.js:1493</code></a>
         
         </p>
 
@@ -1763,7 +1867,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1463"><code>src&#x2F;jquery.gridster.js:1463</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1456"><code>src&#x2F;jquery.gridster.js:1456</code></a>
         
         </p>
 
@@ -1798,8 +1902,8 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 </div>
 
                 
-                    <div id="method_for_each_column_occupied" class="method item">
-    <h3 class="name"><code>for_each_column_occupied</code></h3>
+                    <div id="method_for_each_cell_occupied" class="method item">
+    <h3 class="name"><code>for_each_cell_occupied</code></h3>
 
     
         <div class="args">
@@ -1850,7 +1954,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1598"><code>src&#x2F;jquery.gridster.js:1598</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1591"><code>src&#x2F;jquery.gridster.js:1591</code></a>
         
         </p>
 
@@ -1978,7 +2082,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1619"><code>src&#x2F;jquery.gridster.js:1619</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1612"><code>src&#x2F;jquery.gridster.js:1612</code></a>
         
         </p>
 
@@ -2106,7 +2210,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1638"><code>src&#x2F;jquery.gridster.js:1638</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1631"><code>src&#x2F;jquery.gridster.js:1631</code></a>
         
         </p>
 
@@ -2239,7 +2343,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1704"><code>src&#x2F;jquery.gridster.js:1704</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1697"><code>src&#x2F;jquery.gridster.js:1697</code></a>
         
         </p>
 
@@ -2386,7 +2490,7 @@ iteration. The value of <code>this</code> inside the function is the jQuery wrap
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1720"><code>src&#x2F;jquery.gridster.js:1720</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1713"><code>src&#x2F;jquery.gridster.js:1713</code></a>
         
         </p>
 
@@ -2527,7 +2631,7 @@ iteration. The value of <code>this</code> inside the function is the jQuery wrap
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1848"><code>src&#x2F;jquery.gridster.js:1848</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1841"><code>src&#x2F;jquery.gridster.js:1841</code></a>
         
         </p>
 
@@ -2637,7 +2741,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1898"><code>src&#x2F;jquery.gridster.js:1898</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1891"><code>src&#x2F;jquery.gridster.js:1891</code></a>
         
         </p>
 
@@ -2725,7 +2829,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1781"><code>src&#x2F;jquery.gridster.js:1781</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1774"><code>src&#x2F;jquery.gridster.js:1774</code></a>
         
         </p>
 
@@ -2770,110 +2874,6 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>Number of rows.</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Object</span>:
-                    
-                    Returns the instance of the Gridster class.
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_generate_stylesheet" class="method item">
-    <h3 class="name"><code>generate_stylesheet</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>css</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Object</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1825"><code>src&#x2F;jquery.gridster.js:1825</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Injects the given CSS as string to the head of the document.</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">css</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The styles to apply.</p>
                     </div>
 
                     
@@ -2948,7 +2948,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1570"><code>src&#x2F;jquery.gridster.js:1570</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1563"><code>src&#x2F;jquery.gridster.js:1563</code></a>
         
         </p>
 
@@ -3042,7 +3042,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1736"><code>src&#x2F;jquery.gridster.js:1736</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1729"><code>src&#x2F;jquery.gridster.js:1729</code></a>
         
         </p>
 
@@ -3123,7 +3123,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1535"><code>src&#x2F;jquery.gridster.js:1535</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1528"><code>src&#x2F;jquery.gridster.js:1528</code></a>
         
         </p>
 
@@ -3228,7 +3228,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1553"><code>src&#x2F;jquery.gridster.js:1553</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1546"><code>src&#x2F;jquery.gridster.js:1546</code></a>
         
         </p>
 
@@ -3345,7 +3345,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1021"><code>src&#x2F;jquery.gridster.js:1021</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1014"><code>src&#x2F;jquery.gridster.js:1014</code></a>
         
         </p>
 
@@ -3473,7 +3473,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1884"><code>src&#x2F;jquery.gridster.js:1884</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1877"><code>src&#x2F;jquery.gridster.js:1877</code></a>
         
         </p>
 
@@ -3544,7 +3544,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1099"><code>src&#x2F;jquery.gridster.js:1099</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1092"><code>src&#x2F;jquery.gridster.js:1092</code></a>
         
         </p>
 
@@ -3615,7 +3615,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l859"><code>src&#x2F;jquery.gridster.js:859</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l852"><code>src&#x2F;jquery.gridster.js:852</code></a>
         
         </p>
 
@@ -3702,7 +3702,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l778"><code>src&#x2F;jquery.gridster.js:778</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l771"><code>src&#x2F;jquery.gridster.js:771</code></a>
         
         </p>
 
@@ -3827,7 +3827,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l797"><code>src&#x2F;jquery.gridster.js:797</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l790"><code>src&#x2F;jquery.gridster.js:790</code></a>
         
         </p>
 
@@ -4025,8 +4025,8 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
 </div>
 
                 
-                    <div id="method_is_placeholder_in" class="method item">
-    <h3 class="name"><code>is_placeholder_in</code></h3>
+                    <div id="method_is_placeholder_in_col" class="method item">
+    <h3 class="name"><code>is_placeholder_in_col</code></h3>
 
     
         <div class="args">
@@ -4035,12 +4035,6 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                 <li class="arg">
                     
                         <code>col</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>row</code>
                     
                 </li>
             
@@ -4077,7 +4071,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l764"><code>src&#x2F;jquery.gridster.js:764</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l759"><code>src&#x2F;jquery.gridster.js:759</code></a>
         
         </p>
 
@@ -4088,7 +4082,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
     </div>
 
     <div class="description">
-        <p>Determines if the placeholder is currently over the row and col given.</p>
+        <p>Determines if the placeholder is currently over the column given.</p>
     </div>
 
     
@@ -4107,21 +4101,6 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
 
                     <div class="param-description">
                         <p>The column to check.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">row</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The row to check.</p>
                     </div>
 
                     
@@ -4456,7 +4435,7 @@ and col given.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l817"><code>src&#x2F;jquery.gridster.js:817</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l810"><code>src&#x2F;jquery.gridster.js:810</code></a>
         
         </p>
 
@@ -4582,7 +4561,7 @@ else returns the jQuery HTMLElement
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l842"><code>src&#x2F;jquery.gridster.js:842</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l835"><code>src&#x2F;jquery.gridster.js:835</code></a>
         
         </p>
 
@@ -4855,7 +4834,7 @@ params and if this is under the widget that is being dragged.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1283"><code>src&#x2F;jquery.gridster.js:1283</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1276"><code>src&#x2F;jquery.gridster.js:1276</code></a>
         
         </p>
 
@@ -4974,7 +4953,7 @@ params and if this is under the widget that is being dragged.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1194"><code>src&#x2F;jquery.gridster.js:1194</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1187"><code>src&#x2F;jquery.gridster.js:1187</code></a>
         
         </p>
 
@@ -5086,7 +5065,7 @@ if they can.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1237"><code>src&#x2F;jquery.gridster.js:1237</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1230"><code>src&#x2F;jquery.gridster.js:1230</code></a>
         
         </p>
 
@@ -5680,7 +5659,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1132"><code>src&#x2F;jquery.gridster.js:1132</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1125"><code>src&#x2F;jquery.gridster.js:1125</code></a>
         
         </p>
 
@@ -5784,7 +5763,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1144"><code>src&#x2F;jquery.gridster.js:1144</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1137"><code>src&#x2F;jquery.gridster.js:1137</code></a>
         
         </p>
 
@@ -5997,7 +5976,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1156"><code>src&#x2F;jquery.gridster.js:1156</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1149"><code>src&#x2F;jquery.gridster.js:1149</code></a>
         
         </p>
 
@@ -6101,7 +6080,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1174"><code>src&#x2F;jquery.gridster.js:1174</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1167"><code>src&#x2F;jquery.gridster.js:1167</code></a>
         
         </p>
 
@@ -6150,6 +6129,77 @@ overlapped or stops being overlapped.</p>
                         <span class="type">HTMLElements</span>:
                     
                     Returns a jQuery collection of HTMLElements.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_register_widget" class="method item">
+    <h3 class="name"><code>register_widget</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l231"><code>src&#x2F;jquery.gridster.js:231</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Creates the grid coords object representing the widget a add it to the mapped array of positions</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Array</span>:
+                    
+                    Returns the instance of the Gridster class.
                 
             </div>
         </div>
@@ -6512,77 +6562,6 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l231"><code>src&#x2F;jquery.gridster.js:231</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Creates the grid coords object representing the widget a add it to the mapped array of positions</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Array</span>:
-                    
-                    Returns the instance of the Gridster class.
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_serialize_changed" class="method item">
-    <h3 class="name"><code>serialize_changed</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Array</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
         <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l219"><code>src&#x2F;jquery.gridster.js:219</code></a>
         
         </p>
@@ -6671,7 +6650,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1446"><code>src&#x2F;jquery.gridster.js:1446</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1439"><code>src&#x2F;jquery.gridster.js:1439</code></a>
         
         </p>
 
@@ -6780,7 +6759,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1768"><code>src&#x2F;jquery.gridster.js:1768</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1761"><code>src&#x2F;jquery.gridster.js:1761</code></a>
         
         </p>
 
@@ -6867,7 +6846,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l881"><code>src&#x2F;jquery.gridster.js:881</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l874"><code>src&#x2F;jquery.gridster.js:874</code></a>
         
         </p>
 
@@ -7452,7 +7431,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1417"><code>src&#x2F;jquery.gridster.js:1417</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1410"><code>src&#x2F;jquery.gridster.js:1410</code></a>
         
         </p>
 
