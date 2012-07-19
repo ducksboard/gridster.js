@@ -115,12 +115,8 @@
                 row: wgd.row
             };
         },
-        collision: {
-            on_overlap: function(coords) {}
-        },
-        draggable: {
-
-        }
+        collision: {},
+        draggable: {}
     };
 
 
@@ -142,7 +138,8 @@
 
     var throttle = function(func, wait) {
         var context, args, timeout, throttling, more, result;
-        var whenDone = debounce(function(){ more = throttling = false; }, wait, true);
+        var whenDone = debounce(
+            function(){ more = throttling = false; }, wait, true);
         return function() {
           context = this; args = arguments;
           var later = function() {
@@ -170,14 +167,14 @@
     * @param {HTMLElement} el The HTMLelement that contains all the widgets.
     * @param {Object} [options] An Object with all options you want to
     *        overwrite:
-    *    @param {HTMLElement|String} [options.widget_selector] Define who will be the
-    *     draggable widgets. Can be a CSS Selector String or a collection of
-    *     HTMLElements
-    *    @param {Array} [options.widget_margins] Margin between widgets. The first
-    *     index for the horizontal margin (left, right) and the second
-    *     for the vertical margin (top, bottom).
-    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions in
-    *     pixels. The first index for the width and the second for the
+    *    @param {HTMLElement|String} [options.widget_selector] Define who will
+    *     be the draggable widgets. Can be a CSS Selector String or a
+    *     collection of HTMLElements
+    *    @param {Array} [options.widget_margins] Margin between widgets.
+    *     The first index for the horizontal margin (left, right) and
+    *     the second for the vertical margin (top, bottom).
+    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions
+    *     in pixels. The first index for the width and the second for the
     *     height.
     *    @param {Number} [options.extra_cols] Add more columns in addition to
     *     those that have been calculated.
@@ -227,6 +224,9 @@
       this.set_dom_grid_height();
       this.$wrapper.addClass(&#x27;ready&#x27;);
       this.draggable();
+
+      $(window).bind(
+        &#x27;resize&#x27;, throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -322,7 +322,8 @@
 
 
     &#x2F;**
-    * Creates the grid coords object representing the widget a add it to the mapped array of positions
+    * Creates the grid coords object representing the widget a add it to the
+    * mapped array of positions.
     *
     * @method register_widget
     * @return {Array} Returns the instance of the Gridster class.
@@ -416,6 +417,9 @@
             &#x2F;&#x2F; containment : this.$wrapper,
             start: function(event, ui) {
                 self.$player = $(this);
+                self.$helper = self.options.draggable.helper === &#x27;clone&#x27; ?
+                    $(ui.helper) : self.$player;
+
                 self.on_start_drag.call(self, event, ui);
             },
             stop: function(event, ui) {
@@ -446,7 +450,6 @@
         this.player_grid_data = this.$player.coords().grid;
         this.placeholder_grid_data = $.extend({}, this.player_grid_data);
 
-
         &#x2F;&#x2F;set new grid height along the dragging period
         this.$el.css(&#x27;height&#x27;, this.$el.height() +
           (this.player_grid_data.size_y * this.min_widget_height));
@@ -454,14 +457,17 @@
         var colliders = this.faux_grid;
         var coords = this.$player.data(&#x27;coords&#x27;).coords;
 
-        this.cells_occupied_by_player = this.get_cells_occupied(this.player_grid_data);
-        this.cells_occupied_by_placeholder = this.get_cells_occupied(this.placeholder_grid_data);
+        this.cells_occupied_by_player = this.get_cells_occupied(
+            this.player_grid_data);
+        this.cells_occupied_by_placeholder = this.get_cells_occupied(
+            this.placeholder_grid_data);
 
         this.last_cols = [];
         this.last_rows = [];
 
         &#x2F;&#x2F; see jquery.collision.js
-        this.drag_api = this.$player.collision(colliders, this.options.collision);
+        this.drag_api = this.$helper.collision(
+            colliders, this.options.collision);
 
         this.$preview_holder = $(&#x27;&lt;li &#x2F;&gt;&#x27;, {
               &#x27;class&#x27;: &#x27;preview-holder&#x27;,
@@ -526,7 +532,7 @@
             this.on_stop_overlapping_row
         );
 
-        this.$player.attr({
+        this.$player.add(this.$helper).attr({
             &#x27;data-col&#x27;: this.placeholder_grid_data.col,
             &#x27;data-row&#x27;: this.placeholder_grid_data.row
         }).css({
@@ -722,7 +728,8 @@
 
 
     &#x2F;**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in ascending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in ascending way.
     *
     * @method sort_by_row_asc
     * @param {Array} widgets Array of grid coords objects
@@ -741,7 +748,8 @@
 
 
     &#x2F;**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in descending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in descending way.
     *
     * @method sort_by_row_desc
     * @param {Array} widgets Array of grid coords objects
@@ -759,7 +767,8 @@
 
 
     &#x2F;**
-    * Sorts an Array of grid coords objects (representing the grid coords of each widget) in descending way.
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in descending way.
     *
     * @method manage_movements
     * @param {HTMLElements} $widgets A jQuery collection of HTMLElements
@@ -816,7 +825,7 @@
     fn.is_player = function(col_or_el, row) {
         if (row &amp;&amp; !this.gridmap[col_or_el]) { return false; }
         var $w = row ? this.gridmap[col_or_el][row] : col_or_el;
-        return $w &amp;&amp; $w.is(this.$player);
+        return $w &amp;&amp; ($w.is(this.$player) || $w.is(this.$helper));
     };
 
 
@@ -998,7 +1007,8 @@
 
         if (moved_down || changed_column) {
             $nexts.each($.proxy(function(i, widget){
-                this.move_widget_up( $(widget) , this.placeholder_grid_data.col - col + phgd.size_y );
+                this.move_widget_up(
+                    $(widget), this.placeholder_grid_data.col - col + phgd.size_y);
             }, this));
         }
 
@@ -1030,7 +1040,8 @@
 
             while (--r &gt; 0){
                 if (this.is_empty(tcol, r) || this.is_player(tcol, r) ||
-                    this.is_widget(tcol, r) &amp;&amp; grid_col[r].is($widgets_under_player)
+                    this.is_widget(tcol, r) &amp;&amp;
+                    grid_col[r].is($widgets_under_player)
                 ) {
                     upper_rows[tcol].push(r);
                     min_row = r &lt; min_row ? r : min_row;
@@ -1945,7 +1956,6 @@
         this.gridmap = [];
         var col;
         var row;
-
         for (col = cols; col &gt; 0; col--) {
             this.gridmap[col] = [];
             for (row = rows; row &gt; 0; row--) {
@@ -1966,6 +1976,31 @@
         }
         return this;
     };
+
+
+    &#x2F;**
+    * Recalculates the offsets for the faux grid. You need to use it when
+    * the browser is resized.
+    *
+    * @method recalculate_faux_grid
+    * @return {Object} Returns the instance of the Gridster class.
+    *&#x2F;
+    fn.recalculate_faux_grid = function() {
+        var aw = this.$wrapper.width();
+        this.baseX = ($(window).width() - aw) &#x2F; 2;
+        this.baseY = this.$wrapper.offset().top;
+
+        $.each(this.faux_grid, $.proxy(function(i, coords){
+            this.faux_grid[i] = coords.update({
+                left: this.baseX + (coords.data.col -1) * this.min_widget_width,
+                top: this.baseY + (coords.data.row -1) * this.min_widget_height
+            });
+
+        }, this));
+
+        return this;
+    };
+
 
     &#x2F;**
     * Get all widgets in the DOM and register them.
@@ -1989,13 +2024,12 @@
     * @return {Object} Returns the instance of the Gridster class.
     *&#x2F;
     fn.generate_grid_and_stylesheet = function() {
-        var grid_width;
         var aw = this.$wrapper.width();
         var ah = this.$wrapper.height();
 
-        var cols = Math.floor(aw&#x2F;this.min_widget_width) +
+        var cols = Math.floor(aw &#x2F; this.min_widget_width) +
                    this.options.extra_cols;
-        var rows = Math.floor(ah&#x2F;this.min_widget_height) +
+        var rows = Math.floor(ah &#x2F; this.min_widget_height) +
                    this.options.extra_rows;
 
         var actual_cols = this.$widgets.map(function() {
@@ -2011,18 +2045,16 @@
 
         cols = Math.max(min_cols, cols, this.options.min_cols);
         rows = Math.max(min_rows, rows, this.options.min_rows);
-        grid_width = cols * (this.options.widget_base_dimensions[0] +
-                         (this.options.widget_margins[0] * 2));
 
         &#x2F;&#x2F;this.support_grid_width = cols * this.min_widget_width;
-        this.support_grid_width = this.wrapper_width;
+        &#x2F;&#x2F; this.support_grid_width = this.wrapper_width;
 
-        this.support_grid_height = rows * this.min_widget_height;
-        this.baseX = ($(window).width() - this.support_grid_width) &#x2F; 2;
+        &#x2F;&#x2F; this.support_grid_height = rows * this.min_widget_height;
+        this.baseX = ($(window).width() - aw) &#x2F; 2;
         this.baseY = this.$wrapper.offset().top;
 
         &#x2F;&#x2F;this.baseX = 0;
-        if(this.options.autogenerate_stylesheet) {
+        if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet(rows, cols);
         }
 
