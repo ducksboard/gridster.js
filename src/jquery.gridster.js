@@ -131,6 +131,7 @@
       this.set_dom_grid_height();
       this.$wrapper.addClass('ready');
       this.draggable();
+      this.next_position(2, 2);
 
       $(window).bind(
         'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
@@ -165,6 +166,47 @@
         this.set_dom_grid_height();
 
         $w.fadeIn();
+    };
+
+
+    /**
+    * Get the most left column below to add a new widget.
+    *
+    * @method next_position
+    * @param {Number} size_x The nº of rows the widget occupies horizontally.
+    * @param {Number} size_y The nº of columns the widget occupies vertically.
+    * @return {Object} Returns a grid coords object representing the future
+    *  widget coords.
+    */
+    fn.next_position = function(size_x, size_y) {
+        var ga = this.gridmap;
+        var cols_l = ga.length;
+        var valid_pos = [];
+
+        for (var c = 1; c < cols_l; c++) {
+            var rows_l = ga[c].length;
+            for (var r = 1; r <= rows_l; r++) {
+                var can_move_to = this.can_move_to({
+                    size_x: size_x,
+                    size_y: size_y
+                }, c, r);
+
+                if (can_move_to) {
+                    valid_pos.push({
+                        col: c,
+                        row: r,
+                        size_y: size_y,
+                        size_x: size_x
+                    });
+                }
+            }
+        }
+
+        if (valid_pos.length) {
+            this.next_position = this.sort_by_row_asc(valid_pos)[0];
+            return this.next_position;
+        }
+        return false;
     };
 
 
