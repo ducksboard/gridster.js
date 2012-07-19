@@ -426,11 +426,13 @@
     *  the widget that was just created.
     */
     fn.add_widget = function(html, size_x, size_y) {
+        var next_pos = this.next_position(size_x, size_y);
+
         var $w = $(html).attr({
-                'data-col': this.highest_occupied_cell.col,
-                'data-row': this.highest_occupied_cell.row + 1,
-                'data-sizex' : size_x || 1,
-                'data-sizey' : size_y || 1
+                'data-col': next_pos.col,
+                'data-row': next_pos.row,
+                'data-sizex' : next_pos.size_x,
+                'data-sizey' : next_pos.size_y
             }).addClass('gs_w').appendTo(this.$el).hide();
 
         this.$widgets = this.$widgets.add($w);
@@ -456,6 +458,8 @@
     *  widget coords.
     */
     fn.next_position = function(size_x, size_y) {
+        size_x || (size_x = 1);
+        size_y || (size_y = 1);
         var ga = this.gridmap;
         var cols_l = ga.length;
         var valid_pos = [];
@@ -480,7 +484,8 @@
         }
 
         if (valid_pos.length) {
-            var next_position = this.sort_by_row_asc(valid_pos)[0];
+            var next_position = this.sort_by_row_asc(valid_pos);
+            next_position = this.sort_by_row_asc(next_position)[0];
             return next_position;
         }
         return false;
@@ -964,6 +969,26 @@
     fn.sort_by_row_asc = function(widgets) {
         widgets = widgets.sort(function(a, b){
            if (a.row > b.row) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    /**
+    * Sorts an Array of grid coords objects by column (representing the grid
+    * coords of each widget) in ascending way.
+    *
+    * @method sort_by_row_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    fn.sort_by_col_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b){
+           if (a.col > b.col) {
                return 1;
            }
            return -1;
@@ -2097,6 +2122,7 @@
     fn.set_dom_grid_height = function() {
         var r = this.get_highest_occupied_cell().row;
         this.$el.css('height', r * this.min_widget_height);
+        // this.$widgets.draggable("option", "containment", this.$el);
         return this;
     };
 

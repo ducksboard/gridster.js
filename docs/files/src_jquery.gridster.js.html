@@ -241,11 +241,13 @@
     *  the widget that was just created.
     *&#x2F;
     fn.add_widget = function(html, size_x, size_y) {
+        var next_pos = this.next_position(size_x, size_y);
+
         var $w = $(html).attr({
-                &#x27;data-col&#x27;: this.highest_occupied_cell.col,
-                &#x27;data-row&#x27;: this.highest_occupied_cell.row + 1,
-                &#x27;data-sizex&#x27; : size_x || 1,
-                &#x27;data-sizey&#x27; : size_y || 1
+                &#x27;data-col&#x27;: next_pos.col,
+                &#x27;data-row&#x27;: next_pos.row,
+                &#x27;data-sizex&#x27; : next_pos.size_x,
+                &#x27;data-sizey&#x27; : next_pos.size_y
             }).addClass(&#x27;gs_w&#x27;).appendTo(this.$el).hide();
 
         this.$widgets = this.$widgets.add($w);
@@ -271,6 +273,8 @@
     *  widget coords.
     *&#x2F;
     fn.next_position = function(size_x, size_y) {
+        size_x || (size_x = 1);
+        size_y || (size_y = 1);
         var ga = this.gridmap;
         var cols_l = ga.length;
         var valid_pos = [];
@@ -295,7 +299,8 @@
         }
 
         if (valid_pos.length) {
-            var next_position = this.sort_by_row_asc(valid_pos)[0];
+            var next_position = this.sort_by_row_asc(valid_pos);
+            next_position = this.sort_by_row_asc(next_position)[0];
             return next_position;
         }
         return false;
@@ -779,6 +784,26 @@
     fn.sort_by_row_asc = function(widgets) {
         widgets = widgets.sort(function(a, b){
            if (a.row &gt; b.row) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    &#x2F;**
+    * Sorts an Array of grid coords objects by column (representing the grid
+    * coords of each widget) in ascending way.
+    *
+    * @method sort_by_row_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    *&#x2F;
+    fn.sort_by_col_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b){
+           if (a.col &gt; b.col) {
                return 1;
            }
            return -1;
@@ -1912,6 +1937,7 @@
     fn.set_dom_grid_height = function() {
         var r = this.get_highest_occupied_cell().row;
         this.$el.css(&#x27;height&#x27;, r * this.min_widget_height);
+        &#x2F;&#x2F; this.$widgets.draggable(&quot;option&quot;, &quot;containment&quot;, this.$el);
         return this;
     };
 
