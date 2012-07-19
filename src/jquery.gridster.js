@@ -131,7 +131,6 @@
       this.set_dom_grid_height();
       this.$wrapper.addClass('ready');
       this.draggable();
-      this.next_position(2, 2);
 
       $(window).bind(
         'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
@@ -203,8 +202,8 @@
         }
 
         if (valid_pos.length) {
-            this.next_position = this.sort_by_row_asc(valid_pos)[0];
-            return this.next_position;
+            var next_position = this.sort_by_row_asc(valid_pos)[0];
+            return next_position;
         }
         return false;
     };
