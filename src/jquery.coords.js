@@ -34,7 +34,7 @@
         this.original_coords = this.get();
     };
 
-    fn.set = function(update) {
+    fn.set = function() {
         var el = this.el;
         if (el) {
             this.data = el.offset();
@@ -66,7 +66,7 @@
             var new_data = $.extend(this.data, data);
             this.data = new_data;
         }
-        this.set(true);
+        this.set();
         return this;
     };
 

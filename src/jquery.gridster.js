@@ -22,12 +22,8 @@
                 row: wgd.row
             };
         },
-        collision: {
-            on_overlap: function(coords) {}
-        },
-        draggable: {
-
-        }
+        collision: {},
+        draggable: {}
     };
 
 
@@ -78,14 +74,14 @@
     * @param {HTMLElement} el The HTMLelement that contains all the widgets.
     * @param {Object} [options] An Object with all options you want to
     *        overwrite:
-    *    @param {HTMLElement|String} [options.widget_selector] Define who will be the
-    *     draggable widgets. Can be a CSS Selector String or a collection of
-    *     HTMLElements
-    *    @param {Array} [options.widget_margins] Margin between widgets. The first
-    *     index for the horizontal margin (left, right) and the second
-    *     for the vertical margin (top, bottom).
-    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions in
-    *     pixels. The first index for the width and the second for the
+    *    @param {HTMLElement|String} [options.widget_selector] Define who will
+    *     be the draggable widgets. Can be a CSS Selector String or a
+    *     collection of HTMLElements
+    *    @param {Array} [options.widget_margins] Margin between widgets.
+    *     The first index for the horizontal margin (left, right) and
+    *     the second for the vertical margin (top, bottom).
+    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions
+    *     in pixels. The first index for the width and the second for the
     *     height.
     *    @param {Number} [options.extra_cols] Add more columns in addition to
     *     those that have been calculated.
@@ -135,6 +131,9 @@
       this.set_dom_grid_height();
       this.$wrapper.addClass('ready');
       this.draggable();
+
+      $(window).bind(
+        'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -1864,7 +1863,6 @@
         this.gridmap = [];
         var col;
         var row;
-
         for (col = cols; col > 0; col--) {
             this.gridmap[col] = [];
             for (row = rows; row > 0; row--) {
@@ -1885,6 +1883,31 @@
         }
         return this;
     };
+
+
+    /**
+    * Recalculates the offsets for the faux grid. You need to use it when
+    * the browser is resized.
+    *
+    * @method recalculate_faux_grid
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.recalculate_faux_grid = function() {
+        var aw = this.$wrapper.width();
+        this.baseX = ($(window).width() - aw) / 2;
+        this.baseY = this.$wrapper.offset().top;
+
+        $.each(this.faux_grid, $.proxy(function(i, coords){
+            this.faux_grid[i] = coords.update({
+                left: this.baseX + (coords.data.col -1) * this.min_widget_width,
+                top: this.baseY + (coords.data.row -1) * this.min_widget_height
+            });
+
+        }, this));
+
+        return this;
+    };
+
 
     /**
     * Get all widgets in the DOM and register them.
@@ -1908,13 +1931,12 @@
     * @return {Object} Returns the instance of the Gridster class.
     */
     fn.generate_grid_and_stylesheet = function() {
-        var grid_width;
         var aw = this.$wrapper.width();
         var ah = this.$wrapper.height();
 
-        var cols = Math.floor(aw/this.min_widget_width) +
+        var cols = Math.floor(aw / this.min_widget_width) +
                    this.options.extra_cols;
-        var rows = Math.floor(ah/this.min_widget_height) +
+        var rows = Math.floor(ah / this.min_widget_height) +
                    this.options.extra_rows;
 
         var actual_cols = this.$widgets.map(function() {
@@ -1930,18 +1952,16 @@
 
         cols = Math.max(min_cols, cols, this.options.min_cols);
         rows = Math.max(min_rows, rows, this.options.min_rows);
-        grid_width = cols * (this.options.widget_base_dimensions[0] +
-                         (this.options.widget_margins[0] * 2));
 
         //this.support_grid_width = cols * this.min_widget_width;
-        this.support_grid_width = this.wrapper_width;
+        // this.support_grid_width = this.wrapper_width;
 
-        this.support_grid_height = rows * this.min_widget_height;
-        this.baseX = ($(window).width() - this.support_grid_width) / 2;
+        // this.support_grid_height = rows * this.min_widget_height;
+        this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
 
         //this.baseX = 0;
-        if(this.options.autogenerate_stylesheet) {
+        if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet(rows, cols);
         }
 
