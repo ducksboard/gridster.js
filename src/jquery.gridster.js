@@ -221,7 +221,7 @@
     * @param {HTMLElement} el The jQuery wrapped HTMLElement you want to remove.
     * @return {Class} Returns the instance of the Gridster Class.
     */
-    fn.remove_widget = function(el) {
+    fn.remove_widget = function(el, callback) {
         var $el = el instanceof jQuery ? el : $(el);
         var wgd = $el.coords().grid;
 
@@ -237,6 +237,10 @@
                 this.move_widget_up( $(widget), wgd.size_y );
             }, this));
         }, this));
+
+        if (callback) {
+            callback.apply(el);
+        };
     };
 
 
