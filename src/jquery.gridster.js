@@ -206,8 +206,8 @@
         }
 
         if (valid_pos.length) {
-            var next_position = this.sort_by_row_asc(valid_pos);
-            next_position = this.sort_by_row_asc(next_position)[0];
+            var next_position = this.sort_by_row_desc(valid_pos);
+            next_position = this.sort_by_col_asc(next_position)[0];
             return next_position;
         }
         return false;
@@ -842,7 +842,8 @@
     * @return {Boolean} Returns true or false.
     */
     fn.is_placeholder_in_col = function(col) {
-        return $.inArray(col, this.cells_occupied_by_placeholder.cols) >= 0;
+        var c = this.cells_occupied_by_placeholder || [];
+        return $.inArray(col, c.cols) >= 0;
     };
 
 
@@ -1591,12 +1592,11 @@
             col: col,
             row: row
         };
-        var cells_occupied_by_w = this.get_cells_occupied(widget_grid_data);
         var result = true;
 
         this.for_each_cell_occupied(future_wd, function(tcol, trow){
             var $tw = this.is_widget(tcol, trow);
-            if ($tw && !$tw.is($w)) {
+            if ($tw && (!widget_grid_data.el || $tw.is($w))) {
                 result = false;
             }
         });
