@@ -374,16 +374,19 @@
                     $(ui.helper) : self.$player;
 
                 self.on_start_drag.call(self, event, ui);
+                self.$el.trigger('gridster:dragstart');
             },
             stop: function(event, ui) {
                 self.on_stop_drag.call(self, ui);
+                self.$el.trigger('gridster:dragstop');
             },
             drag: throttle(function(event, ui) {
                 self.on_drag.call(self, event, ui);
+                self.$el.trigger('gridster:drag');
             }, 100, true)
           });
 
-      this.$widgets.draggable(draggable_options);
+        this.$widgets.draggable(draggable_options);
 
       return this;
     };
