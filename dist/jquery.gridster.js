@@ -484,9 +484,7 @@
         }
 
         if (valid_pos.length) {
-            var next_position = this.sort_by_row_desc(valid_pos);
-            next_position = this.sort_by_col_asc(next_position)[0];
-            return next_position;
+            return this.sort_by_row_and_col_asc(valid_pos)[0];
         }
         return false;
     };
@@ -499,7 +497,7 @@
     * @param {HTMLElement} el The jQuery wrapped HTMLElement you want to remove.
     * @return {Class} Returns the instance of the Gridster Class.
     */
-    fn.remove_widget = function(el) {
+    fn.remove_widget = function(el, callback) {
         var $el = el instanceof jQuery ? el : $(el);
         var wgd = $el.coords().grid;
 
@@ -515,6 +513,10 @@
                 this.move_widget_up( $(widget), wgd.size_y );
             }, this));
         }, this));
+
+        if (callback) {
+            callback.apply(el);
+        };
     };
 
 
@@ -650,6 +652,7 @@
                 self.$player = $(this);
                 self.$helper = self.options.draggable.helper === 'clone' ?
                     $(ui.helper) : self.$player;
+                self.helper = !self.$helper.is(self.$player);
 
                 self.on_start_drag.call(self, event, ui);
                 self.$el.trigger('gridster:dragstart');
@@ -665,8 +668,7 @@
           });
 
         this.$widgets.draggable(draggable_options);
-
-      return this;
+        return this;
     };
 
 
@@ -740,6 +742,13 @@
             this.on_stop_overlapping_row
         );
 
+        if (this.helper && this.$player) {
+            this.$player.css({
+                'left': ui.position.left,
+                'top': ui.position.top
+            });
+        }
+
         if (this.options.draggable.drag) {
             this.options.draggable.drag.call(this, event, ui);
         }
@@ -754,6 +763,7 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_stop_drag = function(event, ui) {
+        this.$wrapper.removeClass('dragging');
         this.colliders_data = this.drag_api.get_closest_colliders();
 
         this.on_overlapped_column_change(
@@ -972,6 +982,26 @@
     fn.sort_by_row_asc = function(widgets) {
         widgets = widgets.sort(function(a, b){
            if (a.row > b.row) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    /**
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) placing first the empty cells upper left.
+    *
+    * @method sort_by_row_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    fn.sort_by_row_and_col_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b){
+           if (a.row > b.row || a.row == b.row && a.col > b.col) {
                return 1;
            }
            return -1;
@@ -2301,14 +2331,9 @@
         cols = Math.max(min_cols, cols, this.options.min_cols);
         rows = Math.max(min_rows, rows, this.options.min_rows);
 
-        //this.support_grid_width = cols * this.min_widget_width;
-        // this.support_grid_width = this.wrapper_width;
-
-        // this.support_grid_height = rows * this.min_widget_height;
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
 
-        //this.baseX = 0;
         if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet(rows, cols);
         }
