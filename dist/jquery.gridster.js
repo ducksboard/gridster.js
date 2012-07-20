@@ -512,11 +512,11 @@
             $nexts.each($.proxy(function(i, widget){
                 this.move_widget_up( $(widget), wgd.size_y );
             }, this));
-        }, this));
 
-        if (callback) {
-            callback.apply(el);
-        };
+            if (callback) {
+                callback.apply(this, el);
+            };
+        }, this));
     };
 
 
