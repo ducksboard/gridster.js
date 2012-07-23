@@ -22,14 +22,32 @@
 
 
     /**
-    * Draggable
-    *
     * @class Draggable
+    *
+    * @param {HTMLElement} el The HTMLelement that contains all the widgets
+    *  to be dragged.
+    * @param {Object} [options] An Object with all options you want to
+    *        overwrite:
+    *    @param {HTMLElement|String} [options.items] Define who will
+    *     be the draggable items. Can be a CSS Selector String or a
+    *     collection of HTMLElements.
+    *    @param {Number} [options.distance] Distance in pixels after mousedown
+    *     the mouse must move before dragging should start.
+    *    @param {Boolean} [options.limit] Constrains dragging to the width of
+    *     the container
+    *    @param {offset_left} [options.offset_left] Offset added to the item
+    *     that is being dragged.
+    *    @param {Number} [options.drag] Executes a callback when the mouse is
+    *     moved during the dragging.
+    *    @param {Number} [options.start] Executes a callback when the drag
+    *     starts.
+    *    @param {Number} [options.stop] Executes a callback when the drag stops.
+    * @return {Object} Returns `el`.
     * @constructor
     */
-    function Draggable(element, options) {
-      this.options = $.extend(defaults, options);
-      this.$container = $(element);
+    function Draggable(el, options) {
+      this.options = $.extend({}, defaults, options);
+      this.$container = $(el);
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
       this.player_min_left = 0 + this.options.offset_left;
@@ -43,6 +61,7 @@
         this.$container.css('position', 'relative');
         this.enable();
     };
+
 
     fn.get_actual_pos = function($el) {
         var pos = $el.position();
@@ -71,6 +90,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
 
         $body.on('mousemove.draggable', function(mme){
+
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(mouse_actual_pos.left - self.mouse_init_pos.left);
             var diff_y = Math.abs(mouse_actual_pos.top - self.mouse_init_pos.top);
