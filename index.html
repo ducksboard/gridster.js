@@ -56,7 +56,7 @@
 
         <div class="gridster">
           <ul>
-            <li data-row="1" data-col="1" data-sizex="1" data-sizey="1"></li>
+            <li data-row="1" data-col="1" data-sizex="2" data-sizey="1"></li>
             <li data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
             <li data-row="3" data-col="1" data-sizex="1" data-sizey="1"></li>
 
@@ -85,10 +85,10 @@
 
             <article class="m_txt">
                 <h3 class="heading-l">Setup</h3>
-                <p>Nowadays griddable.js depends on jQuery and jQuery UI draggable, so you need to include this scripts in the head of your document.</p>
+                <p>Nowadays griddable.js depends on jQuery, so you need to include it in the head of your document.</p>
 
                 <h4 class="heading-m">Include dependencies</h4>
-                <p>Download the latest release at <a href="http://jquery.com/">jQuery</a> and <a href="http://jqueryui.com/">jQuery UI</a>.</p>
+                <p>Download the latest release at <a href="http://jquery.com/">jQuery</a>.</p>
 
                 <script src="https://gist.github.com/3129541.js?file=gridder.html"></script>
 
@@ -144,10 +144,15 @@
                         <li><a href="#extra_cols_opt">extra_cols</a></li>
                         <li><a href="#extra_rows_opt">extra_rows</a></li>
                         <li><a href="#autogenerate_stylesheet_opt">autogenerate_stylesheet</a></li>
+                        <li><a href="#avoid_overlapped_widgets_opt">avoid_overlapped_widgets</a></li>
 
-                        <li><a href="#on_overlap_start_opt">on_overlap_start</a></li>
-                        <li><a href="#on_overlap_opt">on_overlap</a></li>
-                        <li><a href="#on_overlap_stop_opt">on_overlap_stop</a></li>
+                        <li><a href="#draggable_start_opt">draggable.start</a></li>
+                        <li><a href="#draggable_start_opt">draggable.drag</a></li>
+                        <li><a href="#draggable_start_opt">draggable.stop</a></li>
+
+                        <li><a href="#on_overlap_start_opt">collision.on_overlap_start</a></li>
+                        <li><a href="#on_overlap_opt">collision.on_overlap</a></li>
+                        <li><a href="#on_overlap_stop_opt">collision.on_overlap_stop</a></li>
                     </ul>
                 </nav><br><br>
 
@@ -196,11 +201,20 @@
                     <h4 id="autogenerate_stylesheet_opt" class="heading-m">autogenerate_stylesheet: <em>true</em></h4>
                     <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false, and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code></p>
 
+                    <h4 id="avoid_overlapped_widgets_opt" class="heading-m">avoid_overlapped_widgets: <em>true</em></h4>
+                    <p>Avoid that widgets loaded from the DOM can be overlapped. It is helpful if the positions were bad stored in the database or if there was any conflict.</p>
+
                     <h4 id="serialize_params_opt" class="heading-m">serialize_params: <em>function($w, wgd) { return { col: wgd.col, row: wgd.row } }</em></h4>
                     <p>Return the data you want for each widget in the serialize method. Two arguments are passed: `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid coords object (`col`, `row`, `size_x`, `size_y`).</p>
 
-                    <h4 id="draggable_opt" class="heading-m">draggable: <em>{}</em></h4>
-                    <p>The configuration object of the jQuery UI Draggable Plugin. See <a href="http://jqueryui.com/demos/draggable/">http://jqueryui.com/demos/draggable/</a> for more information.</p>
+                    <h4 id="draggable_start_opt" class="heading-m">draggable.start: <em>function(event, ui){}</em></h4>
+                    <p>Executes a function when dragging starts.</p>
+
+                    <h4 id="draggable_drag_opt" class="heading-m">draggable.drag: <em>function(event, ui){}</em></h4>
+                    <p>Executes a function when the mouse is moved during the dragging.</p>
+
+                    <h4 id="draggable_stop_opt" class="heading-m">draggable.stop: <em>function(event, ui){}</em></h4>
+                    <p>Executes a function when dragging stops.</p>
 
                     <h4 id="on_overlap_start_opt" class="heading-m">collision.on_overlap_start: <em>function(collider_data) { }</em></h4>
                     <p>Executes a function first time a widget overlaps with a "faux" grid cell.</p>
@@ -292,7 +306,7 @@
             </header>
 
             <article class="m_txt">
-                <p>Reminds that gridster.js depends on jQuery and jQuery UI draggable. Download the latest release at <a href="http://jquery.com/">jQuery</a> and <a href="http://jqueryui.com/">jQuery UI</a>.
+                <p>Reminds that gridster.js depends on jQuery. Download the latest release at <a href="http://jquery.com/">jQuery</a>.
                 </p>
 
                 <h3 class="heading-l">gridster.<u>js</u></h3>
@@ -354,7 +368,6 @@
 </footer>
 
 <script type="text/javascript" src="libs/jquery/jquery.js"></script>
-<script type="text/javascript" src="libs/jquery-ui/jquery-ui.js"></script>
 
 <script src="dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 
@@ -367,10 +380,7 @@
         widget_margins: [10, 10],
         widget_base_dimensions: [140, 140],
         min_cols: 6,
-        min_rows: 10,
-        draggable: {
-            helper: "clone"
-        }
+        min_rows: 10
     }).data('gridster');
 
   });

@@ -1,10 +1,10 @@
-/*! gridster.js - v0.1.0 - 2012-07-20
+/*! gridster.js - v0.1.0 - 2012-07-23
 * https://github.com/ducksboard/gridster.js
 * Copyright (c) 2012 ducksboard; Licensed MIT, GPL */
 
 ;(function($, window, document, undefined){
     /**
-    * Coords description
+    * Coords
     *
     * @class Coords
     * @param {HTMLElement|Object} obj HTMLElement or a literal Object with the left, top, width and height properties.
@@ -30,12 +30,20 @@
         this.original_coords = this.get();
     };
 
-    fn.set = function() {
+
+    fn.set = function(update, not_update_offsets) {
         var el = this.el;
-        if (el) {
-            this.data = el.offset();
-            this.data.width || (this.data.width = el.width());
-            this.data.height || (this.data.height = el.height());
+
+        if (el && !update) {
+            this.data = {} || el.offset();
+            this.data.width = el.width();
+            this.data.height = el.height();
+        };
+
+        if (el && update && !not_update_offsets) {
+            var offset = el.offset();
+            this.data.top = offset.top;
+            this.data.left = offset.left;
         }
 
         var d = this.data;
@@ -53,18 +61,22 @@
         return this;
     };
 
+
     fn.update = function(data){
         if (!data && !this.el) {
             return this;
         }
 
         if (data) {
-            var new_data = $.extend(this.data, data);
+            var new_data = $.extend({}, this.data, data);
             this.data = new_data;
+            return this.set(true, true);
         }
-        this.set();
+
+        this.set(true);
         return this;
     };
+
 
     fn.get = function(){
         return this.coords;
@@ -195,18 +207,18 @@
       }
     };
 
-    fn.find_collisions = function(){
+    fn.find_collisions = function(player_data_coords){
       var self = this;
       var colliders_coords = [];
       var colliders_data = [];
       var $colliders = (this.colliders || this.$colliders);
       var count = $colliders.length;
+      var player_coords = self.$element.coords().update(player_data_coords || false).get();
 
       while(count--){
         var $collider = self.$colliders ? $($colliders[count]) : $colliders[count];
-        var player_coords = self.$element.coords().update().get();
         var $collider_coords_ins = ($collider.isCoords) ?
-                $collider.update() : $collider.coords();
+                $collider : $collider.coords();
         var collider_coords = $collider_coords_ins.get();
         var overlaps = self.overlaps(player_coords, collider_coords);
 
@@ -246,8 +258,8 @@
     };
 
 
-    fn.get_closest_colliders = function(){
-      var colliders = this.find_collisions();
+    fn.get_closest_colliders = function(player_data_coords){
+      var colliders = this.find_collisions(player_data_coords);
       var min_area = 100;
       colliders.sort(function(a, b){
 
@@ -283,30 +295,9 @@
 
 }(jQuery, window, document));
 
-;(function($, window, document, undefined) {
-
-    var defaults = {
-        widget_selector: '> li',
-        widget_margins: [10, 10],
-        widget_base_dimensions: [400, 225],
-        extra_rows: 0,
-        extra_cols: 0,
-        min_cols: 1,
-        min_rows: 10,
-        autogenerate_stylesheet: true,
-        serialize_params: function($w, wgd) {
-            return {
-                col: wgd.col,
-                row: wgd.row
-            };
-        },
-        collision: {},
-        draggable: {}
-    };
-
-
+(function(window, undefined) {
     /* Debounce and throttle functions taken from underscore.js */
-    var debounce = function(func, wait, immediate) {
+    window.debounce = function(func, wait, immediate) {
         var timeout;
         return function() {
           var context = this, args = arguments;
@@ -321,10 +312,10 @@
     };
 
 
-    var throttle = function(func, wait) {
+    window.throttle = function(func, wait) {
         var context, args, timeout, throttling, more, result;
         var whenDone = debounce(
-            function(){ more = throttling = false; }, wait, true);
+            function(){ more = throttling = false; }, wait);
         return function() {
           context = this; args = arguments;
           var later = function() {
@@ -342,6 +333,248 @@
           throttling = true;
           return result;
         };
+    };
+
+})(window)
+
+;(function($, window, document, undefined){
+
+    var defaults = {
+        items: '.gs_w',
+        distance: 1,
+        limit: true,
+        offset_left: 0,
+        drag: function(e){},
+        start : function(e, ui){},
+        stop : function(e){}
+    };
+
+    var $body = $(document.body);
+
+
+    /**
+    * Draggable
+    *
+    * @class Draggable
+    * @constructor
+    */
+    function Draggable(element, options) {
+      this.options = $.extend(defaults, options);
+      this.$container = $(element);
+      this.$dragitems = $(this.options.items, this.$container);
+      this.is_dragging = false;
+      this.player_min_left = 0 + this.options.offset_left;
+
+      this.init();
+    };
+
+    var fn = Draggable.prototype;
+
+    fn.init = function() {
+        this.$container.css('position', 'relative');
+        this.enable();
+    };
+
+    fn.get_actual_pos = function($el) {
+        var pos = $el.position();
+        return pos;
+    };
+
+
+    fn.get_mouse_pos = function(e) {
+        return {
+            left: e.clientX,
+            top: e.clientY
+        };
+    };
+
+
+    fn.drag_handler = function(e) {
+        var self = this;
+        var first = true;
+        this.$player = $(e.currentTarget);
+
+        this.el_init_pos = this.get_actual_pos(this.$player);
+        this.mouse_init_pos = this.get_mouse_pos(e);
+
+        $body.on('mousemove.draggable', function(mme){
+            var mouse_actual_pos = self.get_mouse_pos(mme);
+            var diff_x = Math.abs(mouse_actual_pos.left - self.mouse_init_pos.left);
+            var diff_y = Math.abs(mouse_actual_pos.top - self.mouse_init_pos.top);
+            if (!(diff_x > self.options.distance || diff_y > self.options.distance)) {
+                return false;
+            }
+
+            if (first) {
+                first = false;
+                self.on_dragstart.call(self, mme);
+                return false;
+            }
+
+            if (self.is_dragging == true) {
+                throttle(self.on_dragmove.call(self, mme), 130);
+            };
+
+            return false;
+
+        });
+
+        return false;
+    };
+
+
+    fn.on_dragstart = function(e) {
+        e.preventDefault();
+        this.drag_start = true;
+        this.is_dragging = true;
+        this.$container_offset = this.$container.offset();
+        if (this.options.helper === 'clone') {
+            this.$helper = this.$player.clone().appendTo(this.$container).addClass('helper');
+            this.helper = true;
+        }else{
+            this.helper = false;
+        }
+        this.el_init_offset = this.$player.offset();
+        this.player_width = this.$player.width();
+        this.player_max_left = this.$container.width() - this.player_width + this.options.offset_left;
+        if (this.options.start) {
+            this.options.start.call(this.$player, e, {
+                helper: this.helper ? this.$helper : this.$player
+            });
+        };
+        return false;
+    };
+
+
+    fn.get_offset = function(e) {
+        e.preventDefault();
+        var mouse_actual_pos = this.get_mouse_pos(e);
+        var diff_x = mouse_actual_pos.left - this.mouse_init_pos.left;
+        var diff_y = mouse_actual_pos.top - this.mouse_init_pos.top;
+
+        var left = this.el_init_offset.left + diff_x - this.$container_offset.left;
+        var top = this.el_init_offset.top + diff_y - this.$container_offset.top;
+
+        if (this.options.limit) {
+            if (left > this.player_max_left) {
+                left = this.player_max_left;
+            }else if(left < this.player_min_left) {
+                left = this.player_min_left;
+            }
+        };
+
+        return {
+            left: left,
+            top: top
+        }
+    };
+
+
+    fn.on_dragmove = function(e) {
+        var offset = this.get_offset(e);
+
+        (this.helper ? this.$helper : this.$player).css({
+            'position': 'absolute',
+            'left' : offset.left,
+            'top' : offset.top
+        });
+
+        var ui = {
+            'position': {
+                'left': offset.left,
+                'top': offset.top
+            }
+        };
+
+        if (this.options.drag) {
+            this.options.drag.call(this.$player, e, ui);
+        }
+        return false;
+    };
+
+
+    fn.on_dragstop = function(e) {
+        var offset = this.get_offset(e);
+
+        this.drag_start = false;
+
+        var ui = {
+            'position': {
+                'left': offset.left,
+                'top': offset.top
+            }
+        }
+
+        if (this.options.stop) {
+            this.options.stop.call(this.$player, e, ui);
+        }
+
+        if (this.helper) {
+            this.$helper.remove();
+        }
+
+        return false;
+    };
+
+
+    fn.enable = function(){
+        this.$container.on('mousedown.draggable', this.options.items, $.proxy(this.drag_handler, this));
+        $body.on('mouseup.draggable', $.proxy(function(e) {
+            this.is_dragging = false;
+            $body.off('mousemove.draggable');
+            if (this.drag_start) {
+                this.on_dragstop(e);
+            }
+        }, this));
+    };
+
+
+    fn.disable = function(){
+        this.$container.off('mousedown.draggable');
+        $body.off('mouseup.draggable');
+    };
+
+
+    fn.destroy = function(){
+        this.disable();
+        $.removeData(this.$container, 'draggable');
+    };
+
+
+    //jQuery adapter
+    $.fn.draggable = function ( options ) {
+        return this.each(function () {
+            if (!$.data(this, 'draggable')) {
+                $.data(this, 'draggable', new Draggable( this, options ));
+            }
+        });
+    };
+
+
+}(jQuery, window, document));
+
+;(function($, window, document, undefined) {
+
+    var defaults = {
+        widget_selector: '> li',
+        widget_margins: [10, 10],
+        widget_base_dimensions: [400, 225],
+        extra_rows: 0,
+        extra_cols: 0,
+        min_cols: 1,
+        min_rows: 10,
+        autogenerate_stylesheet: true,
+        avoid_overlapped_widgets: true,
+        serialize_params: function($w, wgd) {
+            return {
+                col: wgd.col,
+                row: wgd.row
+            };
+        },
+        collision: {},
+        draggable: {
+            distance: 4
+        }
     };
 
 
@@ -401,6 +634,8 @@
       this.init();
     }
 
+    Gridster.generated_stylesheets = [];
+
     var fn = Gridster.prototype;
 
     fn.init = function() {
@@ -416,13 +651,38 @@
 
 
     /**
+    * Disable dragging.
+    *
+    * @method enable
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.disable = function(){
+        this.$wrapper.find('.player-revert').removeClass('player-revert');
+        this.drag_api.disable();
+        return this;
+    }
+
+
+    /**
+    * Enable dragging.
+    *
+    * @method enable
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.enable = function(){
+        this.drag_api.enable();
+        return this;
+    }
+
+
+    /**
     * Add a new widget to the grid.
     *
     * @method add_widget
     * @param {String} html The string representing the HTML of the widget.
     * @param {Number} size_x The nº of rows the widget occupies horizontally.
     * @param {Number} size_y The nº of columns the widget occupies vertically.
-    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing
+    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     */
     fn.add_widget = function(html, size_x, size_y) {
@@ -439,12 +699,9 @@
 
         this.register_widget($w);
 
-        this.$widgets.draggable('destroy');
-        this.draggable();
-
         this.set_dom_grid_height();
 
-        $w.fadeIn();
+        return $w.fadeIn();
     };
 
 
@@ -504,7 +761,6 @@
         this.$widgets = this.$widgets.not($el);
 
         var $nexts = this.widgets_below($el);
-
         this.remove_from_gridmap(wgd);
 
         $el.fadeOut($.proxy(function(){
@@ -562,7 +818,8 @@
     * @return {Array} Returns the instance of the Gridster class.
     */
     fn.register_widget = function($el) {
-        var widget_grid_data = {
+
+        var wgd = {
             'col': parseInt($el.attr('data-col'), 10),
             'row': parseInt($el.attr('data-row'), 10),
             'size_x': parseInt($el.attr('data-sizex'), 10),
@@ -570,13 +827,27 @@
             'el': $el
         };
 
+        if (this.options.avoid_overlapped_widgets &&
+            !this.can_move_to(
+             { size_x: wgd.size_x, size_y: wgd.size_y }, wgd.col, wgd.row)
+        ) {
+            wgd = this.next_position(wgd.size_x, wgd.size_y);
+            wgd.el = $el;
+            $el.attr({
+                'data-col': wgd.col,
+                'data-row': wgd.row,
+                'data-sizex': wgd.size_x,
+                'data-sizey': wgd.size_y
+            });
+        };
+
         // attach Coord object to player data-coord attribute
         $el.data('coords', $el.coords());
 
         // Extend Coord object with grid position info
-        $el.data('coords').grid = widget_grid_data;
+        $el.data('coords').grid = wgd;
 
-        this.add_to_gridmap(widget_grid_data, $el);
+        this.add_to_gridmap(wgd, $el);
         this.widgets.push($el);
         return this;
     };
@@ -647,8 +918,10 @@
     fn.draggable = function() {
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
-            // containment : this.$wrapper,
+            offset_left: this.options.widget_margins[0],
+            items: '.gs_w',
             start: function(event, ui) {
+                self.$widgets.filter('.player-revert').removeClass('player-revert');
                 self.$player = $(this);
                 self.$helper = self.options.draggable.helper === 'clone' ?
                     $(ui.helper) : self.$player;
@@ -658,16 +931,16 @@
                 self.$el.trigger('gridster:dragstart');
             },
             stop: function(event, ui) {
-                self.on_stop_drag.call(self, ui);
+                self.on_stop_drag.call(self, event, ui);
                 self.$el.trigger('gridster:dragstop');
             },
-            drag: throttle(function(event, ui) {
+            drag: function(event, ui) {
                 self.on_drag.call(self, event, ui);
                 self.$el.trigger('gridster:drag');
-            }, 100, true)
+            }
           });
 
-        this.$widgets.draggable(draggable_options);
+        this.drag_api = this.$el.draggable(draggable_options).data('draggable');
         return this;
     };
 
@@ -681,8 +954,10 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_start_drag = function(event, ui) {
+
+        this.$helper.add(this.$player).add(this.$wrapper).addClass('dragging');
+
         this.$player.addClass('player');
-        this.$wrapper.addClass('dragging');
         this.player_grid_data = this.$player.coords().grid;
         this.placeholder_grid_data = $.extend({}, this.player_grid_data);
 
@@ -701,8 +976,9 @@
         this.last_cols = [];
         this.last_rows = [];
 
+
         // see jquery.collision.js
-        this.drag_api = this.$helper.collision(
+        this.collision_api = this.$helper.collision(
             colliders, this.options.collision);
 
         this.$preview_holder = $('<li />', {
@@ -730,7 +1006,11 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_drag = function(event, ui) {
-        this.colliders_data = this.drag_api.get_closest_colliders();
+        var abs_offset = {
+            left: ui.position.left + this.baseX,
+            top: ui.position.top + this.baseY
+        }
+        this.colliders_data = this.collision_api.get_closest_colliders(abs_offset);
 
         this.on_overlapped_column_change(
             this.on_start_overlapping_column,
@@ -763,8 +1043,11 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_stop_drag = function(event, ui) {
-        this.$wrapper.removeClass('dragging');
-        this.colliders_data = this.drag_api.get_closest_colliders();
+        this.$helper.add(this.$player).add(this.$wrapper).removeClass('dragging');
+
+        ui.position.left = ui.position.left + this.baseX;
+        ui.position.top = ui.position.top + this.baseY;
+        this.colliders_data = this.collision_api.get_closest_colliders(ui.position);
 
         this.on_overlapped_column_change(
             this.on_start_overlapping_column,
@@ -776,13 +1059,14 @@
             this.on_stop_overlapping_row
         );
 
-        this.$player.add(this.$helper).attr({
+        this.$player
+        .addClass('player-revert').removeClass('player').attr({
             'data-col': this.placeholder_grid_data.col,
             'data-row': this.placeholder_grid_data.row
         }).css({
             'left': '',
             'top': ''
-        }).removeClass('player');
+        });
 
         this.$changed = this.$changed.add(this.$player);
 
@@ -1276,11 +1560,20 @@
                 size_y: phgd.size_y,
                 size_x: phgd.size_x
             });
+
+        //Prevents widgets go out of the grid
+        var right_col = (col + phgd.size_x - 1);
+        if (right_col > this.cols) {
+            col = col - (right_col - col);
+        };
+
         var moved_down = this.placeholder_grid_data.row < row;
         var changed_column = this.placeholder_grid_data.col !== col;
 
         this.placeholder_grid_data.col = col;
         this.placeholder_grid_data.row = row;
+
+
 
         this.cells_occupied_by_placeholder = this.get_cells_occupied(
             this.placeholder_grid_data);
@@ -1631,24 +1924,28 @@
         var can_go_up = true;
         y_units || (y_units = 1);
 
-        if (!this.can_go_up($widget)) { return false; } //break;
+        // if (!this.can_go_up($widget)) { return false; } //break;
+        console.log($widget, y_units);
 
         this.for_each_column_occupied(el_grid_data, function(col){
             // can_go_up
             if ($.inArray($widget, moved) === -1) {
-                var widget_grid_data = $widget.coords().grid;
+                var widget_grid_data = $.extend({}, el_grid_data);
                 var next_row = actual_row - y_units;
                 next_row = this.can_go_up_to_row(widget_grid_data, col, next_row);
-                if (!next_row) {
+                console.log('can_go_up_to_row?', $widget, y_units, next_row);
+                if (next_row === false) {
                     return true;
                 }
 
                 var $next_widgets = this.widgets_below($widget);
+                console.log('$next_widgets', $next_widgets);
 
                 this.remove_from_gridmap(widget_grid_data);
                 widget_grid_data.row = next_row;
                 this.add_to_gridmap(widget_grid_data);
-                $widget.attr('data-row', widget_grid_data.row);
+                console.log($widget, 'next-row', next_row);
+                $widget.attr('data-row', next_row);
                 this.$changed = this.$changed.add($widget);
 
                 moved.push($widget);
@@ -1733,9 +2030,13 @@
 
             r = actual_row;
             while (r--){
-                if (this.is_empty(tcol, r) &&
-                    !this.is_placeholder_in(tcol, r)
+                var $w = this.is_widget(tcol, r);
+                console.log(tcol, r, $w, this.is_empty(tcol, r));
+                if ($w && $w.is(widget_grid_data.el) ||
+                    (this.is_empty(tcol, r) &&
+                    !this.is_placeholder_in(tcol, r))
                 ) {
+                    console.log('push', tcol, r);
                     urc[tcol].push(r);
                 }else{
                     break;
@@ -1748,6 +2049,8 @@
             }
 
         });
+
+        console.log('urc', urc);
 
         if (!result) { return false; }
 
@@ -1865,7 +2168,8 @@
         if (initial_row === 1) { return false; }
 
         this.for_each_column_occupied(el_grid_data, function(col){
-            if (this.is_occupied(col, prev_row) ||
+            if (!$el.is(this.is_widget(col, prev_row)) &&
+                this.is_occupied(col, prev_row) ||
                 this.is_player(col, prev_row) ||
                 this.is_placeholder_in(col, prev_row)
             ) {
@@ -1901,6 +2205,12 @@
             row: row
         };
         var result = true;
+
+        //Prevents widgets go out of the grid
+        var right_col = col + widget_grid_data.size_x - 1;
+        if (right_col > this.cols) {
+            return false;
+        };
 
         this.for_each_cell_occupied(future_wd, function(tcol, trow){
             var $tw = this.is_widget(tcol, trow);
@@ -2146,6 +2456,33 @@
     };
 
 
+
+    fn.get_widgets_from = function(col, row) {
+        var ga = this.gridmap;
+        var $widgets = $();
+
+        if (col) {
+            $widgets = $widgets.add(
+                this.$widgets.filter(function(){
+                    var tcol = $(this).attr('data-col');
+                    return (tcol == col || tcol > col);
+                })
+            );
+        };
+
+        if (row) {
+            $widgets = $widgets.add(
+                this.$widgets.filter(function(){
+                    var trow = $(this).attr('data-row');
+                    return (trow == row || trow > row);
+                })
+            );
+        };
+
+        return $widgets;
+    }
+
+
     /**
     * Set the current height of the parent grid.
     *
@@ -2168,7 +2505,7 @@
     * @param {Number} cols Number of rows.
     * @return {Object} Returns the instance of the Gridster class.
     */
-    fn.generate_stylesheet = function(rows, cols) {
+    fn.generate_stylesheet = function(opts) {
         var styles = '';
         var extra_cells = 10;
         var max_size_y = 6;
@@ -2176,28 +2513,50 @@
         var i;
         var rules;
 
+        opts || (opts = {});
+        opts.cols || (opts.cols = this.cols);
+        opts.rows || (opts.rows = this.rows);
+        opts.namespace || (opts.namespace = '');
+        opts.widget_base_dimensions ||
+            (opts.widget_base_dimensions = this.options.widget_base_dimensions);
+        opts.widget_margins ||
+            (opts.widget_margins = this.options.widget_margins);
+        opts.min_widget_width = (opts.widget_margins[0] * 2) +
+            opts.widget_base_dimensions[0];
+        opts.min_widget_height = (opts.widget_margins[1] * 2) +
+            opts.widget_base_dimensions[1];
+
+        var serialized_opts = $.param(opts);
+        // don't duplicate stylesheets for the same configuration
+        if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
+            return false;
+        };
+
+        Gridster.generated_stylesheets.push(serialized_opts);
+
         /* generate CSS styles for cols */
-        for (i = cols + extra_cells; i >= 0; i--) {
-            styles += '[data-col="'+ (i + 1) +'"] { left: ' +
-                      (i * this.min_widget_width) +
+        for (i = opts.cols + extra_cells; i >= 0; i--) {
+            styles += opts.namespace + ' [data-col="'+ (i + 1) +'"] { left: ' +
+                        ((i * opts.widget_base_dimensions[0]) + (i *opts.widget_margins[0]) + ((i+1) * opts.widget_margins[0])) +
                       'px;} ';
         }
 
         /* generate CSS styles for rows */
-        for (i = rows + extra_cells; i >= 0; i--) {
-            styles += '[data-row="' + (i + 1) + '"] { top: ' +
-                      (i * this.min_widget_height) + 'px;} ';
+        for (i = opts.rows + extra_cells; i >= 0; i--) {
+            styles += opts.namespace + ' [data-row="' + (i + 1) + '"] { top: ' +
+                      ((i * opts.widget_base_dimensions[1]) + (i * opts.widget_margins[1]) + ((i+1) * opts.widget_margins[1]) ) +
+                      'px;} ';
         }
 
 
         for (var y = 1; y < max_size_y; y++) {
-            styles += '[data-sizey="' + (y) + '"] { height: ' +
-                      (y * this.options.widget_base_dimensions[1] + (y-1)*(this.options.widget_margins[1]*2)) + 'px;}';
+            styles += opts.namespace + ' [data-sizey="' + (y) + '"] { height: ' +
+                      (y * opts.widget_base_dimensions[1] + (y-1)*(opts.widget_margins[1]*2)) + 'px;}';
         }
 
         for (var x = 1; x < max_size_x; x++) {
-            styles += '[data-sizex="' + (x) + '"] { width: ' +
-                      (x * this.options.widget_base_dimensions[0] + (x-1)*(this.options.widget_margins[0]*2)) + 'px;}';
+            styles += opts.namespace + ' [data-sizex="' + (x) + '"] { width: ' +
+                    (x * opts.widget_base_dimensions[0] + (x-1)*(opts.widget_margins[0]*2)) + 'px;}';
         }
 
         return this.add_style_tag(styles);
@@ -2328,19 +2687,19 @@
         var min_cols = Math.max.apply(null, actual_cols);
         var min_rows = Math.max.apply(null, actual_rows);
 
-        cols = Math.max(min_cols, cols, this.options.min_cols);
-        rows = Math.max(min_rows, rows, this.options.min_rows);
+        this.cols = Math.max(min_cols, cols, this.options.min_cols);
+        this.rows = Math.max(min_rows, rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
 
         if (this.options.autogenerate_stylesheet) {
-            this.generate_stylesheet(rows, cols);
+            this.generate_stylesheet();
         }
 
         /* more faux rows that needed are created so that there are cells
          * where drag beyond the limits */
-        return this.generate_faux_grid(rows, cols);
+        return this.generate_faux_grid(this.rows, this.cols);
     };
 
 

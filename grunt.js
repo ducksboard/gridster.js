@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     concat: {
       dist_js: {
-        src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
+        src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       },
       dist_css: {
