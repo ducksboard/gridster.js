@@ -1,45 +1,52 @@
 .gridster {
-  position:relative;
+    position:relative;
 }
 
 .gridster > * {
-  margin: 0 auto;
-  -webkit-transition: height .4s;
-  -moz-transition: height .4s;
-  -o-transition: height .4s;
-  -ms-transition: height .4s;
-  transition: height .4s;
+    margin: 0 auto;
+    -webkit-transition: height .4s;
+    -moz-transition: height .4s;
+    -o-transition: height .4s;
+    -ms-transition: height .4s;
+    transition: height .4s;
 }
 
 .gridster .gs_w{
-  z-index: 2;
-  position: absolute;
-  background: rgba(0,0,0,.23);
-}
-
-.ready .gs_w:not(.player):not(.preview-holder):not(.ui-draggable-dragging) {
-  -webkit-transition: left .3s, top .3s;
-  -moz-transition: left .3s, top .3s;
-  -o-transition: left .3s, top .3s;
-}
-
-.gridster.dragging .ui-sortable-helper {
-  z-index: 9;
-}
-
-.gridster .preview-holder {
-    border: 2px dashed #333;
-    border-radius: 5px;
-    z-index: 1;
-    background:#FFF;
+    z-index: 2;
     position: absolute;
 }
 
-.gridster .ui-draggable-dragging {
-    z-index: 10!important;
+.ready .gs_w:not(.preview-holder) {
+    -webkit-transition: opacity .3s, left .3s, top .3s;
+    -moz-transition: opacity .3s, left .3s, top .3s;
+    -o-transition: opacity .3s, left .3s, top .3s;
+    transition: opacity .3s, left .3s, top .3s;
 }
 
- /*uncomment this if you draggable.helper option to "clone"*/
+.gridster .preview-holder {
+    z-index: 1;
+    position: absolute;
+    background-color: #fff;
+    border-color: #fff;
+    opacity: 0.3;
+}
+
+.gridster .player-revert {
+    z-index: 10!important;
+    -webkit-transition: left .3s, top .3s!important;
+    -moz-transition: left .3s, top .3s!important;
+    -o-transition: left .3s, top .3s!important;
+    transition:  left .3s, top .3s!important;
+}
+
+.gridster .dragging {
+    -webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+
+/* Uncomment this if you set helper : "clone" in draggable options */
 /*.gridster .player {
-  display: none!important;
+  opacity:0;
 }*/
