@@ -16,6 +16,7 @@
         min_cols: 1,
         min_rows: 10,
         autogenerate_stylesheet: true,
+        avoid_overlapped_widgets: true,
         serialize_params: function($w, wgd) {
             return {
                 col: wgd.col,
@@ -23,47 +24,9 @@
             };
         },
         collision: {},
-        draggable: {}
-    };
-
-
-    /* Debounce and throttle functions taken from underscore.js */
-    var debounce = function(func, wait, immediate) {
-        var timeout;
-        return function() {
-          var context = this, args = arguments;
-          var later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-          };
-          if (immediate && !timeout) func.apply(context, args);
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-        };
-    };
-
-
-    var throttle = function(func, wait) {
-        var context, args, timeout, throttling, more, result;
-        var whenDone = debounce(
-            function(){ more = throttling = false; }, wait, true);
-        return function() {
-          context = this; args = arguments;
-          var later = function() {
-            timeout = null;
-            if (more) func.apply(context, args);
-            whenDone();
-          };
-          if (!timeout) timeout = setTimeout(later, wait);
-          if (throttling) {
-            more = true;
-          } else {
-            result = func.apply(context, args);
-          }
-          whenDone();
-          throttling = true;
-          return result;
-        };
+        draggable: {
+            distance: 4
+        }
     };
 
 
@@ -123,6 +86,8 @@
       this.init();
     }
 
+    Gridster.generated_stylesheets = [];
+
     var fn = Gridster.prototype;
 
     fn.init = function() {
@@ -138,13 +103,37 @@
 
 
     /**
+    * Disable dragging.
+    *
+    * @method enable
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.disable = function(){
+        this.drag_api.disable();
+        return this;
+    }
+
+
+    /**
+    * Enable dragging.
+    *
+    * @method enable
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.enable = function(){
+        this.drag_api.enable();
+        return this;
+    }
+
+
+    /**
     * Add a new widget to the grid.
     *
     * @method add_widget
     * @param {String} html The string representing the HTML of the widget.
     * @param {Number} size_x The nº of rows the widget occupies horizontally.
     * @param {Number} size_y The nº of columns the widget occupies vertically.
-    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing
+    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     */
     fn.add_widget = function(html, size_x, size_y) {
@@ -161,12 +150,9 @@
 
         this.register_widget($w);
 
-        this.$widgets.draggable('destroy');
-        this.draggable();
-
         this.set_dom_grid_height();
 
-        $w.fadeIn();
+        return $w.fadeIn();
     };
 
 
@@ -284,7 +270,8 @@
     * @return {Array} Returns the instance of the Gridster class.
     */
     fn.register_widget = function($el) {
-        var widget_grid_data = {
+
+        var wgd = {
             'col': parseInt($el.attr('data-col'), 10),
             'row': parseInt($el.attr('data-row'), 10),
             'size_x': parseInt($el.attr('data-sizex'), 10),
@@ -292,13 +279,27 @@
             'el': $el
         };
 
+        if (this.options.avoid_overlapped_widgets &&
+            !this.can_move_to(
+             { size_x: wgd.size_x, size_y: wgd.size_y }, wgd.col, wgd.row)
+        ) {
+            wgd = this.next_position(wgd.size_x, wgd.size_y);
+            wgd.el = $el;
+            $el.attr({
+                'data-col': wgd.col,
+                'data-row': wgd.row,
+                'data-sizex': wgd.size_x,
+                'data-sizey': wgd.size_y
+            });
+        };
+
         // attach Coord object to player data-coord attribute
         $el.data('coords', $el.coords());
 
         // Extend Coord object with grid position info
-        $el.data('coords').grid = widget_grid_data;
+        $el.data('coords').grid = wgd;
 
-        this.add_to_gridmap(widget_grid_data, $el);
+        this.add_to_gridmap(wgd, $el);
         this.widgets.push($el);
         return this;
     };
@@ -369,8 +370,10 @@
     fn.draggable = function() {
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
-            // containment : this.$wrapper,
+            offset_left: this.options.widget_margins[0],
+            items: '.gs_w',
             start: function(event, ui) {
+                self.$widgets.filter('.player-revert').removeClass('player-revert');
                 self.$player = $(this);
                 self.$helper = self.options.draggable.helper === 'clone' ?
                     $(ui.helper) : self.$player;
@@ -380,16 +383,16 @@
                 self.$el.trigger('gridster:dragstart');
             },
             stop: function(event, ui) {
-                self.on_stop_drag.call(self, ui);
+                self.on_stop_drag.call(self, event, ui);
                 self.$el.trigger('gridster:dragstop');
             },
-            drag: throttle(function(event, ui) {
+            drag: function(event, ui) {
                 self.on_drag.call(self, event, ui);
                 self.$el.trigger('gridster:drag');
-            }, 100, true)
+            }
           });
 
-        this.$widgets.draggable(draggable_options);
+        this.drag_api = this.$el.draggable(draggable_options).data('draggable');
         return this;
     };
 
@@ -403,8 +406,10 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_start_drag = function(event, ui) {
+
+        this.$helper.add(this.$player).add(this.$wrapper).addClass('dragging');
+
         this.$player.addClass('player');
-        this.$wrapper.addClass('dragging');
         this.player_grid_data = this.$player.coords().grid;
         this.placeholder_grid_data = $.extend({}, this.player_grid_data);
 
@@ -423,8 +428,9 @@
         this.last_cols = [];
         this.last_rows = [];
 
+
         // see jquery.collision.js
-        this.drag_api = this.$helper.collision(
+        this.collision_api = this.$helper.collision(
             colliders, this.options.collision);
 
         this.$preview_holder = $('<li />', {
@@ -452,7 +458,11 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_drag = function(event, ui) {
-        this.colliders_data = this.drag_api.get_closest_colliders();
+        var abs_offset = {
+            left: ui.position.left + this.baseX,
+            top: ui.position.top + this.baseY
+        }
+        this.colliders_data = this.collision_api.get_closest_colliders(abs_offset);
 
         this.on_overlapped_column_change(
             this.on_start_overlapping_column,
@@ -485,8 +495,11 @@
     *  See http://jqueryui.com/demos/draggable/ for more info.
     */
     fn.on_stop_drag = function(event, ui) {
-        this.$wrapper.removeClass('dragging');
-        this.colliders_data = this.drag_api.get_closest_colliders();
+        this.$helper.add(this.$player).add(this.$wrapper).removeClass('dragging');
+
+        ui.position.left = ui.position.left + this.baseX;
+        ui.position.top = ui.position.top + this.baseY;
+        this.colliders_data = this.collision_api.get_closest_colliders(ui.position);
 
         this.on_overlapped_column_change(
             this.on_start_overlapping_column,
@@ -498,13 +511,14 @@
             this.on_stop_overlapping_row
         );
 
-        this.$player.add(this.$helper).attr({
+        this.$player
+        .addClass('player-revert').removeClass('player').attr({
             'data-col': this.placeholder_grid_data.col,
             'data-row': this.placeholder_grid_data.row
         }).css({
             'left': '',
             'top': ''
-        }).removeClass('player');
+        });
 
         this.$changed = this.$changed.add(this.$player);
 
@@ -998,11 +1012,20 @@
                 size_y: phgd.size_y,
                 size_x: phgd.size_x
             });
+
+        //Prevents widgets go out of the grid
+        var right_col = (col + phgd.size_x - 1);
+        if (right_col > this.cols) {
+            col = col - (right_col - col);
+        };
+
         var moved_down = this.placeholder_grid_data.row < row;
         var changed_column = this.placeholder_grid_data.col !== col;
 
         this.placeholder_grid_data.col = col;
         this.placeholder_grid_data.row = row;
+
+
 
         this.cells_occupied_by_placeholder = this.get_cells_occupied(
             this.placeholder_grid_data);
@@ -1624,6 +1647,12 @@
         };
         var result = true;
 
+        //Prevents widgets go out of the grid
+        var right_col = col + widget_grid_data.size_x - 1;
+        if (right_col > this.cols) {
+            return false;
+        };
+
         this.for_each_cell_occupied(future_wd, function(tcol, trow){
             var $tw = this.is_widget(tcol, trow);
             if ($tw && (!widget_grid_data.el || $tw.is($w))) {
@@ -1868,6 +1897,33 @@
     };
 
 
+
+    fn.get_widgets_from = function(col, row) {
+        var ga = this.gridmap;
+        var $widgets = $();
+
+        if (col) {
+            $widgets = $widgets.add(
+                this.$widgets.filter(function(){
+                    var tcol = $(this).attr('data-col');
+                    return (tcol == col || tcol > col);
+                })
+            );
+        };
+
+        if (row) {
+            $widgets = $widgets.add(
+                this.$widgets.filter(function(){
+                    var trow = $(this).attr('data-row');
+                    return (trow == row || trow > row);
+                })
+            );
+        };
+
+        return $widgets;
+    }
+
+
     /**
     * Set the current height of the parent grid.
     *
@@ -1890,7 +1946,7 @@
     * @param {Number} cols Number of rows.
     * @return {Object} Returns the instance of the Gridster class.
     */
-    fn.generate_stylesheet = function(rows, cols) {
+    fn.generate_stylesheet = function(opts) {
         var styles = '';
         var extra_cells = 10;
         var max_size_y = 6;
@@ -1898,28 +1954,47 @@
         var i;
         var rules;
 
+        opts || (opts = {});
+        opts.cols || (opts.cols = this.cols);
+        opts.rows || (opts.rows = this.rows);
+        opts.namespace || (opts.namespace = '');
+        opts.widget_base_dimensions || (opts.widget_base_dimensions = this.options.widget_base_dimensions);
+        opts.widget_margins || (opts.widget_margins = this.options.widget_margins);
+
+        opts.min_widget_width = (opts.widget_margins[0] * 2) + opts.widget_base_dimensions[0];
+        opts.min_widget_height = (opts.widget_margins[1] * 2) + opts.widget_base_dimensions[1];
+
+        var serialized_opts = $.param(opts);
+        // don't duplicate stylesheets for the same configuration
+        if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
+            return false;
+        };
+
+        Gridster.generated_stylesheets.push(serialized_opts);
+
         /* generate CSS styles for cols */
-        for (i = cols + extra_cells; i >= 0; i--) {
-            styles += '[data-col="'+ (i + 1) +'"] { left: ' +
-                      (i * this.min_widget_width) +
+        for (i = opts.cols + extra_cells; i >= 0; i--) {
+            styles += opts.namespace + ' [data-col="'+ (i + 1) +'"] { left: ' +
+                      ((i * opts.widget_base_dimensions[0]) + (i *opts.widget_margins[0] ) + ((i+1) * opts.widget_margins[0])) +
                       'px;} ';
         }
 
         /* generate CSS styles for rows */
-        for (i = rows + extra_cells; i >= 0; i--) {
-            styles += '[data-row="' + (i + 1) + '"] { top: ' +
-                      (i * this.min_widget_height) + 'px;} ';
+        for (i = opts.rows + extra_cells; i >= 0; i--) {
+            styles += opts.namespace + ' [data-row="' + (i + 1) + '"] { top: ' +
+                      ((i * opts.widget_base_dimensions[1]) + (i * opts.widget_margins[1]) + ((i+1) * opts.widget_margins[1]) ) +
+                      'px;} ';
         }
 
 
         for (var y = 1; y < max_size_y; y++) {
-            styles += '[data-sizey="' + (y) + '"] { height: ' +
-                      (y * this.options.widget_base_dimensions[1] + (y-1)*(this.options.widget_margins[1]*2)) + 'px;}';
+            styles += opts.namespace + ' [data-sizey="' + (y) + '"] { height: ' +
+                      (y * opts.widget_base_dimensions[1] + (y-1)*(opts.widget_margins[1]*2)) + 'px;}';
         }
 
         for (var x = 1; x < max_size_x; x++) {
-            styles += '[data-sizex="' + (x) + '"] { width: ' +
-                      (x * this.options.widget_base_dimensions[0] + (x-1)*(this.options.widget_margins[0]*2)) + 'px;}';
+            styles += opts.namespace + ' [data-sizex="' + (x) + '"] { width: ' +
+                    (x * opts.widget_base_dimensions[0] + (x-1)*(opts.widget_margins[0]*2)) + 'px;}';
         }
 
         return this.add_style_tag(styles);
@@ -2050,19 +2125,19 @@
         var min_cols = Math.max.apply(null, actual_cols);
         var min_rows = Math.max.apply(null, actual_rows);
 
-        cols = Math.max(min_cols, cols, this.options.min_cols);
-        rows = Math.max(min_rows, rows, this.options.min_rows);
+        this.cols = Math.max(min_cols, cols, this.options.min_cols);
+        this.rows = Math.max(min_rows, rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
 
         if (this.options.autogenerate_stylesheet) {
-            this.generate_stylesheet(rows, cols);
+            this.generate_stylesheet();
         }
 
         /* more faux rows that needed are created so that there are cells
          * where drag beyond the limits */
-        return this.generate_faux_grid(rows, cols);
+        return this.generate_faux_grid(this.rows, this.cols);
     };
 
 
