@@ -40,10 +40,11 @@
 }
 
 .gridster .dragging {
-    -webkit-transition: none!important;
-    -moz-transition: none!important;
-    -o-transition: none!important;
-    transition: none!important;
+    z-index: 10!important;
+    -webkit-transition: all 0s !important;
+    -moz-transition: all 0s !important;
+    -o-transition: all 0s !important;
+    transition: all 0s !important;
 }
 
 /* Uncomment this if you set helper : "clone" in draggable options */
