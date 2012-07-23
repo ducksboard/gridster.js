@@ -22,8 +22,10 @@
 
 
     /**
-    * @class Draggable
+    * Basic drag implementation for DOM elements inside a container.
+    * Provide start/stop/drag callbacks.
     *
+    * @class Draggable
     * @param {HTMLElement} el The HTMLelement that contains all the widgets
     *  to be dragged.
     * @param {Object} [options] An Object with all options you want to

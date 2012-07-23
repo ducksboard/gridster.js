@@ -5,7 +5,7 @@
             "name": "src/jquery.collision.js",
             "modules": {},
             "classes": {
-                "Collision\n\nDetects collisions between a DOM element against other DOM elements or\nCoords objects.": 1
+                "Collision": 1
             },
             "fors": {},
             "namespaces": {}
@@ -14,7 +14,7 @@
             "name": "src/jquery.coords.js",
             "modules": {},
             "classes": {
-                "Coords\n\nCreates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)\nto simulate DOM elements on the screen.\nCoords is used by Gridster to create a faux grid with any DOM element can\ncollide.": 1
+                "Coords": 1
             },
             "fors": {},
             "namespaces": {}
@@ -40,16 +40,19 @@
     },
     "modules": {},
     "classes": {
-        "Collision\n\nDetects collisions between a DOM element against other DOM elements or\nCoords objects.": {
-            "name": "Collision\n\nDetects collisions between a DOM element against other DOM elements or\nCoords objects.",
-            "shortname": "Collision\n\nDetects collisions between a DOM element against other DOM elements or\nCoords objects.",
+        "Collision": {
+            "name": "Collision",
+            "shortname": "Collision",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": [],
+            "extension_for": [
+                "Gridster"
+            ],
             "file": "src/jquery.collision.js",
             "line": 19,
+            "description": "Detects collisions between a DOM element against other DOM elements or\nCoords objects.",
             "uses": [
                 "Coords"
             ],
@@ -97,16 +100,19 @@
             },
             "is_constructor": 1
         },
-        "Coords\n\nCreates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)\nto simulate DOM elements on the screen.\nCoords is used by Gridster to create a faux grid with any DOM element can\ncollide.": {
-            "name": "Coords\n\nCreates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)\nto simulate DOM elements on the screen.\nCoords is used by Gridster to create a faux grid with any DOM element can\ncollide.",
-            "shortname": "Coords\n\nCreates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)\nto simulate DOM elements on the screen.\nCoords is used by Gridster to create a faux grid with any DOM element can\ncollide.",
+        "Coords": {
+            "name": "Coords",
+            "shortname": "Coords",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": [],
+            "extension_for": [
+                "Collision"
+            ],
             "file": "src/jquery.coords.js",
             "line": 10,
+            "description": "Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)\nto simulate DOM elements on the screen.\nCoords is used by Gridster to create a faux grid with any DOM element can\ncollide.",
             "params": [
                 {
                     "name": "obj",
@@ -132,6 +138,7 @@
             ],
             "file": "src/jquery.draggable.js",
             "line": 24,
+            "description": "Basic drag implementation for DOM elements inside a container.\nProvide start/stop/drag callbacks.",
             "params": [
                 {
                     "name": "el",
@@ -270,6 +277,12 @@
                             "optional": true
                         },
                         {
+                            "name": "avoid_overlapped_widgets",
+                            "description": "Avoid that widgets loaded\n    from the DOM can be overlapped. It is helpful if the positions were\n    bad stored in the database or if there was any conflict.",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
                             "name": "serialize_params",
                             "description": "Return the data you want\n    for each widget in the serialization. Two arguments are passed:\n    `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid\n    coords object (`col`, `row`, `size_x`, `size_y`).",
                             "type": "Function",
@@ -288,12 +301,6 @@
                             "optional": true
                         }
                     ]
-                },
-                {
-                    "name": "avoid_overlapped_widgets",
-                    "description": "Avoid that widgets loaded\n    from the DOM can be overlapped. It is helpful if the positions were\n    bad stored in the database or if there was any conflict.",
-                    "type": "Boolean",
-                    "optional": true
                 }
             ],
             "is_constructor": 1

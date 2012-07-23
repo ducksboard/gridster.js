@@ -4,13 +4,12 @@
 
 ;(function($, window, document, undefined){
     /**
-    * @class Coords
-    *
     * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
     * to simulate DOM elements on the screen.
     * Coords is used by Gridster to create a faux grid with any DOM element can
     * collide.
     *
+    * @class Coords
     * @param {HTMLElement|Object} obj The jQuery HTMLElement or a object with: left,
     * top, width and height properties.
     * @return {Object} Coords instance.
@@ -115,11 +114,10 @@
 
 
     /**
-    * @class Collision
-    *
     * Detects collisions between a DOM element against other DOM elements or
     * Coords objects.
     *
+    * @class Collision
     * @uses Coords
     * @param {HTMLElement} el The jQuery wrapped HTMLElement.
     * @param {HTMLElement|Array} colliders Can be a jQuery collection
@@ -380,8 +378,10 @@
 
 
     /**
-    * @class Draggable
+    * Basic drag implementation for DOM elements inside a container.
+    * Provide start/stop/drag callbacks.
     *
+    * @class Draggable
     * @param {HTMLElement} el The HTMLelement that contains all the widgets
     *  to be dragged.
     * @param {Object} [options] An Object with all options you want to
@@ -657,7 +657,7 @@
     *     `<head>` of the document. You can set this to false, and write
     *     your own CSS targeting rows and cols via data-attributes like so:
     *     `[data-col="1"] { left: 10px; }`
-    *    @param {Boolean} [avoid_overlapped_widgets] Avoid that widgets loaded
+    *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
     *     from the DOM can be overlapped. It is helpful if the positions were
     *     bad stored in the database or if there was any conflict.
     *    @param {Function} [options.serialize_params] Return the data you want

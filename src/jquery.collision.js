@@ -17,11 +17,10 @@
 
 
     /**
-    * @class Collision
-    *
     * Detects collisions between a DOM element against other DOM elements or
     * Coords objects.
     *
+    * @class Collision
     * @uses Coords
     * @param {HTMLElement} el The jQuery wrapped HTMLElement.
     * @param {HTMLElement|Array} colliders Can be a jQuery collection

@@ -58,7 +58,7 @@
     *     `<head>` of the document. You can set this to false, and write
     *     your own CSS targeting rows and cols via data-attributes like so:
     *     `[data-col="1"] { left: 10px; }`
-    *    @param {Boolean} [avoid_overlapped_widgets] Avoid that widgets loaded
+    *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
     *     from the DOM can be overlapped. It is helpful if the positions were
     *     bad stored in the database or if there was any conflict.
     *    @param {Function} [options.serialize_params] Return the data you want
