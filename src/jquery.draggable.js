@@ -12,10 +12,10 @@
         items: '.gs_w',
         distance: 1,
         limit: true,
-        offset_left: 0,
-        drag: function(e){},
-        start : function(e, ui){},
-        stop : function(e){}
+        offset_left: 0
+        // ,drag: function(e){},
+        // start : function(e, ui){},
+        // stop : function(e){}
     };
 
     var $body = $(document.body);
