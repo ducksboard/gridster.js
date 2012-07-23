@@ -8,10 +8,16 @@
 
 ;(function($, window, document, undefined){
     /**
-    * Coords
-    *
     * @class Coords
-    * @param {HTMLElement|Object} obj HTMLElement or a literal Object with the left, top, width and height properties.
+    *
+    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+    * to simulate DOM elements on the screen.
+    * Coords is used by Gridster to create a faux grid with any DOM element can
+    * collide.
+    *
+    * @param {HTMLElement|Object} obj The jQuery HTMLElement or a object with: left,
+    * top, width and height properties.
+    * @return {Object} Coords instance.
     * @constructor
     */
     function Coords(obj) {
@@ -27,7 +33,9 @@
         return this;
     }
 
+
     var fn = Coords.prototype;
+
 
     fn.init = function(){
         this.set();
@@ -85,6 +93,7 @@
     fn.get = function(){
         return this.coords;
     };
+
 
     //jQuery adapter
     $.fn.coords = function() {
