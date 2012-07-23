@@ -109,6 +109,7 @@
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.disable = function(){
+        this.$wrapper.find('.player-revert').removeClass('player-revert');
         this.drag_api.disable();
         return this;
     }
