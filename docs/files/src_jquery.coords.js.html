@@ -42,9 +42,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="..&#x2F;classes/Collision.html">Collision</a></li>
+                <li><a href="..&#x2F;classes/Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects..html">Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects.</a></li>
             
-                <li><a href="..&#x2F;classes/Coords.html">Coords</a></li>
+                <li><a href="..&#x2F;classes/Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide..html">Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide.</a></li>
             
                 <li><a href="..&#x2F;classes/Draggable.html">Draggable</a></li>
             
@@ -103,10 +119,16 @@
 
 ;(function($, window, document, undefined){
     &#x2F;**
-    * Coords
-    *
     * @class Coords
-    * @param {HTMLElement|Object} obj HTMLElement or a literal Object with the left, top, width and height properties.
+    *
+    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+    * to simulate DOM elements on the screen.
+    * Coords is used by Gridster to create a faux grid with any DOM element can
+    * collide.
+    *
+    * @param {HTMLElement|Object} obj The jQuery HTMLElement or a object with: left,
+    * top, width and height properties.
+    * @return {Object} Coords instance.
     * @constructor
     *&#x2F;
     function Coords(obj) {
@@ -122,7 +144,9 @@
         return this;
     }
 
+
     var fn = Coords.prototype;
+
 
     fn.init = function(){
         this.set();
@@ -180,6 +204,7 @@
     fn.get = function(){
         return this.coords;
     };
+
 
     &#x2F;&#x2F;jQuery adapter
     $.fn.coords = function() {

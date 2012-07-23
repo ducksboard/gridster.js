@@ -42,9 +42,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="..&#x2F;classes/Collision.html">Collision</a></li>
+                <li><a href="..&#x2F;classes/Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects..html">Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects.</a></li>
             
-                <li><a href="..&#x2F;classes/Coords.html">Coords</a></li>
+                <li><a href="..&#x2F;classes/Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide..html">Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide.</a></li>
             
                 <li><a href="..&#x2F;classes/Draggable.html">Draggable</a></li>
             
@@ -109,7 +125,7 @@
 
 
 <div class="box intro">
-    <p>Draggable</p>
+    
 </div>
 
 
@@ -119,9 +135,29 @@
     <h3 class="name"><code>Draggable</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>el</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -162,7 +198,170 @@
     </div>
 
     
+        <div class="params">
+            <h4>Parameters:</h4>
 
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">el</code>
+                        <span class="type">HTMLElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The HTMLelement that contains all the widgets
+ to be dragged.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An Object with all options you want to
+       overwrite:</p>
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[items]</code>
+                                    <span class="type">HTMLElement | String</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Define who will
+    be the draggable items. Can be a CSS Selector String or a
+    collection of HTMLElements.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[distance]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Distance in pixels after mousedown
+    the mouse must move before dragging should start.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[limit]</code>
+                                    <span class="type">Boolean</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Constrains dragging to the width of
+    the container</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[offset_left]</code>
+                                    <span class="type">Offset_left</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Offset added to the item
+    that is being dragged.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[drag]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Executes a callback when the mouse is
+    moved during the dragging.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[start]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Executes a callback when the drag
+    starts.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[stop]</code>
+                                    <span class="type">Number</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Executes a callback when the drag stops.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    Returns <code>el</code>.
+                
+            </div>
+        </div>
     
 
     

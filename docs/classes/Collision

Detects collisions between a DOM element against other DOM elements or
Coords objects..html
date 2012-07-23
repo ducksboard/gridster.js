@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Collision</title>
+    <title>Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects.</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -42,9 +45,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="..&#x2F;classes/Collision.html">Collision</a></li>
+                <li><a href="..&#x2F;classes/Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects..html">Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects.</a></li>
             
-                <li><a href="..&#x2F;classes/Coords.html">Coords</a></li>
+                <li><a href="..&#x2F;classes/Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide..html">Coords
+
+Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+to simulate DOM elements on the screen.
+Coords is used by Gridster to create a faux grid with any DOM element can
+collide.</a></li>
             
                 <li><a href="..&#x2F;classes/Draggable.html">Draggable</a></li>
             
@@ -89,7 +108,10 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Collision Class</h1>
+                        <h1>Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects. Class</h1>
 <div class="box meta">
     
         <div class="uses">
@@ -106,7 +128,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_jquery.collision.js.html#l22"><code>src&#x2F;jquery.collision.js:22</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_jquery.collision.js.html#l19"><code>src&#x2F;jquery.collision.js:19</code></a>
         </div>
     
 
@@ -118,14 +140,20 @@
 
 
 <div class="box intro">
-    <p>Collision</p>
+    
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Collision" class="method item">
-    <h3 class="name"><code>Collision</code></h3>
+        <div id="method_Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects." class="method item">
+    <h3 class="name"><code>Collision
+
+Detects collisions between a DOM element against other DOM elements or
+Coords objects.</code></h3>
 
     
         <div class="args">
@@ -133,7 +161,7 @@
             
                 <li class="arg">
                     
-                        <code>element</code>
+                        <code>el</code>
                     
                 </li>
             
@@ -182,7 +210,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.collision.js.html#l22"><code>src&#x2F;jquery.collision.js:22</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.collision.js.html#l19"><code>src&#x2F;jquery.collision.js:19</code></a>
         
         </p>
 
@@ -204,14 +232,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">element</code>
+                        <code class="param-name">el</code>
                         <span class="type">HTMLElement</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>An Attribute name or object property path</p>
+                        <p>The jQuery wrapped HTMLElement.</p>
                     </div>
 
                     
@@ -220,13 +248,14 @@
                 <li class="param">
                     
                         <code class="param-name">colliders</code>
-                        <span class="type">String | HTMLElement | Array</span>
+                        <span class="type">HTMLElement | Array</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>An Attribute name or object property path</p>
+                        <p>Can be a jQuery collection
+ of HTMLElements or an Array of Coords instances.</p>
                     </div>
 
                     
@@ -242,25 +271,12 @@
                     
 
                     <div class="param-description">
-                        <p>An Attribute name or object property path</p>
+                        <p>An Object with all options you want to
+       overwrite:</p>
                     </div>
 
                     
                         <ul class="params-list">
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name optional">[on_overlap]</code>
-                                    <span class="type">Function</span>
-                                    <span class="flag optional" title="This parameter is optional.">optional</span>
-                                
-
-                                <div class="param-description">
-                                    <p>An Attribute name or object property path</p>
-                                </div>
-
-                                
-                            </li>
                             
                             <li class="param">
                                 
@@ -270,7 +286,8 @@
                                 
 
                                 <div class="param-description">
-                                    <p>An Attribute name or object property path</p>
+                                    <p>Executes a function the first
+   time each <code>collider</code> is overlapped.</p>
                                 </div>
 
                                 
@@ -284,7 +301,23 @@
                                 
 
                                 <div class="param-description">
-                                    <p>An Attribute name or object property path</p>
+                                    <p>Executes a function when a
+   <code>collider</code> is no longer collided.</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[on_overlap]</code>
+                                    <span class="type">Function</span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Executes a function when the
+mouse is moved during the collision.</p>
                                 </div>
 
                                 
@@ -307,7 +340,7 @@
                     
                         <span class="type">Object</span>:
                     
-                    dasdasdadasd
+                    Collision instance.
                 
             </div>
         </div>
