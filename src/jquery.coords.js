@@ -8,7 +8,7 @@
 
 ;(function($, window, document, undefined){
     /**
-    * Coords description
+    * Coords
     *
     * @class Coords
     * @param {HTMLElement|Object} obj HTMLElement or a literal Object with the left, top, width and height properties.
@@ -34,12 +34,20 @@
         this.original_coords = this.get();
     };
 
-    fn.set = function() {
+
+    fn.set = function(update, not_update_offsets) {
         var el = this.el;
-        if (el) {
-            this.data = el.offset();
-            this.data.width || (this.data.width = el.width());
-            this.data.height || (this.data.height = el.height());
+
+        if (el && !update) {
+            this.data = {} || el.offset();
+            this.data.width = el.width();
+            this.data.height = el.height();
+        };
+
+        if (el && update && !not_update_offsets) {
+            var offset = el.offset();
+            this.data.top = offset.top;
+            this.data.left = offset.left;
         }
 
         var d = this.data;
@@ -57,18 +65,22 @@
         return this;
     };
 
+
     fn.update = function(data){
         if (!data && !this.el) {
             return this;
         }
 
         if (data) {
-            var new_data = $.extend(this.data, data);
+            var new_data = $.extend({}, this.data, data);
             this.data = new_data;
+            return this.set(true, true);
         }
-        this.set();
+
+        this.set(true);
         return this;
     };
+
 
     fn.get = function(){
         return this.coords;
