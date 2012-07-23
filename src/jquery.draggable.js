@@ -59,6 +59,10 @@
 
 
     fn.drag_handler = function(e) {
+        if (e.which !== 1) {
+            return false;
+        };
+
         var self = this;
         var first = true;
         this.$player = $(e.currentTarget);
