@@ -118,18 +118,18 @@
       }
     };
 
-    fn.find_collisions = function(){
+    fn.find_collisions = function(player_data_coords){
       var self = this;
       var colliders_coords = [];
       var colliders_data = [];
       var $colliders = (this.colliders || this.$colliders);
       var count = $colliders.length;
+      var player_coords = self.$element.coords().update(player_data_coords || false).get();
 
       while(count--){
         var $collider = self.$colliders ? $($colliders[count]) : $colliders[count];
-        var player_coords = self.$element.coords().update().get();
         var $collider_coords_ins = ($collider.isCoords) ?
-                $collider.update() : $collider.coords();
+                $collider : $collider.coords();
         var collider_coords = $collider_coords_ins.get();
         var overlaps = self.overlaps(player_coords, collider_coords);
 
@@ -169,8 +169,8 @@
     };
 
 
-    fn.get_closest_colliders = function(){
-      var colliders = this.find_collisions();
+    fn.get_closest_colliders = function(player_data_coords){
+      var colliders = this.find_collisions(player_data_coords);
       var min_area = 100;
       colliders.sort(function(a, b){
 
