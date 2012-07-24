@@ -162,7 +162,6 @@
 
         this.el_init_pos = this.get_actual_pos(this.$player);
         this.mouse_init_pos = this.get_mouse_pos(e);
-        this.offsetX = this.mouse_init_pos.left - this.el_init_pos.left;
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
         $body.on('mousemove.draggable', function(mme){
@@ -255,7 +254,6 @@
 
     fn.on_dragstop = function(e) {
         var offset = this.get_offset(e);
-
         this.drag_start = false;
 
         var ui = {
