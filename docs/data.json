@@ -704,7 +704,7 @@
             "line": 740,
             "description": "Sorts an Array of grid coords objects (representing the grid coords of\neach widget) placing first the empty cells upper left.",
             "itemtype": "method",
-            "name": "sort_by_row_asc",
+            "name": "sort_by_row_and_col_asc",
             "params": [
                 {
                     "name": "widgets",
@@ -723,7 +723,7 @@
             "line": 760,
             "description": "Sorts an Array of grid coords objects by column (representing the grid\ncoords of each widget) in ascending way.",
             "itemtype": "method",
-            "name": "sort_by_row_asc",
+            "name": "sort_by_col_asc",
             "params": [
                 {
                     "name": "widgets",

@@ -210,7 +210,7 @@
         this.$wrapper.find(&#x27;.player-revert&#x27;).removeClass(&#x27;player-revert&#x27;);
         this.drag_api.disable();
         return this;
-    }
+    };
 
 
     &#x2F;**
@@ -222,7 +222,7 @@
     fn.enable = function() {
         this.drag_api.enable();
         return this;
-    }
+    };
 
 
     &#x2F;**
@@ -324,7 +324,7 @@
 
             if (callback) {
                 callback.apply(this, el);
-            };
+            }
         }, this));
     };
 
@@ -393,7 +393,7 @@
                 &#x27;data-sizex&#x27;: wgd.size_x,
                 &#x27;data-sizey&#x27;: wgd.size_y
             });
-        };
+        }
 
         &#x2F;&#x2F; attach Coord object to player data-coord attribute
         $el.data(&#x27;coords&#x27;, $el.coords());
@@ -564,7 +564,7 @@
         var abs_offset = {
             left: ui.position.left + this.baseX,
             top: ui.position.top + this.baseY
-        }
+        };
 
         this.colliders_data = this.collision_api.get_closest_colliders(
             abs_offset);
@@ -836,7 +836,7 @@
     * Sorts an Array of grid coords objects (representing the grid coords of
     * each widget) placing first the empty cells upper left.
     *
-    * @method sort_by_row_asc
+    * @method sort_by_row_and_col_asc
     * @param {Array} widgets Array of grid coords objects
     * @return {Array} Returns the array sorted.
     *&#x2F;
@@ -856,7 +856,7 @@
     * Sorts an Array of grid coords objects by column (representing the grid
     * coords of each widget) in ascending way.
     *
-    * @method sort_by_row_asc
+    * @method sort_by_col_asc
     * @param {Array} widgets Array of grid coords objects
     * @return {Array} Returns the array sorted.
     *&#x2F;
@@ -1122,7 +1122,7 @@
         var right_col = (col + phgd.size_x - 1);
         if (right_col &gt; this.cols) {
             col = col - (right_col - col);
-        };
+        }
 
         var moved_down = this.placeholder_grid_data.row &lt; row;
         var changed_column = this.placeholder_grid_data.col !== col;
@@ -2021,19 +2021,19 @@
             $widgets = $widgets.add(
                 this.$widgets.filter(function() {
                     var tcol = $(this).attr(&#x27;data-col&#x27;);
-                    return (tcol == col || tcol &gt; col);
+                    return (tcol === col || tcol &gt; col);
                 })
             );
-        };
+        }
 
         if (row) {
             $widgets = $widgets.add(
                 this.$widgets.filter(function() {
                     var trow = $(this).attr(&#x27;data-row&#x27;);
-                    return (trow == row || trow &gt; row);
+                    return (trow === row || trow &gt; row);
                 })
             );
-        };
+        }
 
         return $widgets;
     }
@@ -2085,7 +2085,7 @@
         &#x2F;&#x2F; don&#x27;t duplicate stylesheets for the same configuration
         if ($.inArray(serialized_opts, Gridster.generated_stylesheets) &gt;= 0) {
             return false;
-        };
+        }
 
         Gridster.generated_stylesheets.push(serialized_opts);
 

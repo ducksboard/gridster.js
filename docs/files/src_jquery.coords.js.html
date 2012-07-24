@@ -141,10 +141,10 @@
         var el = this.el;
 
         if (el &amp;&amp; !update) {
-            this.data = {} || el.offset();
+            this.data = el.offset();
             this.data.width = el.width();
             this.data.height = el.height();
-        };
+        }
 
         if (el &amp;&amp; update &amp;&amp; !not_update_offsets) {
             var offset = el.offset();
