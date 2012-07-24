@@ -119,8 +119,8 @@
         var min_window_y = scrollTop;
         var max_window_y = min_window_y + this.window_height;
 
-        var mouse_down_zone = max_window_y - 10;
-        var mouse_up_zone = min_window_y + 10;
+        var mouse_down_zone = max_window_y - 30;
+        var mouse_up_zone = min_window_y + 20;
 
         var abs_mouse_left = offset.mouse_left;
         var abs_mouse_top = min_window_y + offset.mouse_top;
