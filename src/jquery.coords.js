@@ -46,10 +46,10 @@
         var el = this.el;
 
         if (el && !update) {
-            this.data = {} || el.offset();
+            this.data = el.offset();
             this.data.width = el.width();
             this.data.height = el.height();
-        };
+        }
 
         if (el && update && !not_update_offsets) {
             var offset = el.offset();

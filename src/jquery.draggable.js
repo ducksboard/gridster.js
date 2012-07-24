@@ -55,7 +55,7 @@
       this.player_min_left = 0 + this.options.offset_left;
 
       this.init();
-    };
+    }
 
     var fn = Draggable.prototype;
 
@@ -82,7 +82,7 @@
     fn.drag_handler = function(e) {
         if (e.which !== 1) {
             return false;
-        };
+        }
 
         var self = this;
         var first = true;
@@ -108,7 +108,7 @@
 
             if (self.is_dragging == true) {
                 throttle(self.on_dragmove.call(self, mme), 130);
-            };
+            }
 
             return false;
 
@@ -136,7 +136,7 @@
             this.options.start.call(this.$player, e, {
                 helper: this.helper ? this.$helper : this.$player
             });
-        };
+        }
         return false;
     };
 
@@ -156,12 +156,12 @@
             }else if(left < this.player_min_left) {
                 left = this.player_min_left;
             }
-        };
+        }
 
         return {
             left: left,
             top: top
-        }
+        };
     };
 
 
@@ -198,7 +198,7 @@
                 'left': offset.left,
                 'top': offset.top
             }
-        }
+        };
 
         if (this.options.stop) {
             this.options.stop.call(this.$player, e, ui);

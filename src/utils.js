@@ -1,4 +1,4 @@
-(function(window, undefined) {
+;(function(window, undefined) {
     /* Debounce and throttle functions taken from underscore.js */
     window.debounce = function(func, wait, immediate) {
         var timeout;
@@ -38,4 +38,4 @@
         };
     };
 
-})(window)
+})(window);

@@ -115,7 +115,7 @@
         this.$wrapper.find('.player-revert').removeClass('player-revert');
         this.drag_api.disable();
         return this;
-    }
+    };
 
 
     /**
@@ -127,7 +127,7 @@
     fn.enable = function() {
         this.drag_api.enable();
         return this;
-    }
+    };
 
 
     /**
@@ -229,7 +229,7 @@
 
             if (callback) {
                 callback.apply(this, el);
-            };
+            }
         }, this));
     };
 
@@ -298,7 +298,7 @@
                 'data-sizex': wgd.size_x,
                 'data-sizey': wgd.size_y
             });
-        };
+        }
 
         // attach Coord object to player data-coord attribute
         $el.data('coords', $el.coords());
@@ -469,7 +469,7 @@
         var abs_offset = {
             left: ui.position.left + this.baseX,
             top: ui.position.top + this.baseY
-        }
+        };
 
         this.colliders_data = this.collision_api.get_closest_colliders(
             abs_offset);
@@ -741,7 +741,7 @@
     * Sorts an Array of grid coords objects (representing the grid coords of
     * each widget) placing first the empty cells upper left.
     *
-    * @method sort_by_row_asc
+    * @method sort_by_row_and_col_asc
     * @param {Array} widgets Array of grid coords objects
     * @return {Array} Returns the array sorted.
     */
@@ -761,7 +761,7 @@
     * Sorts an Array of grid coords objects by column (representing the grid
     * coords of each widget) in ascending way.
     *
-    * @method sort_by_row_asc
+    * @method sort_by_col_asc
     * @param {Array} widgets Array of grid coords objects
     * @return {Array} Returns the array sorted.
     */
@@ -1027,7 +1027,7 @@
         var right_col = (col + phgd.size_x - 1);
         if (right_col > this.cols) {
             col = col - (right_col - col);
-        };
+        }
 
         var moved_down = this.placeholder_grid_data.row < row;
         var changed_column = this.placeholder_grid_data.col !== col;
@@ -1926,19 +1926,19 @@
             $widgets = $widgets.add(
                 this.$widgets.filter(function() {
                     var tcol = $(this).attr('data-col');
-                    return (tcol == col || tcol > col);
+                    return (tcol === col || tcol > col);
                 })
             );
-        };
+        }
 
         if (row) {
             $widgets = $widgets.add(
                 this.$widgets.filter(function() {
                     var trow = $(this).attr('data-row');
-                    return (trow == row || trow > row);
+                    return (trow === row || trow > row);
                 })
             );
-        };
+        }
 
         return $widgets;
     }
@@ -1990,7 +1990,7 @@
         // don't duplicate stylesheets for the same configuration
         if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
             return false;
-        };
+        }
 
         Gridster.generated_stylesheets.push(serialized_opts);
 
