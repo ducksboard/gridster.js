@@ -396,10 +396,10 @@
                 self.on_stop_drag.call(self, event, ui);
                 self.$el.trigger('gridster:dragstop');
             },
-            drag: function(event, ui) {
+            drag: throttle(function(event, ui) {
                 self.on_drag.call(self, event, ui);
                 self.$el.trigger('gridster:drag');
-            }
+            }, 130)
           });
 
         this.drag_api = this.$el.draggable(draggable_options).data('draggable');
