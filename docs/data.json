@@ -137,7 +137,7 @@
                 "Gridster"
             ],
             "file": "src/jquery.draggable.js",
-            "line": 24,
+            "line": 26,
             "description": "Basic drag implementation for DOM elements inside a container.\nProvide start/stop/drag callbacks.",
             "params": [
                 {
