@@ -200,7 +200,9 @@
 
         return {
             left: left,
-            top: top
+            top: top,
+            mouse_left: mouse_actual_pos.left,
+            mouse_top: mouse_actual_pos.top
         };
     };
 
@@ -211,28 +213,31 @@
         var scrollTop = $window.scrollTop();
         var min_window_y = scrollTop;
         var max_window_y = min_window_y + this.window_height;
-        var player_top_y = this.baseY + offset.top;
-        var player_bottom_y = player_top_y + this.player_height;
+
+        var mouse_down_zone = max_window_y - 10;
+        var mouse_up_zone = min_window_y + 10;
+
+        var abs_mouse_left = offset.mouse_left;
+        var abs_mouse_top = min_window_y + offset.mouse_top;
+
         var max_player_y = (this.doc_height - this.window_height +
             this.player_height);
 
-        if ( player_bottom_y &gt; max_window_y) {
-            var diff = player_bottom_y - max_window_y;
-            nextScrollTop = scrollTop + diff;
+        if (abs_mouse_top &gt;= mouse_down_zone) {
+            nextScrollTop = scrollTop + 10;
             if (nextScrollTop &lt; max_player_y) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset + diff;
-            };
-        }else if (player_top_y &lt; min_window_y) {
+                this.scrollOffset = this.scrollOffset + 10;
+            }
+        };
 
-            var diff = min_window_y - player_top_y;
-            nextScrollTop = scrollTop - diff;
+        if (abs_mouse_top &lt;= mouse_up_zone) {
+            nextScrollTop = scrollTop - 10;
             if (nextScrollTop &gt; 0) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset - diff;
-            };
-        }
-
+                this.scrollOffset = this.scrollOffset - 10;
+            }
+        };
     }
 
 
