@@ -12,13 +12,15 @@
         items: '.gs_w',
         distance: 1,
         limit: true,
-        offset_left: 0
+        offset_left: 0,
+        autoscroll: true
         // ,drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
     };
 
     var $body = $(document.body);
+    var $window = $(window);
 
 
     /**
@@ -53,15 +55,18 @@
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
       this.player_min_left = 0 + this.options.offset_left;
-
       this.init();
     }
 
     var fn = Draggable.prototype;
 
     fn.init = function() {
+        this.calculate_positions();
         this.$container.css('position', 'relative');
         this.enable();
+
+        $(window).bind('resize',
+            throttle($.proxy(this.calculate_positions, this), 200));
     };
 
 
@@ -79,76 +84,16 @@
     };
 
 
-    fn.drag_handler = function(e) {
-        if (e.which !== 1) {
-            return false;
-        }
-
-        var self = this;
-        var first = true;
-        this.$player = $(e.currentTarget);
-
-        this.el_init_pos = this.get_actual_pos(this.$player);
-        this.mouse_init_pos = this.get_mouse_pos(e);
-
-        $body.on('mousemove.draggable', function(mme){
-
-            var mouse_actual_pos = self.get_mouse_pos(mme);
-            var diff_x = Math.abs(mouse_actual_pos.left - self.mouse_init_pos.left);
-            var diff_y = Math.abs(mouse_actual_pos.top - self.mouse_init_pos.top);
-            if (!(diff_x > self.options.distance || diff_y > self.options.distance)) {
-                return false;
-            }
-
-            if (first) {
-                first = false;
-                self.on_dragstart.call(self, mme);
-                return false;
-            }
-
-            if (self.is_dragging == true) {
-                throttle(self.on_dragmove.call(self, mme), 130);
-            }
-
-            return false;
-
-        });
-
-        return false;
-    };
-
-
-    fn.on_dragstart = function(e) {
-        e.preventDefault();
-        this.drag_start = true;
-        this.is_dragging = true;
-        this.$container_offset = this.$container.offset();
-        if (this.options.helper === 'clone') {
-            this.$helper = this.$player.clone().appendTo(this.$container).addClass('helper');
-            this.helper = true;
-        }else{
-            this.helper = false;
-        }
-        this.el_init_offset = this.$player.offset();
-        this.player_width = this.$player.width();
-        this.player_max_left = this.$container.width() - this.player_width + this.options.offset_left;
-        if (this.options.start) {
-            this.options.start.call(this.$player, e, {
-                helper: this.helper ? this.$helper : this.$player
-            });
-        }
-        return false;
-    };
-
-
     fn.get_offset = function(e) {
         e.preventDefault();
         var mouse_actual_pos = this.get_mouse_pos(e);
-        var diff_x = mouse_actual_pos.left - this.mouse_init_pos.left;
-        var diff_y = mouse_actual_pos.top - this.mouse_init_pos.top;
+        var diff_x = Math.round(
+            mouse_actual_pos.left - this.mouse_init_pos.left);
+        var diff_y = Math.round(mouse_actual_pos.top - this.mouse_init_pos.top);
 
-        var left = this.el_init_offset.left + diff_x - this.$container_offset.left;
-        var top = this.el_init_offset.top + diff_y - this.$container_offset.top;
+        var left = Math.round(this.el_init_offset.left + diff_x - this.baseX);
+        var top = Math.round(
+            this.el_init_offset.top + diff_y - this.baseY + this.scrollOffset);
 
         if (this.options.limit) {
             if (left > this.player_max_left) {
@@ -165,8 +110,123 @@
     };
 
 
+    fn.manage_scroll = function(offset) {
+        /* scroll document */
+        var nextScrollTop;
+        var scrollTop = $window.scrollTop();
+        var min_window_y = scrollTop;
+        var max_window_y = min_window_y + this.window_height;
+        var player_top_y = this.baseY + offset.top;
+        var player_bottom_y = player_top_y + this.player_height;
+        var max_player_y = (this.doc_height - this.window_height +
+            this.player_height);
+
+        if ( player_bottom_y > max_window_y) {
+            var diff = player_bottom_y - max_window_y;
+            nextScrollTop = scrollTop + diff;
+            if (nextScrollTop < max_player_y) {
+                $window.scrollTop(nextScrollTop);
+                this.scrollOffset = this.scrollOffset + diff;
+            };
+        }else if (player_top_y < min_window_y) {
+
+            var diff = min_window_y - player_top_y;
+            nextScrollTop = scrollTop - diff;
+            if (nextScrollTop > 0) {
+                $window.scrollTop(nextScrollTop);
+                this.scrollOffset = this.scrollOffset - diff;
+            };
+        }
+
+    }
+
+
+    fn.calculate_positions = function(e) {
+        this.window_height = $window.height();
+    }
+
+
+    fn.drag_handler = function(e) {
+        if (e.which !== 1) {
+            return false;
+        }
+
+        var self = this;
+        var first = true;
+        this.$player = $(e.currentTarget);
+
+        this.el_init_pos = this.get_actual_pos(this.$player);
+        this.mouse_init_pos = this.get_mouse_pos(e);
+        this.offsetX = this.mouse_init_pos.left - this.el_init_pos.left;
+        this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
+
+        $body.on('mousemove.draggable', function(mme){
+
+            var mouse_actual_pos = self.get_mouse_pos(mme);
+            var diff_x = Math.abs(
+                mouse_actual_pos.left - self.mouse_init_pos.left);
+            var diff_y = Math.abs(
+                mouse_actual_pos.top - self.mouse_init_pos.top);
+            if (!(diff_x > self.options.distance ||
+                diff_y > self.options.distance)
+            ) {
+                return false;
+            }
+
+            if (first) {
+                first = false;
+                self.on_dragstart.call(self, mme);
+                return false;
+            }
+
+            if (self.is_dragging == true) {
+                self.on_dragmove.call(self, mme);
+            }
+
+            return false;
+
+        });
+
+        return false;
+    };
+
+
+    fn.on_dragstart = function(e) {
+        e.preventDefault();
+        this.drag_start = true;
+        this.is_dragging = true;
+        var offset = this.$container.offset();
+        this.baseX = Math.round(offset.left);
+        this.baseY = Math.round(offset.top);
+        this.doc_height = $(document).height();
+
+        if (this.options.helper === 'clone') {
+            this.$helper = this.$player.clone()
+                .appendTo(this.$container).addClass('helper');
+            this.helper = true;
+        }else{
+            this.helper = false;
+        }
+        this.scrollOffset = 0;
+        this.el_init_offset = this.$player.offset();
+        this.player_width = this.$player.width();
+        this.player_height = this.$player.height();
+        this.player_max_left = (this.$container.width() - this.player_width +
+            this.options.offset_left);
+
+        if (this.options.start) {
+            this.options.start.call(this.$player, e, {
+                helper: this.helper ? this.$helper : this.$player
+            });
+        }
+        return false;
+    };
+
+
     fn.on_dragmove = function(e) {
         var offset = this.get_offset(e);
+
+        this.options.autoscroll && this.manage_scroll(offset);
 
         (this.helper ? this.$helper : this.$player).css({
             'position': 'absolute',
@@ -213,7 +273,9 @@
 
 
     fn.enable = function(){
-        this.$container.on('mousedown.draggable', this.options.items, $.proxy(this.drag_handler, this));
+        this.$container.on('mousedown.draggable', this.options.items, $.proxy(
+            this.drag_handler, this));
+
         $body.on('mouseup.draggable', $.proxy(function(e) {
             this.is_dragging = false;
             $body.off('mousemove.draggable');
