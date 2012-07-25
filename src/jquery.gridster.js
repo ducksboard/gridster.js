@@ -228,7 +228,7 @@
             }, this));
 
             if (callback) {
-                callback.apply(this, el);
+                callback.call(this, el);
             }
         }, this));
     };
@@ -1550,7 +1550,7 @@
             diffs.push(temp_y_units);
         });
 
-        var max_diff = Math.max.apply(null, diffs);
+        var max_diff = Math.max.apply(Math, diffs);
         y_units = (y_units - max_diff);
 
         return y_units > 0 ? y_units : 0;
@@ -1907,7 +1907,7 @@
             }
         }
 
-        var highest_row = Math.max.apply(null, rows);
+        var highest_row = Math.max.apply(Math, rows);
 
         this.highest_occupied_cell = {
             col: row_in_col[highest_row],
@@ -2148,8 +2148,8 @@
             return $(this).attr('data-row');
         });
 
-        var min_cols = Math.max.apply(null, actual_cols);
-        var min_rows = Math.max.apply(null, actual_rows);
+        var min_cols = Math.max.apply(Math, actual_cols);
+        var min_rows = Math.max.apply(Math, actual_rows);
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
         this.rows = Math.max(min_rows, rows, this.options.min_rows);
