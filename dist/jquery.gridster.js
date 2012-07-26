@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-07-25
+/*! gridster.js - v0.1.0 - 2012-07-26
 * https://github.com/ducksboard/gridster.js
 * Copyright (c) 2012 ducksboard; Licensed MIT, GPL */
 
@@ -2807,10 +2807,14 @@
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr('data-col');
         });
+        //needed to pass tests with phantomjs
+        actual_cols.length || (actual_cols = [0]);
 
         var actual_rows = this.$widgets.map(function() {
             return $(this).attr('data-row');
         });
+        //needed to pass tests with phantomjs
+        actual_rows.length || (actual_rows = [0]);
 
         var min_cols = Math.max.apply(Math, actual_cols);
         var min_rows = Math.max.apply(Math, actual_rows);

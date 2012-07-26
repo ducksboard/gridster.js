@@ -323,7 +323,7 @@
             }, this));
 
             if (callback) {
-                callback.apply(this, el);
+                callback.call(this, el);
             }
         }, this));
     };
@@ -1645,7 +1645,7 @@
             diffs.push(temp_y_units);
         });
 
-        var max_diff = Math.max.apply(null, diffs);
+        var max_diff = Math.max.apply(Math, diffs);
         y_units = (y_units - max_diff);
 
         return y_units &gt; 0 ? y_units : 0;
@@ -2002,7 +2002,7 @@
             }
         }
 
-        var highest_row = Math.max.apply(null, rows);
+        var highest_row = Math.max.apply(Math, rows);
 
         this.highest_occupied_cell = {
             col: row_in_col[highest_row],
@@ -2238,13 +2238,17 @@
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr(&#x27;data-col&#x27;);
         });
+        &#x2F;&#x2F;needed to pass tests with phantomjs
+        actual_cols.length || (actual_cols = [0]);
 
         var actual_rows = this.$widgets.map(function() {
             return $(this).attr(&#x27;data-row&#x27;);
         });
+        &#x2F;&#x2F;needed to pass tests with phantomjs
+        actual_rows.length || (actual_rows = [0]);
 
-        var min_cols = Math.max.apply(null, actual_cols);
-        var min_rows = Math.max.apply(null, actual_rows);
+        var min_cols = Math.max.apply(Math, actual_cols);
+        var min_rows = Math.max.apply(Math, actual_rows);
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
         this.rows = Math.max(min_rows, rows, this.options.min_rows);
