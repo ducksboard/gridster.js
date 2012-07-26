@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         "logo": 'http://ducksboard.com/wp-content/themes/blog-theme-ducksboard/images/ducksboard.png',
         options: {
           paths: "src/",
-          outdir: "docs/"
+          outdir: "gh-pages/docs/"
         }
       }
     }
@@ -81,6 +81,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib');
 
   // Default task.
-  grunt.registerTask('default', 'lint qunit concat min mincss');
+  grunt.registerTask('default', 'lint qunit concat min mincss yuidoc');
 
 };
