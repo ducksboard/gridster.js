@@ -227,6 +227,8 @@
                 this.move_widget_up( $(widget), wgd.size_y );
             }, this));
 
+            this.set_dom_grid_height();
+
             if (callback) {
                 callback.call(this, el);
             }
