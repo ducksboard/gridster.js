@@ -6,7 +6,7 @@
 
 	<title>gridster.js</title>
 
-	<meta name="description" content="">
+	<meta name="description" content="gridster.js, a drag-and-drop multi-column jQuery grid plugin">
 	<meta name="author" content="duscksboard">
 
 
@@ -42,8 +42,9 @@
 
     <section id="intro" class="wrapper m_txt">
         <div>
-            <h2 class="heading-xl">Try it now!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.</p>
+            <h2 class="heading-xl">Plug in to the grid</h2>
+            <p>This is it, the mythical drag-and-drop multi-column grid has arrived. Gridster is a jQuery plugin that makes building intuitive draggable layouts from elements spanning multiple columns. You can dynamically add and remove elements from the grid. It is on par with sliced bread, or possibly better. Distributed under a license named after a famous school in the US. Suitable for children of all ages.</p>
+            <p>It's so sweet we like to call it drag-and-drool.</p>
         </div>
         <div class="ttr">
             <a href="https://github.com/ducksboard/gridster.js/zipball/master" class="i_download"><span>Download now</span></a>
@@ -85,28 +86,27 @@
 
             <article class="m_txt">
                 <h3 class="heading-l">Setup</h3>
-                <p>Nowadays griddable.js depends on jQuery, so you need to include it in the head of your document.</p>
 
                 <h4 class="heading-m">Include dependencies</h4>
-                <p>Download the latest release at <a href="http://jquery.com/">jQuery</a>.</p>
+                <p>Gridster is currently written as a jQuery plugin, so you need to include it in the head of the document. Download the latest release at <a href="http://jquery.com/">jQuery</a>.</p>
 
                 <script src="https://gist.github.com/3129541.js?file=gridder.html"></script>
 
                 <h4 class="heading-m">HTML Structure</h4>
-                <p>The HTML required to make gridster works. Class names and tags are customizable but is needed to follow the structure below:</p>
+                <p>Class names and tags are customizable, gridster only cares about data attributes. Use a structure like this:</p>
 
                 <script src="https://gist.github.com/3129747.js?file=gridster.html"></script>
 
-                <h4 class="heading-m">Let's go run gridster.js!</h4>
-                <p>Gridster only accepts one argument with configuration options. Take a look at the <a href="#documentation">documentation</a>.</p>
+                <h4 class="heading-m">Grid it up!</h4>
+                <p>Gridster accepts one argument, a hash of with configuration options. See the <a href="#documentation">documentation</a> for details.</p>
 
                 <script src="https://gist.github.com/3129767.js?file=gridder.js"></script>
 
             </article>
 
             <article class="m_txt">
-                <h3 class="heading-l">Playing with the API</h3>
-                <p>The API can be accesed as in most jQuery plugins via the jQuery data method like so:</p>
+                <h3 class="heading-l">Using the API</h3>
+                <p>To get hold of the API object, use the jQuery data method like so:</p>
 
                 <script src="https://gist.github.com/3129811.js?file=gridster.js"></script>
 
@@ -158,7 +158,7 @@
 
                 <div class="m_txt">
                     <h3 class="heading-m">Methods</h3>
-                    <p>The methods listed here are the most common. If this is never enough take a look to the <a href="http://gridster.net/docs/classes/Gridster.html">documentation generated from source</a>.</p>
+                    <p>These are the most commonly used methods. If you want more details, check out the <a href="http://gridster.net/docs/classes/Gridster.html">documentation generated from source</a>.</p>
                 </div>
 
                 <nav>
@@ -175,55 +175,55 @@
             <article id="options" class="m_doc_method">
                 <div class="m_txt">
                     <h3 id="widget_class_opt" class="heading-l">Options</h3>
-                    <p>gridster configuration object.</p>
+                    <p>A gridster configuration object.</p>
 
                     <h4 id="widget_selector_opt" class="heading-m">widget_selector: <em>"> li"</em></h4>
-                    <p>Define who are the widgets. Can be a CSS Selector string or a jQuery collection of HTMLElements.</p>
+                    <p>Define which elements are the widgets. Can be a CSS Selector string or a jQuery collection of HTMLElements.</p>
 
                     <h4 id="widget_margins_opt" class="heading-m">widget_margins: <em>[10, 10]</em></h4>
                     <p>Horizontal and vertical margins respectively for widgets.</p>
 
                     <h4 id="widget_base_dimensions_opt" class="heading-m">widget_base_dimensions: <em>[140, 140]</em></h4>
-                    <p>Base widget dimensions in pixels. The first index for the width and the second for the height.</p>
+                    <p>Base widget dimensions in pixels. The first index is the width, the second is the height.</p>
 
                     <h4 id="extra_rows_opt" class="heading-m">extra_rows: <em>0</em></h4>
-                    <p>Add more rows in addition to those that have been calculated.</p>
+                    <p>Add more rows to the grid in addition to those that have been calculated.</p>
 
                     <h4 id="extra_cols_opt" class="heading-m">extra_cols: <em>0</em></h4>
-                    <p>Add more rows in addition to those that have been calculated.</p>
+                    <p>Add more rows to the grid in addition to those that have been calculated.</p>
 
                     <h4 id="min_cols_opt" class="heading-m">min_cols: <em>1</em></h4>
-                    <p>The minimum required columns.</p>
+                    <p>The minimum number columns to create.</p>
 
                     <h4 id="min_rows_opt" class="heading-m">min_rows: <em>15</em></h4>
-                    <p>The minimum required rows.</p>
+                    <p>The minimum number of rows to create.</p>
 
                     <h4 id="autogenerate_stylesheet_opt" class="heading-m">autogenerate_stylesheet: <em>true</em></h4>
-                    <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false, and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code>.</p>
+                    <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code>.</p>
 
                     <h4 id="avoid_overlapped_widgets_opt" class="heading-m">avoid_overlapped_widgets: <em>true</em></h4>
-                    <p>Avoid that widgets loaded from the DOM can be overlapped. It is helpful if the positions were bad stored in the database or if there was any conflict.</p>
+                    <p>Don't allow widgets loaded from the DOM to overlap. This is helpful if you're loading widget positions form the database and they might be inconsistent.</p>
 
                     <h4 id="serialize_params_opt" class="heading-m">serialize_params: <em>function($w, wgd) { return { col: wgd.col, row: wgd.row } }</em></h4>
-                    <p>Return the data you want for each widget in the serialize method. Two arguments are passed: `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid coords object (`col`, `row`, `size_x`, `size_y`).</p>
+                    <p>A function to return serialized data for each each widget, used when calling the <a href="#serialize_method">serialize method</a>. Two arguments are passed: <code>$w</code>: the jQuery wrapped HTMLElement, and <code>wgd</code>: the grid coords object with keys <code>col</code>, <code>row</code>, <code>size_x</code> and <code>size_y</code>.</p>
 
                     <h4 id="draggable_start_opt" class="heading-m">draggable.start: <em>function(event, ui){}</em></h4>
-                    <p>Executes a function when dragging starts.</p>
+                    <p>A callback for when dragging starts.</p>
 
                     <h4 id="draggable_drag_opt" class="heading-m">draggable.drag: <em>function(event, ui){}</em></h4>
-                    <p>Executes a function when the mouse is moved during the dragging.</p>
+                    <p>A callback for when the mouse is moved during the dragging.</p>
 
                     <h4 id="draggable_stop_opt" class="heading-m">draggable.stop: <em>function(event, ui){}</em></h4>
-                    <p>Executes a function when dragging stops.</p>
+                    <p>A callback for when dragging stops.</p>
 
                     <h4 id="on_overlap_start_opt" class="heading-m">collision.on_overlap_start: <em>function(collider_data) { }</em></h4>
-                    <p>Executes a function first time a widget overlaps with a "faux" grid cell.</p>
+                    <p>A callback for the first time when a widget enters a new grid cell.</p>
 
                     <h4 id="on_overlap_opt" class="heading-m">collision.on_overlap: <em>function(collider_data) { }</em></h4>
-                    <p>Executes a function each time a widget overlaps with a "faux" grid cell.</p>
+                    <p>A callback for each time a widget moves inside a grid cell.</p>
 
                     <h4 id="on_overlap_stop_opt" class="heading-m">collision.on_overlap_stop: <em>function(collider_data) { }</em></h4>
-                    <p>Executes a function last time a widget overlaps with a "faux" grid cell.</p>
+                    <p>A callback for the first time when a widget leaves its old grid cell.</p>
                 </div>
             </article>
 
@@ -239,13 +239,13 @@
                         <dt>html<em>String|HTMLElement</em></dt>
                         <dd>The string of HTMLElement that represents the widget is going to be added.</dd>
                         <dt>size_x <em>Number</em></dt>
-                        <dd>The number of rows that the widget occupies. Default is <em>1</em>.</dd>
+                        <dd>The number of rows that the widget occupies. Defaults to <em>1</em>.</dd>
                         <dt>size_y <em>Number</em></dt>
-                        <dd>The number of columns that the widget occupies. Default is <em>1</em>.</dd>
+                        <dd>The number of columns that the widget occupies. Defaults to <em>1</em>.</dd>
                     </dl>
 
                     <h4 class="heading-m">Returns</h4>
-                    <p>Returns the jQuery wrapped HTMLElement representing the widget that was just created.</p>
+                    <p>Returns the jQuery wrapped HTMLElement representing the widget that's been created.</p>
                 </div>
             </article>
 
@@ -260,11 +260,11 @@
                         <dt>el <em>HTMLElement</em></dt>
                         <dd>The jQuery wrapped HTMLElement representing the widget that you want to remove.</dd>
                         <dt>callback <em>Function</em></dt>
-                        <dd>Executes a callback when the widgets is removed.</dd>
+                        <dd>A callback for when the widget is removed.</dd>
                     </dl>
 
                     <h4 class="heading-m">Returns</h4>
-                    <p>Returns the instance of the Gridster Class.</p>
+                    <p>Returns the instance of the Gridster class.</p>
                 </div>
             </article>
 
@@ -281,7 +281,7 @@
                     </dl>
 
                     <h4 class="heading-m">Returns</h4>
-                    <p>Returns an Array of Objects (ready to be encoded as a JSON string) with the data specified in the serialize_params option.</p>
+                    <p>Returns an Array of Objects (ready to be encoded as a JSON string) with the data specified by the <a href="#serialize_params_opt">serialize_params</a> option.</p>
 
                 </div>
             </article>
@@ -292,7 +292,7 @@
                 <div class="m_txt">
                     <p>Creates an array of objects representing the current position of the widgets who have changed position.</p>
                     <h4 class="heading-m">Returns</h4>
-                    <p>Returns an Array of Objects (ready to be encoded as a JSON string) with the data specified in the serialize_params option.</p>
+                    <p>Returns an Array of Objects (ready to be encoded as a JSON string) with the data specified in the <a href="#serialize_params_opt">serialize_params</a> option.</p>
                 </div>
             </article>
 
@@ -308,7 +308,7 @@
             </header>
 
             <article class="m_txt">
-                <p>Reminds that gridster.js depends on jQuery. Download the latest release at <a href="http://jquery.com/">jQuery</a>.
+                <p>Remember that gridster depends on jQuery. Download the latest release at <a href="http://jquery.com/">jQuery</a>.
                 </p>
 
                 <h3 class="heading-l">gridster.<u>js</u></h3>
