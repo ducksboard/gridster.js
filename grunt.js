@@ -65,10 +65,10 @@ module.exports = function(grunt) {
     uglify: {},
     yuidoc: {
       compile: {
-        "name": '<%= pkg.title || pkg.name %>',
-        "description": '<%= pkg.description %>',
-        "version": '<%= pkg.version %>',
-        "url": '<%= pkg.homepage %>',
+        "name": 'gridster.js',
+        "description": 'gridster.js, a drag-and-drop multi-column jQuery grid plugin',
+        "version": '0.1.0',
+        "url": 'http://gridster.net/',
         "logo": 'http://ducksboard.com/wp-content/themes/blog-theme-ducksboard/images/ducksboard.png',
         options: {
           paths: "src/",
