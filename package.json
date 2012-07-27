@@ -18,11 +18,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/ducksboard/gridster.js/blob/master/LICENSE-MIT"
-    },
-    {
-      "type": "GPL",
-      "url": "https://github.com/ducksboard/gridster.js/blob/master/LICENSE-GPL"
+      "url": "https://github.com/ducksboard/gridster.js/blob/master/LICENSE"
     }
   ],
   "dependencies": {

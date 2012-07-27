@@ -3,7 +3,7 @@
  * https://github.com/ducksboard/gridster.js
  *
  * Copyright (c) 2012 ducksboard
- * Licensed under the MIT, GPL licenses.
+ * Licensed under the MIT licenses.
  */
 
 ;(function($, window, document, undefined){
