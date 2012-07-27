@@ -1,7 +1,7 @@
 {
   "name": "jquery.gridster",
   "title": "gridster.js",
-  "description": "Put a grid in your life",
+  "description": "gridster.js, a drag-and-drop multi-column jQuery grid plugin",
   "version": "0.1.0",
   "homepage": "https://github.com/ducksboard/gridster.js",
   "author": {
