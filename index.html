@@ -117,7 +117,7 @@
                 <script src="https://gist.github.com/3129893.js?file=gridster.js"></script>
 
                 <h4 class="heading-m">Get serialized array with the elements positions</h4>
-                <p>Creates a JavaScript array of objects, ready to be encoded as a JSON string.</p>
+                <p>Creates a JavaScript array of objects with positions of all widgets, ready to be encoded as a JSON string.</p>
 
                 <script src="https://gist.github.com/3129908.js?file=gridster.js"></script>
 
@@ -175,10 +175,10 @@
             <article id="options" class="m_doc_method">
                 <div class="m_txt">
                     <h3 id="widget_class_opt" class="heading-l">Options</h3>
-                    <p>gridder configuration object.</p>
+                    <p>gridster configuration object.</p>
 
                     <h4 id="widget_selector_opt" class="heading-m">widget_selector: <em>"> li"</em></h4>
-                    <p>Define who are the widgets. Can be a CSS Selector string or a jQuery collection of HTMLElement</p>
+                    <p>Define who are the widgets. Can be a CSS Selector string or a jQuery collection of HTMLElements.</p>
 
                     <h4 id="widget_margins_opt" class="heading-m">widget_margins: <em>[10, 10]</em></h4>
                     <p>Horizontal and vertical margins respectively for widgets.</p>
@@ -199,7 +199,7 @@
                     <p>The minimum required rows.</p>
 
                     <h4 id="autogenerate_stylesheet_opt" class="heading-m">autogenerate_stylesheet: <em>true</em></h4>
-                    <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false, and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code></p>
+                    <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false, and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code>.</p>
 
                     <h4 id="avoid_overlapped_widgets_opt" class="heading-m">avoid_overlapped_widgets: <em>true</em></h4>
                     <p>Avoid that widgets loaded from the DOM can be overlapped. It is helpful if the positions were bad stored in the database or if there was any conflict.</p>
@@ -236,8 +236,8 @@
 
                     <h4 class="heading-m">Parameters</h4>
                     <dl>
-                        <dt>html <em>String</em></dt>
-                        <dd>The string that represents the HTML of the widget.</dd>
+                        <dt>html<em>String|HTMLElement</em></dt>
+                        <dd>The string of HTMLElement that represents the widget is going to be added.</dd>
                         <dt>size_x <em>Number</em></dt>
                         <dd>The number of rows that the widget occupies. Default is <em>1</em>.</dd>
                         <dt>size_y <em>Number</em></dt>
@@ -253,7 +253,7 @@
                 <h3>.remove_widget( el, [callback] )</h3>
 
                 <div class="m_txt">
-                    <p>Remove a widget from the grid</p>
+                    <p>Remove a widget from the grid.</p>
 
                     <h4 class="heading-m">Parameters</h4>
                     <dl>
