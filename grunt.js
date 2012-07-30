@@ -19,18 +19,33 @@ module.exports = function(grunt) {
       dist_css: {
         src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
+      },
+
+      dist_demo_js: {
+        src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
+        dest: 'gh-pages/dist/<%= pkg.name %>.js'
+      },
+      dist_demo_css: {
+        src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
+        dest: 'gh-pages/dist/<%= pkg.name %>.css'
       }
     },
     min: {
       dist: {
         src: ['<banner:meta.banner>', '<config:concat.dist_js.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
+      },
+
+      dist_demo: {
+        src: ['<banner:meta.banner>', '<config:concat.dist_js.dest>'],
+        dest: 'gh-pages/dist/<%= pkg.name %>.min.js'
       }
     },
     mincss: {
       compress: {
         files: {
-          "dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"]
+          "dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"],
+          "gh-pages/dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"]
         }
       }
     },
