@@ -2240,12 +2240,14 @@
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr(&#x27;data-col&#x27;);
         });
+        actual_cols = Array.prototype.slice.call(actual_cols, 0);
         &#x2F;&#x2F;needed to pass tests with phantomjs
         actual_cols.length || (actual_cols = [0]);
 
         var actual_rows = this.$widgets.map(function() {
             return $(this).attr(&#x27;data-row&#x27;);
         });
+        actual_rows = Array.prototype.slice.call(actual_rows, 0);
         &#x2F;&#x2F;needed to pass tests with phantomjs
         actual_rows.length || (actual_rows = [0]);
 
