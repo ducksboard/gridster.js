@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-07-30
+/*! gridster.js - v0.1.0 - 2012-08-03
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -375,7 +375,6 @@
         // stop : function(e){}
     };
 
-    var $body = $(document.body);
     var $window = $(window);
 
 
@@ -407,6 +406,7 @@
     */
     function Draggable(el, options) {
       this.options = $.extend({}, defaults, options);
+      this.$body = $(document.body);
       this.$container = $(el);
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
@@ -508,9 +508,15 @@
 
 
     fn.drag_handler = function(e) {
+        var node = e.target.nodeName;
+
         if (e.which !== 1) {
-            return false;
+            return;
         }
+
+        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT') {
+            return;
+        };
 
         var self = this;
         var first = true;
@@ -520,7 +526,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        $body.on('mousemove.draggable', function(mme){
+        this.$body.on('mousemove.draggable', function(mme){
 
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
@@ -544,10 +550,7 @@
             }
 
             return false;
-
         });
-
-        return false;
     };
 
 
@@ -635,9 +638,9 @@
         this.$container.on('mousedown.draggable', this.options.items, $.proxy(
             this.drag_handler, this));
 
-        $body.on('mouseup.draggable', $.proxy(function(e) {
+        this.$body.on('mouseup.draggable', $.proxy(function(e) {
             this.is_dragging = false;
-            $body.off('mousemove.draggable');
+            this.$body.off('mousemove.draggable');
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -647,7 +650,7 @@
 
     fn.disable = function(){
         this.$container.off('mousedown.draggable');
-        $body.off('mouseup.draggable');
+        this.$body.off('mouseup.draggable');
     };
 
 
