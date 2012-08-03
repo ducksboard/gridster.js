@@ -152,9 +152,15 @@
 
 
     fn.drag_handler = function(e) {
+        var node = e.target.nodeName;
+
         if (e.which !== 1) {
-            return false;
+            return;
         }
+
+        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT') {
+            return;
+        };
 
         var self = this;
         var first = true;
@@ -188,10 +194,7 @@
             }
 
             return false;
-
         });
-
-        return false;
     };
 
 
