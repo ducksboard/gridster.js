@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-03
+/*! gridster.js - v0.1.0 - 2012-08-05
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -376,7 +376,12 @@
     };
 
     var $window = $(window);
-
+    var isTouch = !!('ontouchstart' in window);
+    var pointer_events = {
+        start: isTouch ? 'touchstart' : 'mousedown.draggable',
+        move: isTouch ? 'touchmove' : 'mousemove.draggable',
+        end: isTouch ? 'touchend' : 'mouseup.draggable'
+    };
 
     /**
     * Basic drag implementation for DOM elements inside a container.
@@ -433,6 +438,11 @@
 
 
     fn.get_mouse_pos = function(e) {
+        if (isTouch) {
+            var oe = e.originalEvent;
+            e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
+        };
+
         return {
             left: e.clientX,
             top: e.clientY
@@ -475,8 +485,8 @@
         var min_window_y = scrollTop;
         var max_window_y = min_window_y + this.window_height;
 
-        var mouse_down_zone = max_window_y - 30;
-        var mouse_up_zone = min_window_y + 20;
+        var mouse_down_zone = max_window_y - 50;
+        var mouse_up_zone = min_window_y + 50;
 
         var abs_mouse_left = offset.mouse_left;
         var abs_mouse_top = min_window_y + offset.mouse_top;
@@ -485,18 +495,18 @@
             this.player_height);
 
         if (abs_mouse_top >= mouse_down_zone) {
-            nextScrollTop = scrollTop + 10;
+            nextScrollTop = scrollTop + 30;
             if (nextScrollTop < max_player_y) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset + 10;
+                this.scrollOffset = this.scrollOffset + 30;
             }
         };
 
         if (abs_mouse_top <= mouse_up_zone) {
-            nextScrollTop = scrollTop - 10;
+            nextScrollTop = scrollTop - 30;
             if (nextScrollTop > 0) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset - 10;
+                this.scrollOffset = this.scrollOffset - 30;
             }
         };
     }
@@ -510,7 +520,7 @@
     fn.drag_handler = function(e) {
         var node = e.target.nodeName;
 
-        if (e.which !== 1) {
+        if (e.which !== 1 && !isTouch) {
             return;
         }
 
@@ -526,8 +536,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on('mousemove.draggable', function(mme){
-
+        this.$body.on(pointer_events.move, function(mme){
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -635,12 +644,12 @@
 
 
     fn.enable = function(){
-        this.$container.on('mousedown.draggable', this.options.items, $.proxy(
+        this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
-        this.$body.on('mouseup.draggable', $.proxy(function(e) {
+        this.$body.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
-            this.$body.off('mousemove.draggable');
+            this.$body.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -649,8 +658,8 @@
 
 
     fn.disable = function(){
-        this.$container.off('mousedown.draggable');
-        this.$body.off('mouseup.draggable');
+        this.$container.off(pointer_events.start);
+        this.$body.off(pointer_events.end);
     };
 
 
