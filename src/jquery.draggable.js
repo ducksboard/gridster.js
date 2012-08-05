@@ -20,7 +20,12 @@
     };
 
     var $window = $(window);
-
+    var isTouch = !!('ontouchstart' in window);
+    var pointer_events = {
+        start: isTouch ? 'touchstart' : 'mousedown.draggable',
+        move: isTouch ? 'touchmove' : 'mousemove.draggable',
+        end: isTouch ? 'touchend' : 'mouseup.draggable'
+    };
 
     /**
     * Basic drag implementation for DOM elements inside a container.
@@ -77,6 +82,11 @@
 
 
     fn.get_mouse_pos = function(e) {
+        if (isTouch) {
+            var oe = e.originalEvent;
+            e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
+        };
+
         return {
             left: e.clientX,
             top: e.clientY
@@ -154,7 +164,7 @@
     fn.drag_handler = function(e) {
         var node = e.target.nodeName;
 
-        if (e.which !== 1) {
+        if (e.which !== 1 && !isTouch) {
             return;
         }
 
@@ -170,8 +180,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on('mousemove.draggable', function(mme){
-
+        this.$body.on(pointer_events.move, function(mme){
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -279,12 +288,12 @@
 
 
     fn.enable = function(){
-        this.$container.on('mousedown.draggable', this.options.items, $.proxy(
+        this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
-        this.$body.on('mouseup.draggable', $.proxy(function(e) {
+        this.$body.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
-            this.$body.off('mousemove.draggable');
+            this.$body.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -293,8 +302,8 @@
 
 
     fn.disable = function(){
-        this.$container.off('mousedown.draggable');
-        this.$body.off('mouseup.draggable');
+        this.$container.off(pointer_events.start);
+        this.$body.off(pointer_events.end);
     };
 
 
