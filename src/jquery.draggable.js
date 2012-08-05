@@ -119,8 +119,8 @@
         var min_window_y = scrollTop;
         var max_window_y = min_window_y + this.window_height;
 
-        var mouse_down_zone = max_window_y - 30;
-        var mouse_up_zone = min_window_y + 20;
+        var mouse_down_zone = max_window_y - 50;
+        var mouse_up_zone = min_window_y + 50;
 
         var abs_mouse_left = offset.mouse_left;
         var abs_mouse_top = min_window_y + offset.mouse_top;
@@ -129,18 +129,18 @@
             this.player_height);
 
         if (abs_mouse_top >= mouse_down_zone) {
-            nextScrollTop = scrollTop + 10;
+            nextScrollTop = scrollTop + 30;
             if (nextScrollTop < max_player_y) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset + 10;
+                this.scrollOffset = this.scrollOffset + 30;
             }
         };
 
         if (abs_mouse_top <= mouse_up_zone) {
-            nextScrollTop = scrollTop - 10;
+            nextScrollTop = scrollTop - 30;
             if (nextScrollTop > 0) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset - 10;
+                this.scrollOffset = this.scrollOffset - 30;
             }
         };
     }
