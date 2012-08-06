@@ -108,7 +108,7 @@
     /**
     * Disable dragging.
     *
-    * @method enable
+    * @method disable
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.disable = function() {
