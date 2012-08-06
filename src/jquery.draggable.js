@@ -168,7 +168,8 @@
             return;
         }
 
-        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT') {
+        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT' ||
+            node === 'BUTTON') {
             return;
         };
 
