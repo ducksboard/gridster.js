@@ -310,7 +310,7 @@
         {
             "file": "src/jquery.gridster.js",
             "line": 108,
-            "description": "Disable dragging.",
+            "description": "Disables dragging.",
             "itemtype": "method",
             "name": "disable",
             "return": {
@@ -322,7 +322,7 @@
         {
             "file": "src/jquery.gridster.js",
             "line": 121,
-            "description": "Enable dragging.",
+            "description": "Enables dragging.",
             "itemtype": "method",
             "name": "enable",
             "return": {
@@ -1329,13 +1329,13 @@
                     "type": "Object"
                 },
                 {
-                    "name": "The",
-                    "description": "col target col.",
+                    "name": "col",
+                    "description": "The col to check.",
                     "type": "Object"
                 },
                 {
-                    "name": "The",
-                    "description": "row target row.",
+                    "name": "row",
+                    "description": "The row to check.",
                     "type": "Object"
                 }
             ],

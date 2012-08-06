@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-06
+/*! gridster.js - v0.1.0 - 2012-08-07
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -524,7 +524,8 @@
             return;
         }
 
-        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT') {
+        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT' ||
+            node === 'BUTTON') {
             return;
         };
 
@@ -782,7 +783,7 @@
 
 
     /**
-    * Disable dragging.
+    * Disables dragging.
     *
     * @method disable
     * @return {Class} Returns the instance of the Gridster Class.
@@ -795,7 +796,7 @@
 
 
     /**
-    * Enable dragging.
+    * Enables dragging.
     *
     * @method enable
     * @return {Class} Returns the instance of the Gridster Class.
@@ -2327,8 +2328,8 @@
     * @method can_move_to
     * @param {Object} widget_grid_data The grid coords object that represents
     *  the widget.
-    * @param {Object} The col target col.
-    * @param {Object} The row target row.
+    * @param {Object} col The col to check.
+    * @param {Object} row The row to check.
     * @return {Boolean} Returns true if all cells are empty, else return false.
     */
     fn.can_move_to = function(widget_grid_data, col, row) {
