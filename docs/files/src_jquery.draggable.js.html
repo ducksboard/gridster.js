@@ -114,9 +114,13 @@
         &#x2F;&#x2F; stop : function(e){}
     };
 
-    var $body = $(document.body);
     var $window = $(window);
-
+    var isTouch = !!(&#x27;ontouchstart&#x27; in window);
+    var pointer_events = {
+        start: isTouch ? &#x27;touchstart&#x27; : &#x27;mousedown.draggable&#x27;,
+        move: isTouch ? &#x27;touchmove&#x27; : &#x27;mousemove.draggable&#x27;,
+        end: isTouch ? &#x27;touchend&#x27; : &#x27;mouseup.draggable&#x27;
+    };
 
     &#x2F;**
     * Basic drag implementation for DOM elements inside a container.
@@ -146,6 +150,7 @@
     *&#x2F;
     function Draggable(el, options) {
       this.options = $.extend({}, defaults, options);
+      this.$body = $(document.body);
       this.$container = $(el);
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
@@ -172,6 +177,11 @@
 
 
     fn.get_mouse_pos = function(e) {
+        if (isTouch) {
+            var oe = e.originalEvent;
+            e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
+        };
+
         return {
             left: e.clientX,
             top: e.clientY
@@ -214,8 +224,8 @@
         var min_window_y = scrollTop;
         var max_window_y = min_window_y + this.window_height;
 
-        var mouse_down_zone = max_window_y - 30;
-        var mouse_up_zone = min_window_y + 20;
+        var mouse_down_zone = max_window_y - 50;
+        var mouse_up_zone = min_window_y + 50;
 
         var abs_mouse_left = offset.mouse_left;
         var abs_mouse_top = min_window_y + offset.mouse_top;
@@ -224,18 +234,18 @@
             this.player_height);
 
         if (abs_mouse_top &gt;= mouse_down_zone) {
-            nextScrollTop = scrollTop + 10;
+            nextScrollTop = scrollTop + 30;
             if (nextScrollTop &lt; max_player_y) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset + 10;
+                this.scrollOffset = this.scrollOffset + 30;
             }
         };
 
         if (abs_mouse_top &lt;= mouse_up_zone) {
-            nextScrollTop = scrollTop - 10;
+            nextScrollTop = scrollTop - 30;
             if (nextScrollTop &gt; 0) {
                 $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset - 10;
+                this.scrollOffset = this.scrollOffset - 30;
             }
         };
     }
@@ -247,9 +257,15 @@
 
 
     fn.drag_handler = function(e) {
-        if (e.which !== 1) {
-            return false;
+        var node = e.target.nodeName;
+
+        if (e.which !== 1 &amp;&amp; !isTouch) {
+            return;
         }
+
+        if (node === &#x27;INPUT&#x27; || node === &#x27;TEXTAREA&#x27; || node === &#x27;SELECT&#x27;) {
+            return;
+        };
 
         var self = this;
         var first = true;
@@ -259,8 +275,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        $body.on(&#x27;mousemove.draggable&#x27;, function(mme){
-
+        this.$body.on(pointer_events.move, function(mme){
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -283,10 +298,7 @@
             }
 
             return false;
-
         });
-
-        return false;
     };
 
 
@@ -371,12 +383,12 @@
 
 
     fn.enable = function(){
-        this.$container.on(&#x27;mousedown.draggable&#x27;, this.options.items, $.proxy(
+        this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
-        $body.on(&#x27;mouseup.draggable&#x27;, $.proxy(function(e) {
+        this.$body.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
-            $body.off(&#x27;mousemove.draggable&#x27;);
+            this.$body.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -385,8 +397,8 @@
 
 
     fn.disable = function(){
-        this.$container.off(&#x27;mousedown.draggable&#x27;);
-        $body.off(&#x27;mouseup.draggable&#x27;);
+        this.$container.off(pointer_events.start);
+        this.$body.off(pointer_events.end);
     };
 
 

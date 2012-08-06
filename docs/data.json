@@ -137,7 +137,7 @@
                 "Gridster"
             ],
             "file": "src/jquery.draggable.js",
-            "line": 26,
+            "line": 30,
             "description": "Basic drag implementation for DOM elements inside a container.\nProvide start/stop/drag callbacks.",
             "params": [
                 {
@@ -312,7 +312,7 @@
             "line": 108,
             "description": "Disable dragging.",
             "itemtype": "method",
-            "name": "enable",
+            "name": "disable",
             "return": {
                 "description": "Returns the instance of the Gridster Class.",
                 "type": "Class"
