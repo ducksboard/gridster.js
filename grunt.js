@@ -57,7 +57,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<config:lint.files>', 'src/<%= pkg.name %>.css'],
-      tasks: 'lint concat'
+      tasks: 'min concat'
     },
     jshint: {
       options: {
