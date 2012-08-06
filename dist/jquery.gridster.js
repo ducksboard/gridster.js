@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-05
+/*! gridster.js - v0.1.0 - 2012-08-06
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -784,7 +784,7 @@
     /**
     * Disable dragging.
     *
-    * @method enable
+    * @method disable
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.disable = function() {
