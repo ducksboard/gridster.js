@@ -15,6 +15,8 @@
         extra_cols: 0,
         min_cols: 1,
         min_rows: 15,
+        max_size_x: 6,
+        max_size_y: 6,
         autogenerate_stylesheet: true,
         avoid_overlapped_widgets: true,
         serialize_params: function($w, wgd) {
@@ -52,6 +54,10 @@
     *     those that have been calculated.
     *    @param {Number} [options.min_cols] The minimum required columns.
     *    @param {Number} [options.min_rows] The minimum required rows.
+    *    @param {Number} [options.max_size_x] The maximum number of columns
+    *     that a widget can span.
+    *    @param {Number} [options.max_size_y] The maximum number of rows
+    *     that a widget can span.
     *    @param {Boolean} [options.autogenerate_stylesheet] If true, all the
     *     CSS required to position all widgets in their respective columns
     *     and rows will be generated automatically and injected to the
@@ -1970,8 +1976,8 @@
     fn.generate_stylesheet = function(opts) {
         var styles = '';
         var extra_cells = 10;
-        var max_size_y = 6;
-        var max_size_x = 6;
+        var max_size_y = this.options.max_size_y;
+        var max_size_x = this.options.max_size_x;
         var i;
         var rules;
 
