@@ -136,6 +136,8 @@
                         <li><a href="#widget_base_dimensions_opt">widget_base_dimensions</a></li>
                         <li><a href="#min_cols_opt">min_cols</a></li>
                         <li><a href="#min_rows_opt">min_rows</a></li>
+                        <li><a href="#max_size_x_opt">max_size_x</a></li>
+                        <li><a href="#max_size_y_opt">max_size_y</a></li>
                         <li><a href="#extra_cols_opt">extra_cols</a></li>
                         <li><a href="#extra_rows_opt">extra_rows</a></li>
                         <li><a href="#autogenerate_stylesheet_opt">autogenerate_stylesheet</a></li>
@@ -194,6 +196,12 @@
 
                     <h4 id="min_rows_opt" class="heading-m">min_rows: <em>15</em></h4>
                     <p>The minimum number of rows to create.</p>
+
+                    <h4 id="max_size_x_opt" class="heading-m">max_size_x: <em>6</em></h4>
+                    <p>The maximum number of columns that a widget can span.</p>
+
+                    <h4 id="max_size_y_opt" class="heading-m">max_size_y: <em>6</em></h4>
+                    <p>The maximum number of rows that a widget can span.</p>
 
                     <h4 id="autogenerate_stylesheet_opt" class="heading-m">autogenerate_stylesheet: <em>true</em></h4>
                     <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code>.</p>
