@@ -2695,14 +2695,13 @@
                 ((i + 1) * opts.widget_margins[1]) ) + 'px;} ');
         }
 
-
-        for (var y = 1; y < max_size_y; y++) {
+        for (var y = 1; y <= max_size_y; y++) {
             styles += (opts.namespace + ' [data-sizey="' + y + '"] { height:' +
                 (y * opts.widget_base_dimensions[1] +
                 (y - 1) * (opts.widget_margins[1] * 2)) + 'px;}');
         }
 
-        for (var x = 1; x < max_size_x; x++) {
+        for (var x = 1; x <= max_size_x; x++) {
             styles += (opts.namespace + ' [data-sizex="' + x + '"] { width:' +
                 (x * opts.widget_base_dimensions[0] +
                 (x - 1) * (opts.widget_margins[0] * 2)) + 'px;}');
