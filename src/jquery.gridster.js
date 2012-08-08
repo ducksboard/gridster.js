@@ -410,7 +410,7 @@
             }, 60)
           });
 
-        this.drag_api = this.$el.draggable(draggable_options).data('draggable');
+        this.drag_api = this.$el.drag(draggable_options).data('draggable');
         return this;
     };
 

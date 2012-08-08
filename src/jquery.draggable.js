@@ -315,10 +315,10 @@
 
 
     //jQuery adapter
-    $.fn.draggable = function ( options ) {
+    $.fn.drag = function ( options ) {
         return this.each(function () {
-            if (!$.data(this, 'draggable')) {
-                $.data(this, 'draggable', new Draggable( this, options ));
+            if (!$.data(this, 'drag')) {
+                $.data(this, 'drag', new Draggable( this, options ));
             }
         });
     };
