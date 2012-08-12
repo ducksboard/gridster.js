@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-08
+/*! gridster.js - v0.1.0 - 2012-08-13
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -561,6 +561,8 @@
 
             return false;
         });
+
+        return false;
     };
 
 
@@ -643,8 +645,14 @@
         return false;
     };
 
+    fn.on_select_start = function(e) {
+        return false;
+    }
+
 
     fn.enable = function(){
+        this.$container.on('selectstart', this.on_select_start);
+
         this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
@@ -661,6 +669,7 @@
     fn.disable = function(){
         this.$container.off(pointer_events.start);
         this.$body.off(pointer_events.end);
+        this.$container.off(this.on_select_start);
     };
 
 
@@ -1526,7 +1535,6 @@
         return this;
     };
 
-
     /**
     * Determines if there is a widget in the row and col given. Or if the
     * HTMLElement passed as first argument is the player.
@@ -1554,7 +1562,7 @@
     * @return {Boolean} Returns true or false.
     */
     fn.is_player_in = function(col, row) {
-        var c = this.cells_occupied_by_player;
+        var c = this.cells_occupied_by_player || {};
         return $.inArray(col, c.cols) >= 0 && $.inArray(row, c.rows) >= 0;
     };
 
@@ -1802,6 +1810,13 @@
         var upper_rows = [];
         var min_row = 10000;
 
+        if (widget_grid_data.col < this.player_grid_data.col &&
+            (widget_grid_data.col + widget_grid_data.size_y - 1) >
+            (this.player_grid_data.col + this.player_grid_data.size_y - 1)
+         ) {
+            return false;
+        };
+
         /* generate an array with columns as index and array with upper rows
          * empty as value */
         this.for_each_column_occupied(widget_grid_data, function(tcol) {
@@ -1811,17 +1826,19 @@
             var r = p_bottom_row + 1;
 
             while (--r > 0) {
-                if (this.is_occupied(tcol, r) && !this.is_player(tcol, r)) {
-                    break;
+                if (this.is_widget(tcol, r) && !this.is_player_in(tcol, r)) {
+                    if (!grid_col[r].is(widget_grid_data.el)) {
+                        break;
+                    };
                 }
 
                 if (!this.is_player(tcol, r) &&
-                    !this.is_placeholder_in(tcol, r)
-                ) {
+                    !this.is_placeholder_in(tcol, r) &&
+                    !this.is_player_in(tcol, r)) {
                     upper_rows[tcol].push(r);
-                }
+                };
 
-                if (r < min_row ) {
+                if (r < min_row) {
                     min_row = r;
                 }
             }
@@ -1863,7 +1880,7 @@
         while (++r <= p_bottom_row ) {
             var common = true;
             $.each(upper_rows, function(col, rows) {
-                if (rows && $.inArray(r, rows) === -1) {
+                if ($.isArray(rows) && $.inArray(r, rows) === -1) {
                     common = false;
                 }
             });
@@ -1887,7 +1904,6 @@
                     valid_rows, size_y);
             }
         }
-
 
         return new_row;
     };
@@ -1983,7 +1999,7 @@
     * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
     */
     fn.on_stop_overlapping_column = function(col) {
-        this.set_player();
+        this.set_player(col, false);
 
         var self = this;
         this.for_each_widget_below(col, this.cells_occupied_by_player.rows[0],
@@ -2001,7 +2017,7 @@
     * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
     */
     fn.on_stop_overlapping_row = function(row) {
-        this.set_player();
+        this.set_player(false, row);
 
         var self = this;
         var cols = this.cells_occupied_by_player.cols;
@@ -2047,7 +2063,6 @@
             var $w = $(widget);
             var wgd = $w.coords().grid;
             var can_go_up = self.can_go_widget_up(wgd);
-
             if (can_go_up && can_go_up !== wgd.row) {
                 self.move_widget_to($w, can_go_up);
             }
@@ -2314,7 +2329,8 @@
             var $w = this.is_widget(col, prev_row);
             if (this.is_occupied(col, prev_row) ||
                 this.is_player(col, prev_row) ||
-                this.is_placeholder_in(col, prev_row)
+                this.is_placeholder_in(col, prev_row) ||
+                this.is_player_in(col, prev_row)
             ) {
                 result = false;
                 return true; //break

@@ -300,6 +300,8 @@
 
             return false;
         });
+
+        return false;
     };
 
 
@@ -382,8 +384,14 @@
         return false;
     };
 
+    fn.on_select_start = function(e) {
+        return false;
+    }
+
 
     fn.enable = function(){
+        this.$container.on(&#x27;selectstart&#x27;, this.on_select_start);
+
         this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
@@ -400,6 +408,7 @@
     fn.disable = function(){
         this.$container.off(pointer_events.start);
         this.$body.off(pointer_events.end);
+        this.$container.off(this.on_select_start);
     };
 
 
@@ -410,10 +419,10 @@
 
 
     &#x2F;&#x2F;jQuery adapter
-    $.fn.draggable = function ( options ) {
+    $.fn.drag = function ( options ) {
         return this.each(function () {
-            if (!$.data(this, &#x27;draggable&#x27;)) {
-                $.data(this, &#x27;draggable&#x27;, new Draggable( this, options ));
+            if (!$.data(this, &#x27;drag&#x27;)) {
+                $.data(this, &#x27;drag&#x27;, new Draggable( this, options ));
             }
         });
     };
