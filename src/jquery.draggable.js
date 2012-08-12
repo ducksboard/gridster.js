@@ -205,6 +205,8 @@
 
             return false;
         });
+
+        return false;
     };
 
 
@@ -287,8 +289,14 @@
         return false;
     };
 
+    fn.on_select_start = function(e) {
+        return false;
+    }
+
 
     fn.enable = function(){
+        this.$container.on('selectstart', this.on_select_start);
+
         this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
 
@@ -305,6 +313,7 @@
     fn.disable = function(){
         this.$container.off(pointer_events.start);
         this.$body.off(pointer_events.end);
+        this.$container.off(this.on_select_start);
     };
 
 
