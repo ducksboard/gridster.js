@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-13
+/*! gridster.js - v0.1.0 - 2012-08-14
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -669,13 +669,13 @@
     fn.disable = function(){
         this.$container.off(pointer_events.start);
         this.$body.off(pointer_events.end);
-        this.$container.off(this.on_select_start);
+        this.$container.off('selectstart', this.on_select_start);
     };
 
 
     fn.destroy = function(){
         this.disable();
-        $.removeData(this.$container, 'draggable');
+        $.removeData(this.$container, 'drag');
     };
 
 
@@ -1096,7 +1096,7 @@
             }, 60)
           });
 
-        this.drag_api = this.$el.drag(draggable_options).data('draggable');
+        this.drag_api = this.$el.drag(draggable_options).data('drag');
         return this;
     };
 
@@ -1160,6 +1160,11 @@
     * @param {Object} A prepared ui object.
     */
     fn.on_drag = function(event, ui) {
+        //break if dragstop has been fired
+        if (this.$player === null) {
+            return false;
+        };
+
         var abs_offset = {
             left: ui.position.left + this.baseX,
             top: ui.position.top + this.baseY
@@ -1234,15 +1239,14 @@
         this.$player.coords().grid.row = this.placeholder_grid_data.row;
         this.$player.coords().grid.col = this.placeholder_grid_data.col;
 
-        this.$player = null;
-
-        this.$preview_holder.remove();
-
-        this.set_dom_grid_height();
-
         if (this.options.draggable.stop) {
           this.options.draggable.stop.call(this, event, ui);
         }
+
+        this.$preview_holder.remove();
+        this.$player = null;
+
+        this.set_dom_grid_height();
     };
 
 
