@@ -474,6 +474,11 @@
     * @param {Object} A prepared ui object.
     */
     fn.on_drag = function(event, ui) {
+        //break if dragstop has been fired
+        if (this.$player === null) {
+            return false;
+        };
+
         var abs_offset = {
             left: ui.position.left + this.baseX,
             top: ui.position.top + this.baseY
@@ -548,15 +553,14 @@
         this.$player.coords().grid.row = this.placeholder_grid_data.row;
         this.$player.coords().grid.col = this.placeholder_grid_data.col;
 
-        this.$player = null;
-
-        this.$preview_holder.remove();
-
-        this.set_dom_grid_height();
-
         if (this.options.draggable.stop) {
           this.options.draggable.stop.call(this, event, ui);
         }
+
+        this.$preview_holder.remove();
+        this.$player = null;
+
+        this.set_dom_grid_height();
     };
 
 
