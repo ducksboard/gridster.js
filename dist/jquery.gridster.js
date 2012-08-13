@@ -826,7 +826,8 @@
     * Add a new widget to the grid.
     *
     * @method add_widget
-    * @param {String} html The string representing the HTML of the widget.
+    * @param {String|HTMLElement} html The string representing the HTML of the widget
+    *  or the HTMLElement.
     * @param {Number} size_x The nº of rows the widget occupies horizontally.
     * @param {Number} size_y The nº of columns the widget occupies vertically.
     * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
@@ -856,6 +857,92 @@
 
         return $w.fadeIn();
     };
+
+
+
+    /**
+    * Change the size of a widget.
+    *
+    * @method resize_widget
+    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+    *  representing the widget.
+    * @param {Number} size_x The number of columns that will occupy the widget.
+    * @param {Number} size_y The number of rows that will occupy the widget.
+    * @return {HTMLElement} Returns $widget.
+    */
+    fn.resize_widget = function($widget, size_x, size_y) {
+        var wgd = $widget.coords().grid;
+        size_x || (size_x = wgd.size_x);
+        size_y || (size_y = wgd.size_y);
+        if (size_x > this.cols) {
+            size_x = this.cols;
+        };
+        var old_size_x = wgd.size_x;
+        var old_size_y = wgd.size_y;
+        var old_col = wgd.col;
+        var wider = size_x > old_size_x;
+        var taller = size_y > old_size_y;
+        var $nexts = this.widgets_below({
+                col: wgd.col,
+                row: wgd.row,
+                size_x: size_x,
+                size_y: size_y
+            });
+
+        wgd.size_x = size_x;
+        wgd.size_y = size_y;
+
+        if (wgd.col+wgd.size_x > this.cols) {
+            var diff = wgd.col+wgd.size_x-this.cols;
+            var c = wgd.col - diff;
+            wgd.col = c > 1 ? c : 1;
+        };
+
+        this.$player = this.$preview_holder = $widget;
+        this.player_grid_data = {
+            col: wgd.col,
+            row: wgd.row,
+            size_x: size_x,
+            size_y: size_y,
+            el: $widget
+        }
+
+        this.placeholder_grid_data = $.extend({}, this.player_grid_data);
+
+        $widget.attr({
+            'data-sizex': size_x,
+            'data-sizey': size_y
+        })
+
+        this.set_player(wgd.col, wgd.row, true);
+
+        this.placeholder_grid_data = this.player_grid_data = {};
+
+        this.remove_from_gridmap({
+            col: old_col,
+            row: wgd.row,
+            size_x: old_size_x,
+            size_y: old_size_y
+        });
+
+        this.add_to_gridmap({
+            col: wgd.col,
+            row: wgd.row,
+            size_x: size_x,
+            size_y: size_y
+        }, $widget);
+
+        // if (!taller || !wider) {
+            $nexts.each($.proxy(function(i, widget) {
+                this.move_widget_up(
+                 $(widget), old_size_y - size_y);
+            }, this));
+        // };
+
+        this.set_dom_grid_height();
+
+        return $widget;
+    }
 
 
     /**
@@ -1079,7 +1166,6 @@
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
             offset_left: this.options.widget_margins[0],
-            items: '.gs_w',
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -1342,11 +1428,12 @@
     * @method set_player
     * @return {Class} Returns the instance of the Gridster Class.
     */
-    fn.set_player = function(col, row) {
-        this.empty_cells_player_occupies();
-
+    fn.set_player = function(col, row, no_player) {
         var self = this;
-        var cell = self.colliders_data[0].el.data;
+        if (!no_player) {
+            this.empty_cells_player_occupies();
+        };
+        var cell = !no_player ? self.colliders_data[0].el.data : {col: col};
         var to_col = cell.col;
         var to_row = row || cell.row;
 
@@ -1962,7 +2049,6 @@
                 // if there is a widget in the player position
                 if (!this.gridmap[col]) { return true; } //next iteration
                 var $w = this.gridmap[col][row];
-
                 if (this.is_occupied(col, row) && !this.is_player($w) &&
                     $.inArray($w, used) === -1
                 ) {
