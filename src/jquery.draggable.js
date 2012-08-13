@@ -313,13 +313,13 @@
     fn.disable = function(){
         this.$container.off(pointer_events.start);
         this.$body.off(pointer_events.end);
-        this.$container.off(this.on_select_start);
+        this.$container.off('selectstart', this.on_select_start);
     };
 
 
     fn.destroy = function(){
         this.disable();
-        $.removeData(this.$container, 'draggable');
+        $.removeData(this.$container, 'drag');
     };
 
 
