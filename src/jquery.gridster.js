@@ -147,14 +147,24 @@
     * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     */
-    fn.add_widget = function(html, size_x, size_y) {
-        var next_pos = this.next_position(size_x, size_y);
+    fn.add_widget = function(html, size_x, size_y, col, row) {
+        var pos;
+        if (!col & !row) {
+            var pos = this.next_position(size_x, size_y);
+        }else{
+            var pos = {
+                col: col,
+                row: row
+            };
+
+            this.empty_cells(col, row, size_x, size_y);
+        }
 
         var $w = $(html).attr({
-                'data-col': next_pos.col,
-                'data-row': next_pos.row,
-                'data-sizex' : next_pos.size_x,
-                'data-sizey' : next_pos.size_y
+                'data-col': pos.col,
+                'data-row': pos.row,
+                'data-sizex' : size_x,
+                'data-sizey' : size_y
             }).addClass('gs_w').appendTo(this.$el).hide();
 
         this.$widgets = this.$widgets.add($w);
@@ -256,7 +266,27 @@
         this.set_dom_grid_height();
 
         return $widget;
-    }
+    };
+
+
+    fn.empty_cells = function(col, row, size_x, size_y) {
+
+        var $nexts = this.widgets_below({
+                col: col,
+                row: row - size_y,
+                size_x: size_x,
+                size_y: size_y
+            });
+
+        $nexts.filter(function() {
+            console.log($(this).coords().grid.row, row + size_y -1 );
+            return $(this).coords().grid.row <= (row + size_y - 1);
+        }).each($.proxy(function(i, w) {
+            this.move_widget_down($(w), size_y);
+        }, this));
+
+        return this;
+    };
 
 
     /**
