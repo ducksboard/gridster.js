@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-14
+/*! gridster.js - v0.1.0 - 2012-08-18
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -786,14 +786,14 @@
     var fn = Gridster.prototype;
 
     fn.init = function() {
-      this.generate_grid_and_stylesheet();
-      this.get_widgets_from_DOM();
-      this.set_dom_grid_height();
-      this.$wrapper.addClass('ready');
-      this.draggable();
+        this.generate_grid_and_stylesheet();
+        this.get_widgets_from_DOM();
+        this.set_dom_grid_height();
+        this.$wrapper.addClass('ready');
+        this.draggable();
 
-      $(window).bind(
-        'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
+        $(window).bind(
+            'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -845,6 +845,12 @@
         this.$widgets = this.$widgets.add($w);
 
         this.register_widget($w);
+
+        this.add_faux_rows(next_pos.size_y);
+
+        if (this.options.autogenerate_stylesheet) {
+            this.generate_stylesheet();
+        }
 
         this.set_dom_grid_height();
 
@@ -2672,9 +2678,10 @@
     */
     fn.generate_stylesheet = function(opts) {
         var styles = '';
-        var extra_cells = 10;
         var max_size_y = this.options.max_size_y;
         var max_size_x = this.options.max_size_x;
+        var max_rows = 0;
+        var max_cols = 0;
         var i;
         var rules;
 
@@ -2691,8 +2698,8 @@
         opts.min_widget_height = (opts.widget_margins[1] * 2) +
             opts.widget_base_dimensions[1];
 
-        var serialized_opts = $.param(opts);
         // don't duplicate stylesheets for the same configuration
+        var serialized_opts = $.param(opts);
         if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
             return false;
         }
@@ -2700,7 +2707,7 @@
         Gridster.generated_stylesheets.push(serialized_opts);
 
         /* generate CSS styles for cols */
-        for (i = opts.cols + extra_cells; i >= 0; i--) {
+        for (i = opts.cols; i >= 0; i--) {
             styles += (opts.namespace + ' [data-col="'+ (i + 1) + '"] { left:' +
                 ((i * opts.widget_base_dimensions[0]) +
                 (i * opts.widget_margins[0]) +
@@ -2708,7 +2715,7 @@
         }
 
         /* generate CSS styles for rows */
-        for (i = opts.rows + extra_cells; i >= 0; i--) {
+        for (i = opts.rows; i >= 0; i--) {
             styles += (opts.namespace + ' [data-row="' + (i + 1) + '"] { top:' +
                 ((i * opts.widget_base_dimensions[1]) +
                 (i * opts.widget_margins[1]) +
@@ -2771,7 +2778,23 @@
         for (col = cols; col > 0; col--) {
             this.gridmap[col] = [];
             for (row = rows; row > 0; row--) {
-                var coords = $({
+                this.add_faux_cell(row, col);
+            }
+        }
+        return this;
+    };
+
+
+    /**
+    * Add cell to the faux grid.
+    *
+    * @method add_faux_rows
+    * @param {Number} row The row for the new faux cell.
+    * @param {Number} col The col for the new faux cell.
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.add_faux_cell = function(row, col) {
+        var coords = $({
                         left: this.baseX + ((col - 1) * this.min_widget_width),
                         top: this.baseY + (row -1) * this.min_widget_height,
                         width: this.min_widget_width,
@@ -2782,10 +2805,31 @@
                         original_row: row
                     }).coords();
 
-                this.gridmap[col][row] = false;
-                this.faux_grid.push(coords);
-            }
-        }
+        this.gridmap[col][row] = false;
+        this.faux_grid.push(coords);
+
+        return this;
+    };
+
+
+    /**
+    * Add rows to the faux grid.
+    *
+    * @method add_faux_rows
+    * @param {Number} rows The number of rows you want to add to the faux grid.
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.add_faux_rows = function(rows) {
+        var actual_rows = this.rows;
+        var max_rows = actual_rows + (rows || 1);
+
+        for (var r = max_rows; r > actual_rows; r--) {
+            for (var c = this.cols; c >= 1; c--) {
+                this.add_faux_cell(r, c);
+            };
+        };
+
+        this.rows = max_rows;
         return this;
     };
 
@@ -2841,8 +2885,6 @@
 
         var cols = Math.floor(aw / this.min_widget_width) +
                    this.options.extra_cols;
-        var rows = Math.floor(ah / this.min_widget_height) +
-                   this.options.extra_rows;
 
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr('data-col');
@@ -2851,18 +2893,16 @@
         //needed to pass tests with phantomjs
         actual_cols.length || (actual_cols = [0]);
 
-        var actual_rows = this.$widgets.map(function() {
-            return $(this).attr('data-row');
-        });
-        actual_rows = Array.prototype.slice.call(actual_rows, 0);
-        //needed to pass tests with phantomjs
-        actual_rows.length || (actual_rows = [0]);
-
         var min_cols = Math.max.apply(Math, actual_cols);
-        var min_rows = Math.max.apply(Math, actual_rows);
+
+        // get all rows that could be occupied by the current widgets
+        var max_rows = this.options.extra_rows;
+        this.$widgets.each(function(i, w){
+            max_rows += (+$(w).attr('data-sizey'));
+        });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
-        this.rows = Math.max(min_rows, rows, this.options.min_rows);
+        this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
@@ -2871,8 +2911,6 @@
             this.generate_stylesheet();
         }
 
-        /* more faux rows that needed are created so that there are cells
-         * where drag beyond the limits */
         return this.generate_faux_grid(this.rows, this.cols);
     };
 
