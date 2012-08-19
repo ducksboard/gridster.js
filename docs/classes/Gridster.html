@@ -108,7 +108,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l35"><code>src&#x2F;jquery.gridster.js:35</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l36"><code>src&#x2F;jquery.gridster.js:36</code></a>
         </div>
     
 
@@ -174,7 +174,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l35"><code>src&#x2F;jquery.gridster.js:35</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l36"><code>src&#x2F;jquery.gridster.js:36</code></a>
         
         </p>
 
@@ -349,21 +349,6 @@
                             
                             <li class="param">
                                 
-                                    <code class="param-name optional">[max_size_y]</code>
-                                    <span class="type">Number</span>
-                                    <span class="flag optional" title="This parameter is optional.">optional</span>
-                                
-
-                                <div class="param-description">
-                                    <p>The maximum number of rows
-    that a widget can span.</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
                                     <code class="param-name optional">[autogenerate_stylesheet]</code>
                                     <span class="type">Boolean</span>
                                     <span class="flag optional" title="This parameter is optional.">optional</span>
@@ -485,6 +470,20 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_add_faux_cell">add_faux_cell</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_add_faux_rows">add_faux_rows</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_add_style_tag">add_style_tag</a>
 
                                 
@@ -542,6 +541,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_draggable">draggable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_empty_cells">empty_cells</a>
 
                                 
                                 
@@ -842,6 +848,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_remove_empty_cells">remove_empty_cells</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_remove_from_gridmap">remove_from_gridmap</a>
 
                                 
@@ -850,6 +863,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_remove_widget">remove_widget</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_resize_widget">resize_widget</a>
 
                                 
                                 
@@ -962,6 +982,235 @@
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method_add_faux_cell" class="method item">
+    <h3 class="name"><code>add_faux_cell</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>row</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>col</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2309"><code>src&#x2F;jquery.gridster.js:2309</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Add cell to the faux grid.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">row</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The row for the new faux cell.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">col</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The col for the new faux cell.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    Returns the instance of the Gridster class.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_add_faux_rows" class="method item">
+    <h3 class="name"><code>add_faux_rows</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>rows</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2336"><code>src&#x2F;jquery.gridster.js:2336</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Add rows to the faux grid.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">rows</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of rows you want to add to the faux grid.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    Returns the instance of the Gridster class.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_add_style_tag" class="method item">
     <h3 class="name"><code>add_style_tag</code></h3>
 
@@ -1008,7 +1257,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2044"><code>src&#x2F;jquery.gridster.js:2044</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2262"><code>src&#x2F;jquery.gridster.js:2262</code></a>
         
         </p>
 
@@ -1118,7 +1367,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l357"><code>src&#x2F;jquery.gridster.js:357</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l562"><code>src&#x2F;jquery.gridster.js:562</code></a>
         
         </p>
 
@@ -1208,13 +1457,25 @@
             
                 <li class="arg">
                     
-                        <code>size_x</code>
+                        <code class="optional">[size_x]</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>size_y</code>
+                        <code class="optional">[size_y]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[col]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[row]</code>
                     
                 </li>
             
@@ -1251,7 +1512,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l139"><code>src&#x2F;jquery.gridster.js:139</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l138"><code>src&#x2F;jquery.gridster.js:138</code></a>
         
         </p>
 
@@ -1274,13 +1535,14 @@
                 <li class="param">
                     
                         <code class="param-name">html</code>
-                        <span class="type">String</span>
+                        <span class="type">String | HTMLElement</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The string representing the HTML of the widget.</p>
+                        <p>The string representing the HTML of the widget
+ or the HTMLElement.</p>
                     </div>
 
                     
@@ -1288,8 +1550,9 @@
             
                 <li class="param">
                     
-                        <code class="param-name">size_x</code>
+                        <code class="param-name optional">[size_x]</code>
                         <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
@@ -1303,14 +1566,47 @@
             
                 <li class="param">
                     
-                        <code class="param-name">size_y</code>
+                        <code class="param-name optional">[size_y]</code>
                         <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
                         <p>The nº of columns the widget occupies vertically.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[col]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The column the widget should start in.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[row]</code>
+                        <span class="type">Number</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The row the widget should start in.</p>
                     </div>
 
                     
@@ -1386,7 +1682,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1063"><code>src&#x2F;jquery.gridster.js:1063</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1283"><code>src&#x2F;jquery.gridster.js:1283</code></a>
         
         </p>
 
@@ -1504,7 +1800,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1483"><code>src&#x2F;jquery.gridster.js:1483</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1702"><code>src&#x2F;jquery.gridster.js:1702</code></a>
         
         </p>
 
@@ -1641,7 +1937,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1112"><code>src&#x2F;jquery.gridster.js:1112</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1332"><code>src&#x2F;jquery.gridster.js:1332</code></a>
         
         </p>
 
@@ -1759,7 +2055,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1659"><code>src&#x2F;jquery.gridster.js:1659</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1877"><code>src&#x2F;jquery.gridster.js:1877</code></a>
         
         </p>
 
@@ -1886,7 +2182,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l114"><code>src&#x2F;jquery.gridster.js:114</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l113"><code>src&#x2F;jquery.gridster.js:113</code></a>
         
         </p>
 
@@ -1957,7 +2253,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l379"><code>src&#x2F;jquery.gridster.js:379</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l584"><code>src&#x2F;jquery.gridster.js:584</code></a>
         
         </p>
 
@@ -1971,6 +2267,197 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
         <p>Make widgets draggable.</p>
     </div>
 
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Class</span>:
+                    
+                    Returns the instance of the Gridster Class.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_empty_cells" class="method item">
+    <h3 class="name"><code>empty_cells</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>col</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>row</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>$exclude</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Class</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l307"><code>src&#x2F;jquery.gridster.js:307</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Move down widgets in cells represented by the arguments col, row, size<em>x,
+size</em>y</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">col</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The column where the group of cells begin.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">row</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The row where the group of cells begin.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of columns that the group of cells
+occupy.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of rows that the group of cells
+occupy.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">$exclude</code>
+                        <span class="type">HTMLElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Exclude widgets from being moved.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -2028,7 +2515,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1620"><code>src&#x2F;jquery.gridster.js:1620</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1837"><code>src&#x2F;jquery.gridster.js:1837</code></a>
         
         </p>
 
@@ -2099,7 +2586,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l127"><code>src&#x2F;jquery.gridster.js:127</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l126"><code>src&#x2F;jquery.gridster.js:126</code></a>
         
         </p>
 
@@ -2186,7 +2673,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1763"><code>src&#x2F;jquery.gridster.js:1763</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1981"><code>src&#x2F;jquery.gridster.js:1981</code></a>
         
         </p>
 
@@ -2314,7 +2801,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1784"><code>src&#x2F;jquery.gridster.js:1784</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2002"><code>src&#x2F;jquery.gridster.js:2002</code></a>
         
         </p>
 
@@ -2442,7 +2929,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1803"><code>src&#x2F;jquery.gridster.js:1803</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2021"><code>src&#x2F;jquery.gridster.js:2021</code></a>
         
         </p>
 
@@ -2576,7 +3063,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1870"><code>src&#x2F;jquery.gridster.js:1870</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2088"><code>src&#x2F;jquery.gridster.js:2088</code></a>
         
         </p>
 
@@ -2724,7 +3211,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1887"><code>src&#x2F;jquery.gridster.js:1887</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2105"><code>src&#x2F;jquery.gridster.js:2105</code></a>
         
         </p>
 
@@ -2866,7 +3353,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2067"><code>src&#x2F;jquery.gridster.js:2067</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2285"><code>src&#x2F;jquery.gridster.js:2285</code></a>
         
         </p>
 
@@ -2976,7 +3463,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2141"><code>src&#x2F;jquery.gridster.js:2141</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2401"><code>src&#x2F;jquery.gridster.js:2401</code></a>
         
         </p>
 
@@ -3064,7 +3551,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1975"><code>src&#x2F;jquery.gridster.js:1975</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2193"><code>src&#x2F;jquery.gridster.js:2193</code></a>
         
         </p>
 
@@ -3183,7 +3670,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1735"><code>src&#x2F;jquery.gridster.js:1735</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1953"><code>src&#x2F;jquery.gridster.js:1953</code></a>
         
         </p>
 
@@ -3277,7 +3764,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1904"><code>src&#x2F;jquery.gridster.js:1904</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2122"><code>src&#x2F;jquery.gridster.js:2122</code></a>
         
         </p>
 
@@ -3358,7 +3845,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1699"><code>src&#x2F;jquery.gridster.js:1699</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1917"><code>src&#x2F;jquery.gridster.js:1917</code></a>
         
         </p>
 
@@ -3464,7 +3951,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1718"><code>src&#x2F;jquery.gridster.js:1718</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1936"><code>src&#x2F;jquery.gridster.js:1936</code></a>
         
         </p>
 
@@ -3581,7 +4068,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1174"><code>src&#x2F;jquery.gridster.js:1174</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1394"><code>src&#x2F;jquery.gridster.js:1394</code></a>
         
         </p>
 
@@ -3709,7 +4196,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2127"><code>src&#x2F;jquery.gridster.js:2127</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2387"><code>src&#x2F;jquery.gridster.js:2387</code></a>
         
         </p>
 
@@ -3780,7 +4267,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1251"><code>src&#x2F;jquery.gridster.js:1251</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1471"><code>src&#x2F;jquery.gridster.js:1471</code></a>
         
         </p>
 
@@ -3851,7 +4338,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l992"><code>src&#x2F;jquery.gridster.js:992</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1212"><code>src&#x2F;jquery.gridster.js:1212</code></a>
         
         </p>
 
@@ -3938,7 +4425,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l911"><code>src&#x2F;jquery.gridster.js:911</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1131"><code>src&#x2F;jquery.gridster.js:1131</code></a>
         
         </p>
 
@@ -4063,7 +4550,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l930"><code>src&#x2F;jquery.gridster.js:930</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1150"><code>src&#x2F;jquery.gridster.js:1150</code></a>
         
         </p>
 
@@ -4188,7 +4675,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l884"><code>src&#x2F;jquery.gridster.js:884</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1104"><code>src&#x2F;jquery.gridster.js:1104</code></a>
         
         </p>
 
@@ -4307,7 +4794,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l898"><code>src&#x2F;jquery.gridster.js:898</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1118"><code>src&#x2F;jquery.gridster.js:1118</code></a>
         
         </p>
 
@@ -4417,7 +4904,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l852"><code>src&#x2F;jquery.gridster.js:852</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1072"><code>src&#x2F;jquery.gridster.js:1072</code></a>
         
         </p>
 
@@ -4545,7 +5032,7 @@ HTMLElements.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l869"><code>src&#x2F;jquery.gridster.js:869</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1089"><code>src&#x2F;jquery.gridster.js:1089</code></a>
         
         </p>
 
@@ -4671,7 +5158,7 @@ and col given.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l950"><code>src&#x2F;jquery.gridster.js:950</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1170"><code>src&#x2F;jquery.gridster.js:1170</code></a>
         
         </p>
 
@@ -4797,7 +5284,7 @@ else returns the jQuery HTMLElement
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l975"><code>src&#x2F;jquery.gridster.js:975</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1195"><code>src&#x2F;jquery.gridster.js:1195</code></a>
         
         </p>
 
@@ -4929,7 +5416,7 @@ params and if this is under the widget that is being dragged.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l807"><code>src&#x2F;jquery.gridster.js:807</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1027"><code>src&#x2F;jquery.gridster.js:1027</code></a>
         
         </p>
 
@@ -5071,7 +5558,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1437"><code>src&#x2F;jquery.gridster.js:1437</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1656"><code>src&#x2F;jquery.gridster.js:1656</code></a>
         
         </p>
 
@@ -5191,7 +5678,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1346"><code>src&#x2F;jquery.gridster.js:1346</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1565"><code>src&#x2F;jquery.gridster.js:1565</code></a>
         
         </p>
 
@@ -5304,7 +5791,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1389"><code>src&#x2F;jquery.gridster.js:1389</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1608"><code>src&#x2F;jquery.gridster.js:1608</code></a>
         
         </p>
 
@@ -5430,7 +5917,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l169"><code>src&#x2F;jquery.gridster.js:169</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l374"><code>src&#x2F;jquery.gridster.js:374</code></a>
         
         </p>
 
@@ -5552,7 +6039,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l469"><code>src&#x2F;jquery.gridster.js:469</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l673"><code>src&#x2F;jquery.gridster.js:673</code></a>
         
         </p>
 
@@ -5664,7 +6151,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l563"><code>src&#x2F;jquery.gridster.js:563</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l777"><code>src&#x2F;jquery.gridster.js:777</code></a>
         
         </p>
 
@@ -5792,7 +6279,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l603"><code>src&#x2F;jquery.gridster.js:603</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l817"><code>src&#x2F;jquery.gridster.js:817</code></a>
         
         </p>
 
@@ -5916,7 +6403,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l418"><code>src&#x2F;jquery.gridster.js:418</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l622"><code>src&#x2F;jquery.gridster.js:622</code></a>
         
         </p>
 
@@ -6022,7 +6509,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1284"><code>src&#x2F;jquery.gridster.js:1284</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1503"><code>src&#x2F;jquery.gridster.js:1503</code></a>
         
         </p>
 
@@ -6126,7 +6613,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1296"><code>src&#x2F;jquery.gridster.js:1296</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1515"><code>src&#x2F;jquery.gridster.js:1515</code></a>
         
         </p>
 
@@ -6232,7 +6719,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l507"><code>src&#x2F;jquery.gridster.js:507</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l716"><code>src&#x2F;jquery.gridster.js:716</code></a>
         
         </p>
 
@@ -6338,7 +6825,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1308"><code>src&#x2F;jquery.gridster.js:1308</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1527"><code>src&#x2F;jquery.gridster.js:1527</code></a>
         
         </p>
 
@@ -6442,7 +6929,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1326"><code>src&#x2F;jquery.gridster.js:1326</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1545"><code>src&#x2F;jquery.gridster.js:1545</code></a>
         
         </p>
 
@@ -6536,7 +7023,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2103"><code>src&#x2F;jquery.gridster.js:2103</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2363"><code>src&#x2F;jquery.gridster.js:2363</code></a>
         
         </p>
 
@@ -6608,7 +7095,7 @@ the browser is resized.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l280"><code>src&#x2F;jquery.gridster.js:280</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l485"><code>src&#x2F;jquery.gridster.js:485</code></a>
         
         </p>
 
@@ -6635,6 +7122,197 @@ mapped array of positions.</p>
                         <span class="type">Array</span>:
                     
                     Returns the instance of the Gridster class.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_remove_empty_cells" class="method item">
+    <h3 class="name"><code>remove_empty_cells</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>col</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>row</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_y</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>$exclude</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Class</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l342"><code>src&#x2F;jquery.gridster.js:342</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Move up widgets below cells represented by the arguments col, row, size<em>x,
+size</em>y.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">col</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The column where the group of cells begin.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">row</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The row where the group of cells begin.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of columns that the group of cells
+occupy.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of rows that the group of cells
+occupy.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">$exclude</code>
+                        <span class="type">HTMLElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Exclude widgets from being moved.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Class</span>:
+                    
+                    Returns the instance of the Gridster Class.
                 
             </div>
         </div>
@@ -6690,7 +7368,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l344"><code>src&#x2F;jquery.gridster.js:344</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l549"><code>src&#x2F;jquery.gridster.js:549</code></a>
         
         </p>
 
@@ -6795,7 +7473,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l211"><code>src&#x2F;jquery.gridster.js:211</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l416"><code>src&#x2F;jquery.gridster.js:416</code></a>
         
         </p>
 
@@ -6853,6 +7531,153 @@ mapped array of positions.</p>
 </div>
 
                 
+                    <div id="method_resize_widget" class="method item">
+    <h3 class="name"><code>resize_widget</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>$widget</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_x</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>size_y</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">HTMLElement</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l187"><code>src&#x2F;jquery.gridster.js:187</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Change the size of a widget.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">$widget</code>
+                        <span class="type">HTMLElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The jQuery wrapped HTMLElement
+ representing the widget.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_x</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of columns that will occupy the widget.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">size_y</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of rows that will occupy the widget.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">HTMLElement</span>:
+                    
+                    Returns $widget.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_serialize" class="method item">
     <h3 class="name"><code>serialize</code></h3>
 
@@ -6899,7 +7724,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l245"><code>src&#x2F;jquery.gridster.js:245</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l450"><code>src&#x2F;jquery.gridster.js:450</code></a>
         
         </p>
 
@@ -6997,7 +7822,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l267"><code>src&#x2F;jquery.gridster.js:267</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l472"><code>src&#x2F;jquery.gridster.js:472</code></a>
         
         </p>
 
@@ -7086,7 +7911,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1603"><code>src&#x2F;jquery.gridster.js:1603</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1820"><code>src&#x2F;jquery.gridster.js:1820</code></a>
         
         </p>
 
@@ -7195,7 +8020,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1962"><code>src&#x2F;jquery.gridster.js:1962</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2180"><code>src&#x2F;jquery.gridster.js:2180</code></a>
         
         </p>
 
@@ -7282,7 +8107,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1014"><code>src&#x2F;jquery.gridster.js:1014</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1234"><code>src&#x2F;jquery.gridster.js:1234</code></a>
         
         </p>
 
@@ -7409,7 +8234,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l639"><code>src&#x2F;jquery.gridster.js:639</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l853"><code>src&#x2F;jquery.gridster.js:853</code></a>
         
         </p>
 
@@ -7530,7 +8355,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l768"><code>src&#x2F;jquery.gridster.js:768</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l988"><code>src&#x2F;jquery.gridster.js:988</code></a>
         
         </p>
 
@@ -7635,7 +8460,7 @@ coords of each widget) in ascending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l748"><code>src&#x2F;jquery.gridster.js:748</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l968"><code>src&#x2F;jquery.gridster.js:968</code></a>
         
         </p>
 
@@ -7740,7 +8565,7 @@ each widget) placing first the empty cells upper left.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l728"><code>src&#x2F;jquery.gridster.js:728</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l943"><code>src&#x2F;jquery.gridster.js:943</code></a>
         
         </p>
 
@@ -7845,7 +8670,7 @@ each widget) in ascending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l788"><code>src&#x2F;jquery.gridster.js:788</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1008"><code>src&#x2F;jquery.gridster.js:1008</code></a>
         
         </p>
 
@@ -7956,7 +8781,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l323"><code>src&#x2F;jquery.gridster.js:323</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l528"><code>src&#x2F;jquery.gridster.js:528</code></a>
         
         </p>
 
@@ -8079,7 +8904,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1574"><code>src&#x2F;jquery.gridster.js:1574</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1793"><code>src&#x2F;jquery.gridster.js:1793</code></a>
         
         </p>
 
@@ -8183,7 +9008,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l692"><code>src&#x2F;jquery.gridster.js:692</code></a>
+        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l907"><code>src&#x2F;jquery.gridster.js:907</code></a>
         
         </p>
 

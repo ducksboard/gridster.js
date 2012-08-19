@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-14
+/*! gridster.js - v0.1.0 - 2012-08-20
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -25,6 +25,13 @@
     -moz-transition: opacity .3s, left .3s, top .3s;
     -o-transition: opacity .3s, left .3s, top .3s;
     transition: opacity .3s, left .3s, top .3s;
+}
+
+.ready .gs_w:not(.preview-holder) {
+    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
+    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;
 }
 
 .gridster .preview-holder {

@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-08-14
+/*! gridster.js - v0.1.0 - 2012-08-20
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -702,13 +702,14 @@
         min_cols: 1,
         min_rows: 15,
         max_size_x: 6,
-        max_size_y: 6,
         autogenerate_stylesheet: true,
         avoid_overlapped_widgets: true,
         serialize_params: function($w, wgd) {
             return {
                 col: wgd.col,
-                row: wgd.row
+                row: wgd.row,
+                size_x: wgd.size_x,
+                size_y: wgd.size_y
             };
         },
         collision: {},
@@ -741,8 +742,6 @@
     *    @param {Number} [options.min_cols] The minimum required columns.
     *    @param {Number} [options.min_rows] The minimum required rows.
     *    @param {Number} [options.max_size_x] The maximum number of columns
-    *     that a widget can span.
-    *    @param {Number} [options.max_size_y] The maximum number of rows
     *     that a widget can span.
     *    @param {Boolean} [options.autogenerate_stylesheet] If true, all the
     *     CSS required to position all widgets in their respective columns
@@ -786,14 +785,14 @@
     var fn = Gridster.prototype;
 
     fn.init = function() {
-      this.generate_grid_and_stylesheet();
-      this.get_widgets_from_DOM();
-      this.set_dom_grid_height();
-      this.$wrapper.addClass('ready');
-      this.draggable();
+        this.generate_grid_and_stylesheet();
+        this.get_widgets_from_DOM();
+        this.set_dom_grid_height();
+        this.$wrapper.addClass('ready');
+        this.draggable();
 
-      $(window).bind(
-        'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
+        $(window).bind(
+            'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -826,30 +825,236 @@
     * Add a new widget to the grid.
     *
     * @method add_widget
-    * @param {String} html The string representing the HTML of the widget.
-    * @param {Number} size_x The nº of rows the widget occupies horizontally.
-    * @param {Number} size_y The nº of columns the widget occupies vertically.
+    * @param {String|HTMLElement} html The string representing the HTML of the widget
+    *  or the HTMLElement.
+    * @param {Number} [size_x] The nº of rows the widget occupies horizontally.
+    * @param {Number} [size_y] The nº of columns the widget occupies vertically.
+    * @param {Number} [col] The column the widget should start in.
+    * @param {Number} [row] The row the widget should start in.
     * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     */
-    fn.add_widget = function(html, size_x, size_y) {
-        var next_pos = this.next_position(size_x, size_y);
+    fn.add_widget = function(html, size_x, size_y, col, row) {
+        var pos;
+        size_x || (size_x = 1);
+        size_y || (size_y = 1);
+
+        if (!col & !row) {
+            pos = this.next_position(size_x, size_y);
+        }else{
+            pos = {
+                col: col,
+                row: row
+            };
+
+            this.empty_cells(col, row, size_x, size_y);
+        }
 
         var $w = $(html).attr({
-                'data-col': next_pos.col,
-                'data-row': next_pos.row,
-                'data-sizex' : next_pos.size_x,
-                'data-sizey' : next_pos.size_y
+                'data-col': pos.col,
+                'data-row': pos.row,
+                'data-sizex' : size_x,
+                'data-sizey' : size_y
             }).addClass('gs_w').appendTo(this.$el).hide();
 
         this.$widgets = this.$widgets.add($w);
 
         this.register_widget($w);
 
+        this.add_faux_rows(pos.size_y);
+
         this.set_dom_grid_height();
 
         return $w.fadeIn();
     };
+
+
+
+    /**
+    * Change the size of a widget.
+    *
+    * @method resize_widget
+    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+    *  representing the widget.
+    * @param {Number} size_x The number of columns that will occupy the widget.
+    * @param {Number} size_y The number of rows that will occupy the widget.
+    * @return {HTMLElement} Returns $widget.
+    */
+    fn.resize_widget = function($widget, size_x, size_y) {
+        var wgd = $widget.coords().grid;
+        size_x || (size_x = wgd.size_x);
+        size_y || (size_y = wgd.size_y);
+
+        if (size_x > this.cols) {
+            size_x = this.cols;
+        };
+
+        var old_cells_occupied = this.get_cells_occupied(wgd);
+        var old_size_x = wgd.size_x;
+        var old_size_y = wgd.size_y;
+        var old_col = wgd.col;
+        var new_col = old_col;
+        var wider = size_x > old_size_x;
+        var taller = size_y > old_size_y;
+
+        if (old_col + size_x - 1 > this.cols) {
+            var diff = old_col + (size_x - 1) - this.cols;
+            var c = old_col - diff;
+            new_col = Math.max(1, c);
+        };
+
+        var new_grid_data = {
+            col: new_col,
+            row: wgd.row,
+            size_x: size_x,
+            size_y: size_y
+        };
+
+        var new_cells_occupied = this.get_cells_occupied(new_grid_data);
+
+        var empty_cols = [];
+        $.each(old_cells_occupied.cols, function(i, col) {
+            if ($.inArray(col, new_cells_occupied.cols) === -1) {
+                empty_cols.push(col);
+            };
+        });
+
+        var occupied_cols = [];
+        $.each(new_cells_occupied.cols, function(i, col) {
+            if ($.inArray(col, old_cells_occupied.cols) === -1) {
+                occupied_cols.push(col);
+            }
+        });
+
+        var empty_rows = [];
+        $.each(old_cells_occupied.rows, function(i, row) {
+            if ($.inArray(row, new_cells_occupied.rows) === -1) {
+                empty_rows.push(row);
+            };
+        });
+
+        var occupied_rows = [];
+        $.each(new_cells_occupied.rows, function(i, row) {
+            if ($.inArray(row, old_cells_occupied.rows) === -1) {
+                occupied_rows.push(row);
+            };
+        });
+
+        this.remove_from_gridmap(wgd);
+
+        if (occupied_cols.length) {
+            var cols_to_empty = [
+                new_col, wgd.row, size_x, Math.min(old_size_y, size_y), $widget
+            ];
+            this.empty_cells.apply(this, cols_to_empty);
+        };
+
+        if (occupied_rows.length) {
+            var rows_to_empty = [new_col, wgd.row, size_x, size_y, $widget];
+            this.empty_cells.apply(this, rows_to_empty);
+        };
+
+        wgd.col = new_col;
+        wgd.size_x = size_x;
+        wgd.size_y = size_y;
+        this.add_to_gridmap(new_grid_data, $widget);
+
+        if (size_y > old_size_y) {
+            this.add_faux_rows(size_y - old_size_y);
+        };
+
+        $widget.attr({
+            'data-col': new_col,
+            'data-sizex': size_x,
+            'data-sizey': size_y
+        });
+
+        if (empty_cols.length) {
+            var cols_to_remove_holes = [
+                empty_cols[0], wgd.row,
+                empty_cols.length,
+                Math.min(old_size_y, size_y),
+                $widget
+            ];
+
+            this.remove_empty_cells.apply(this, cols_to_remove_holes);
+        }
+
+        if (empty_rows.length) {
+            var rows_to_remove_holes = [
+                new_col, wgd.row, size_x, size_y, $widget
+            ];
+            this.remove_empty_cells.apply(this, rows_to_remove_holes);
+        }
+
+        return $widget;
+    };
+
+    /**
+    * Move down widgets in cells represented by the arguments col, row, size_x,
+    * size_y
+    *
+    * @method empty_cells
+    * @param {Number} col The column where the group of cells begin.
+    * @param {Number} row The row where the group of cells begin.
+    * @param {Number} size_x The number of columns that the group of cells
+    * occupy.
+    * @param {Number} size_y The number of rows that the group of cells
+    * occupy.
+    * @param {HTMLElement} $exclude Exclude widgets from being moved.
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.empty_cells = function(col, row, size_x, size_y, $exclude) {
+        var $nexts = this.widgets_below({
+                col: col,
+                row: row - size_y,
+                size_x: size_x,
+                size_y: size_y
+            });
+
+        $nexts.not($exclude).each($.proxy(function(i, w) {
+            var wgd = $(w).coords().grid;
+            if (!(wgd.row <= (row + size_y - 1))) { return; };
+            var diff =  (row + size_y) - wgd.row;
+            this.move_widget_down($(w), diff);
+        }, this));
+
+        this.set_dom_grid_height();
+
+        return this;
+    };
+
+
+    /**
+    * Move up widgets below cells represented by the arguments col, row, size_x,
+    * size_y.
+    *
+    * @method remove_empty_cells
+    * @param {Number} col The column where the group of cells begin.
+    * @param {Number} row The row where the group of cells begin.
+    * @param {Number} size_x The number of columns that the group of cells
+    * occupy.
+    * @param {Number} size_y The number of rows that the group of cells
+    * occupy.
+    * @param {HTMLElement} $exclude Exclude widgets from being moved.
+    * @return {Class} Returns the instance of the Gridster Class.
+    */
+    fn.remove_empty_cells = function(col, row, size_x, size_y, exclude) {
+        var $nexts = this.widgets_below({
+            col: col,
+            row: row,
+            size_x: size_x,
+            size_y: size_y
+        });
+
+        $nexts.not(exclude).each($.proxy(function(i, widget) {
+            this.move_widget_up( $(widget), size_y );
+        }, this));
+
+        this.set_dom_grid_height();
+
+        return this;
+    }
 
 
     /**
@@ -1073,7 +1278,6 @@
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
             offset_left: this.options.widget_margins[0],
-            items: '.gs_w',
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -1244,7 +1448,13 @@
         }
 
         this.$preview_holder.remove();
+
         this.$player = null;
+        this.$helper = null;
+        this.placeholder_grid_data = {};
+        this.player_grid_data = {};
+        this.cells_occupied_by_placeholder = {};
+        this.cells_occupied_by_player = {};
 
         this.set_dom_grid_height();
     };
@@ -1336,11 +1546,12 @@
     * @method set_player
     * @return {Class} Returns the instance of the Gridster Class.
     */
-    fn.set_player = function(col, row) {
-        this.empty_cells_player_occupies();
-
+    fn.set_player = function(col, row, no_player) {
         var self = this;
-        var cell = self.colliders_data[0].el.data;
+        if (!no_player) {
+            this.empty_cells_player_occupies();
+        };
+        var cell = !no_player ? self.colliders_data[0].el.data : {col: col};
         var to_col = cell.col;
         var to_row = row || cell.row;
 
@@ -1425,6 +1636,11 @@
     */
     fn.sort_by_row_asc = function(widgets) {
         widgets = widgets.sort(function(a, b) {
+            if (!a.row) {
+                a = $(a).coords().grid;
+                b = $(b).coords().grid;
+            };
+
            if (a.row > b.row) {
                return 1;
            }
@@ -1686,7 +1902,7 @@
     * @return {HTMLElement} Returns a jQuery collection of HTMLElements
     */
     fn.get_widgets_under_player = function() {
-        var cells = this.cells_occupied_by_player;
+        var cells = this.cells_occupied_by_player || {cols: [], rows: []};
         var $widgets = $([]);
 
         $.each(cells.cols, $.proxy(function(i, col) {
@@ -1956,7 +2172,6 @@
                 // if there is a widget in the player position
                 if (!this.gridmap[col]) { return true; } //next iteration
                 var $w = this.gridmap[col][row];
-
                 if (this.is_occupied(col, row) && !this.is_player($w) &&
                     $.inArray($w, used) === -1
                 ) {
@@ -2276,14 +2491,12 @@
         var $nexts = $([]);
 
         this.for_each_column_occupied(el_grid_data, function(col) {
-            self.for_each_widget_below(col, next_row,
-                function(tcol, trow) {
-                    if (!self.is_player(this) &&
-                        $.inArray(this, $nexts) === -1) {
-                            $nexts = $nexts.add(this);
-                            return true; // break
-                    }
-                });
+            self.for_each_widget_below(col, next_row, function(tcol, trow) {
+                if (!self.is_player(this) && $.inArray(this, $nexts) === -1) {
+                    $nexts = $nexts.add(this);
+                    return true; // break
+                }
+            });
         });
 
         return this.sort_by_row_asc($nexts);
@@ -2331,6 +2544,7 @@
 
         this.for_each_column_occupied(el_grid_data, function(col) {
             var $w = this.is_widget(col, prev_row);
+
             if (this.is_occupied(col, prev_row) ||
                 this.is_player(col, prev_row) ||
                 this.is_placeholder_in(col, prev_row) ||
@@ -2672,9 +2886,9 @@
     */
     fn.generate_stylesheet = function(opts) {
         var styles = '';
-        var extra_cells = 10;
-        var max_size_y = this.options.max_size_y;
         var max_size_x = this.options.max_size_x;
+        var max_rows = 0;
+        var max_cols = 0;
         var i;
         var rules;
 
@@ -2691,8 +2905,8 @@
         opts.min_widget_height = (opts.widget_margins[1] * 2) +
             opts.widget_base_dimensions[1];
 
-        var serialized_opts = $.param(opts);
         // don't duplicate stylesheets for the same configuration
+        var serialized_opts = $.param(opts);
         if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
             return false;
         }
@@ -2700,7 +2914,7 @@
         Gridster.generated_stylesheets.push(serialized_opts);
 
         /* generate CSS styles for cols */
-        for (i = opts.cols + extra_cells; i >= 0; i--) {
+        for (i = opts.cols; i >= 0; i--) {
             styles += (opts.namespace + ' [data-col="'+ (i + 1) + '"] { left:' +
                 ((i * opts.widget_base_dimensions[0]) +
                 (i * opts.widget_margins[0]) +
@@ -2708,14 +2922,14 @@
         }
 
         /* generate CSS styles for rows */
-        for (i = opts.rows + extra_cells; i >= 0; i--) {
+        for (i = opts.rows; i >= 0; i--) {
             styles += (opts.namespace + ' [data-row="' + (i + 1) + '"] { top:' +
                 ((i * opts.widget_base_dimensions[1]) +
                 (i * opts.widget_margins[1]) +
                 ((i + 1) * opts.widget_margins[1]) ) + 'px;} ');
         }
 
-        for (var y = 1; y <= max_size_y; y++) {
+        for (var y = 1; y <= opts.rows; y++) {
             styles += (opts.namespace + ' [data-sizey="' + y + '"] { height:' +
                 (y * opts.widget_base_dimensions[1] +
                 (y - 1) * (opts.widget_margins[1] * 2)) + 'px;}');
@@ -2771,7 +2985,23 @@
         for (col = cols; col > 0; col--) {
             this.gridmap[col] = [];
             for (row = rows; row > 0; row--) {
-                var coords = $({
+                this.add_faux_cell(row, col);
+            }
+        }
+        return this;
+    };
+
+
+    /**
+    * Add cell to the faux grid.
+    *
+    * @method add_faux_cell
+    * @param {Number} row The row for the new faux cell.
+    * @param {Number} col The col for the new faux cell.
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.add_faux_cell = function(row, col) {
+        var coords = $({
                         left: this.baseX + ((col - 1) * this.min_widget_width),
                         top: this.baseY + (row -1) * this.min_widget_height,
                         width: this.min_widget_width,
@@ -2782,10 +3012,36 @@
                         original_row: row
                     }).coords();
 
-                this.gridmap[col][row] = false;
-                this.faux_grid.push(coords);
-            }
+        this.gridmap[col][row] = false;
+        this.faux_grid.push(coords);
+
+        return this;
+    };
+
+
+    /**
+    * Add rows to the faux grid.
+    *
+    * @method add_faux_rows
+    * @param {Number} rows The number of rows you want to add to the faux grid.
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.add_faux_rows = function(rows) {
+        var actual_rows = this.rows;
+        var max_rows = actual_rows + (rows || 1);
+
+        for (var r = max_rows; r > actual_rows; r--) {
+            for (var c = this.cols; c >= 1; c--) {
+                this.add_faux_cell(r, c);
+            };
+        };
+
+        this.rows = max_rows;
+
+        if (this.options.autogenerate_stylesheet) {
+            this.generate_stylesheet();
         }
+
         return this;
     };
 
@@ -2841,8 +3097,6 @@
 
         var cols = Math.floor(aw / this.min_widget_width) +
                    this.options.extra_cols;
-        var rows = Math.floor(ah / this.min_widget_height) +
-                   this.options.extra_rows;
 
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr('data-col');
@@ -2851,18 +3105,16 @@
         //needed to pass tests with phantomjs
         actual_cols.length || (actual_cols = [0]);
 
-        var actual_rows = this.$widgets.map(function() {
-            return $(this).attr('data-row');
-        });
-        actual_rows = Array.prototype.slice.call(actual_rows, 0);
-        //needed to pass tests with phantomjs
-        actual_rows.length || (actual_rows = [0]);
-
         var min_cols = Math.max.apply(Math, actual_cols);
-        var min_rows = Math.max.apply(Math, actual_rows);
+
+        // get all rows that could be occupied by the current widgets
+        var max_rows = this.options.extra_rows;
+        this.$widgets.each(function(i, w){
+            max_rows += (+$(w).attr('data-sizey'));
+        });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
-        this.rows = Math.max(min_rows, rows, this.options.min_rows);
+        this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
@@ -2871,8 +3123,6 @@
             this.generate_stylesheet();
         }
 
-        /* more faux rows that needed are created so that there are cells
-         * where drag beyond the limits */
         return this.generate_faux_grid(this.rows, this.cols);
     };
 
