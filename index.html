@@ -161,6 +161,7 @@
                 <nav>
                     <ul class="m_tags">
                         <li><a href="#add_widget_method">add_widget</a></li>
+                        <li><a href="#resize_widget_method">resize_widget</a></li>
                         <li><a href="#remove_widget_method">remove_widget</a></li>
                         <li><a href="#serialize_method">serialize</a></li>
                         <li><a href="#serialize_changed_method">serialize_changed</a></li>
@@ -234,7 +235,7 @@
 
 
             <article id="add_widget_method" class="m_doc_method">
-                <h3>.add_widget( html, [size_x], [size_y] )</h3>
+                <h3>.add_widget( html, [size_x], [size_y], [col], [row] )</h3>
 
                 <div class="m_txt">
                     <p>Create a new widget with the given html and add it to the grid.</p>
@@ -247,10 +248,35 @@
                         <dd>The number of rows that the widget occupies. Defaults to <em>1</em>.</dd>
                         <dt>size_y <em>Number</em></dt>
                         <dd>The number of columns that the widget occupies. Defaults to <em>1</em>.</dd>
+                        <dt>col <em>Number</em></dt>
+                        <dd>The column the widget should start in.</dd>
+                        <dt>row <em>Number</em></dt>
+                        <dd>The row the widget should start in.</dd>
                     </dl>
 
                     <h4 class="heading-m">Returns</h4>
                     <p>Returns the jQuery wrapped HTMLElement representing the widget that's been created.</p>
+                </div>
+            </article>
+
+            <article id="resize_widget_method" class="m_doc_method">
+                <h3>.resize_widget( $widget, [size_x], [size_y] )</h3>
+
+                <div class="m_txt">
+                    <p>Change the size of a widget.</p>
+
+                    <h4 class="heading-m">Parameters</h4>
+                    <dl>
+                        <dt>$widget<em>HTMLElement</em></dt>
+                        <dd>The jQuery wrapped HTMLElement that represents the widget is going to be resized.</dd>
+                        <dt>size_x <em>Number</em></dt>
+                        <dd>The number of rows that the widget is going to span. Defaults to current size_x.</dd>
+                        <dt>size_y <em>Number</em></dt>
+                        <dd>The number of columns that the widget is going to span. Defaults to current size_y.</dd>
+                    </dl>
+
+                    <h4 class="heading-m">Returns</h4>
+                    <p>Returns the jQuery wrapped HTMLElement representing the widget that's been resized.</p>
                 </div>
             </article>
 
@@ -394,7 +420,7 @@
 </footer>
 
 <script type="text/javascript" src="assets/js/libs/jquery-1.7.2.min.js"></script>
-<script src="dist/jquery.gridster.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript">
   var gridster;
@@ -404,8 +430,7 @@
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [140, 140],
-        min_cols: 6,
-        min_rows: 20
+        min_cols: 6
     }).data('gridster');
 
   });
