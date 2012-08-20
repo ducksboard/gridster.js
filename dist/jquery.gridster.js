@@ -959,6 +959,14 @@
         wgd.size_y = size_y;
         this.add_to_gridmap(new_grid_data, $widget);
 
+        //update coords instance attributes
+        $widget.data('coords').update({
+            width: (size_x * this.options.widget_base_dimensions[0] +
+                ((size_x - 1) * this.options.widget_margins[0]) * 2),
+            height: (size_y * this.options.widget_base_dimensions[1] +
+                ((size_y - 1) * this.options.widget_margins[1]) * 2)
+        });
+
         if (size_y > old_size_y) {
             this.add_faux_rows(size_y - old_size_y);
         };
