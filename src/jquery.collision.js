@@ -188,12 +188,8 @@
 
     fn.get_closest_colliders = function(player_data_coords){
         var colliders = this.find_collisions(player_data_coords);
-        var min_area = 100;
-        colliders.sort(function(a, b){
-            if (a.area <= min_area) {
-              return 1;
-            }
 
+        colliders.sort(function(a, b) {
             /* if colliders are being overlapped by the "C" (center) region,
              * we have to set a lower index in the array to which they are placed
              * above in the grid. */
@@ -205,7 +201,7 @@
                 }
             }
 
-            if (a.area < b.area){
+            if (a.area < b.area) {
                 return 1;
             }
 
