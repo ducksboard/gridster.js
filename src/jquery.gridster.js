@@ -1218,13 +1218,14 @@
 
 
     /**
-    * Get widgets overlapping with the player.
+    * Get widgets overlapping with the player or with the object passed
+    * representing the grid cells.
     *
     * @method get_widgets_under_player
     * @return {HTMLElement} Returns a jQuery collection of HTMLElements
     */
-    fn.get_widgets_under_player = function() {
-        var cells = this.cells_occupied_by_player || {cols: [], rows: []};
+    fn.get_widgets_under_player = function(cells) {
+        cells || (cells = this.cells_occupied_by_player || {cols: [], rows: []});
         var $widgets = $([]);
 
         $.each(cells.cols, $.proxy(function(i, col) {
@@ -1258,7 +1259,7 @@
                 size_x: phgd.size_x
             });
 
-        //Prevents widgets go out of the grid
+        // Prevents widgets go out of the grid
         var right_col = (col + phgd.size_x - 1);
         if (right_col > this.cols) {
             col = col - (right_col - col);
@@ -1284,6 +1285,16 @@
                  $(widget), this.placeholder_grid_data.col - col + phgd.size_y);
             }, this));
         }
+
+
+        var $widgets_under_ph = this.get_widgets_under_player(this.cells_occupied_by_placeholder);
+        if ($widgets_under_ph.length) {
+            $widgets_under_ph.each($.proxy(function(i, widget) {
+                var $w = $(widget);
+                this.move_widget_down(
+                 $w, row + phgd.size_y - $w.data('coords').grid.row);
+            }, this));
+        };
 
     };
 
@@ -1352,21 +1363,14 @@
         var upper_rows = [];
         var min_row = 10000;
 
-        if (widget_grid_data.col < this.player_grid_data.col &&
-            (widget_grid_data.col + widget_grid_data.size_y - 1) >
-            (this.player_grid_data.col + this.player_grid_data.size_y - 1)
-         ) {
-            return false;
-        };
-
-        /* generate an array with columns as index and array with upper rows
+        /* generate an array with columns as index and array with topmost rows
          * empty as value */
         this.for_each_column_occupied(widget_grid_data, function(tcol) {
             var grid_col = this.gridmap[tcol];
             upper_rows[tcol] = [];
 
             var r = p_bottom_row + 1;
-
+            // iterate over each row
             while (--r > 0) {
                 if (this.is_widget(tcol, r) && !this.is_player_in(tcol, r)) {
                     if (!grid_col[r].is(widget_grid_data.el)) {
