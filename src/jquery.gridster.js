@@ -8,6 +8,7 @@
 ;(function($, window, document, undefined) {
 
     var defaults = {
+        namespace: '',
         widget_selector: '> li',
         widget_margins: [10, 10],
         widget_base_dimensions: [400, 225],
@@ -2365,7 +2366,7 @@
         this.rows = max_rows;
 
         if (this.options.autogenerate_stylesheet) {
-            this.generate_stylesheet();
+            this.generate_stylesheet({namespace: this.options.namespace});
         }
 
         return this;
