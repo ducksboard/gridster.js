@@ -2500,5 +2500,6 @@
      });
     };
 
+    $.Gridster = fn;
 
 }(jQuery, window, document));
