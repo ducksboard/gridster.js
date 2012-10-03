@@ -203,7 +203,7 @@
 
         if (size_x > this.cols) {
             size_x = this.cols;
-        };
+        }
 
         var old_cells_occupied = this.get_cells_occupied(wgd);
         var old_size_x = wgd.size_x;
@@ -217,7 +217,7 @@
             var diff = old_col + (size_x - 1) - this.cols;
             var c = old_col - diff;
             new_col = Math.max(1, c);
-        };
+        }
 
         var new_grid_data = {
             col: new_col,
@@ -232,7 +232,7 @@
         $.each(old_cells_occupied.cols, function(i, col) {
             if ($.inArray(col, new_cells_occupied.cols) === -1) {
                 empty_cols.push(col);
-            };
+            }
         });
 
         var occupied_cols = [];
@@ -246,14 +246,14 @@
         $.each(old_cells_occupied.rows, function(i, row) {
             if ($.inArray(row, new_cells_occupied.rows) === -1) {
                 empty_rows.push(row);
-            };
+            }
         });
 
         var occupied_rows = [];
         $.each(new_cells_occupied.rows, function(i, row) {
             if ($.inArray(row, old_cells_occupied.rows) === -1) {
                 occupied_rows.push(row);
-            };
+            }
         });
 
         this.remove_from_gridmap(wgd);
@@ -263,12 +263,12 @@
                 new_col, wgd.row, size_x, Math.min(old_size_y, size_y), $widget
             ];
             this.empty_cells.apply(this, cols_to_empty);
-        };
+        }
 
         if (occupied_rows.length) {
             var rows_to_empty = [new_col, wgd.row, size_x, size_y, $widget];
             this.empty_cells.apply(this, rows_to_empty);
-        };
+        }
 
         wgd.col = new_col;
         wgd.size_x = size_x;
@@ -342,7 +342,7 @@
 
         $nexts.not($exclude).each($.proxy(function(i, w) {
             var wgd = $(w).coords().grid;
-            if (!(wgd.row <= (row + size_y - 1))) { return; };
+            if (!(wgd.row <= (row + size_y - 1))) { return; }
             var diff =  (row + size_y) - wgd.row;
             this.move_widget_down($(w), diff);
         }, this));
@@ -382,7 +382,7 @@
         this.set_dom_grid_height();
 
         return this;
-    }
+    };
 
 
     /**
@@ -400,9 +400,10 @@
         var ga = this.gridmap;
         var cols_l = ga.length;
         var valid_pos = [];
+        var rows_l;
 
         for (var c = 1; c < cols_l; c++) {
-            var rows_l = ga[c].length;
+            rows_l = ga[c].length;
             for (var r = 1; r <= rows_l; r++) {
                 var can_move_to = this.can_move_to({
                     size_x: size_x,
@@ -534,7 +535,7 @@
         $el.data('coords').grid = wgd;
 
         this.add_to_gridmap(wgd, $el);
-        this.widgets.push($el);
+
         return this;
     };
 
@@ -695,7 +696,7 @@
         //break if dragstop has been fired
         if (this.$player === null) {
             return false;
-        };
+        }
 
         var abs_offset = {
             left: ui.position.left + this.baseX,
@@ -878,7 +879,7 @@
         var self = this;
         if (!no_player) {
             this.empty_cells_player_occupies();
-        };
+        }
         var cell = !no_player ? self.colliders_data[0].el.data : {col: col};
         var to_col = cell.col;
         var to_row = row || cell.row;
@@ -967,7 +968,7 @@
             if (!a.row) {
                 a = $(a).coords().grid;
                 b = $(b).coords().grid;
-            };
+            }
 
            if (a.row > b.row) {
                return 1;
@@ -989,7 +990,7 @@
     */
     fn.sort_by_row_and_col_asc = function(widgets) {
         widgets = widgets.sort(function(a, b) {
-           if (a.row > b.row || a.row == b.row && a.col > b.col) {
+           if (a.row > b.row || a.row === b.row && a.col > b.col) {
                return 1;
            }
            return -1;
@@ -1300,7 +1301,7 @@
                 this.move_widget_down(
                  $w, row + phgd.size_y - $w.data('coords').grid.row);
             }, this));
-        };
+        }
 
     };
 
@@ -1381,14 +1382,14 @@
                 if (this.is_widget(tcol, r) && !this.is_player_in(tcol, r)) {
                     if (!grid_col[r].is(widget_grid_data.el)) {
                         break;
-                    };
+                    }
                 }
 
                 if (!this.is_player(tcol, r) &&
                     !this.is_placeholder_in(tcol, r) &&
                     !this.is_player_in(tcol, r)) {
                     upper_rows[tcol].push(r);
-                };
+                }
 
                 if (r < min_row) {
                     min_row = r;
@@ -2197,7 +2198,7 @@
         }
 
         return $widgets;
-    }
+    };
 
 
     /**
@@ -2370,8 +2371,8 @@
         for (var r = max_rows; r > actual_rows; r--) {
             for (var c = this.cols; c >= 1; c--) {
                 this.add_faux_cell(r, c);
-            };
-        };
+            }
+        }
 
         this.rows = max_rows;
 
@@ -2396,8 +2397,8 @@
         for (var c = actual_cols; c < max_cols; c++) {
             for (var r = this.rows; r >= 1; r--) {
                 this.add_faux_cell(r, c);
-            };
-        };
+            }
+        }
 
         this.cols = max_cols;
 
@@ -2472,7 +2473,7 @@
 
         // get all rows that could be occupied by the current widgets
         var max_rows = this.options.extra_rows;
-        this.$widgets.each(function(i, w){
+        this.$widgets.each(function(i, w) {
             max_rows += (+$(w).attr('data-sizey'));
         });
 
