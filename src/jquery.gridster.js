@@ -1902,9 +1902,10 @@
     *  the widget.
     * @param {Object} col The col to check.
     * @param {Object} row The row to check.
+    * @param {Number} [max_row] The max row allowed.
     * @return {Boolean} Returns true if all cells are empty, else return false.
     */
-    fn.can_move_to = function(widget_grid_data, col, row) {
+    fn.can_move_to = function(widget_grid_data, col, row, max_row) {
         var ga = this.gridmap;
         var $w = widget_grid_data.el;
         var future_wd = {
@@ -1919,7 +1920,11 @@
         var right_col = col + widget_grid_data.size_x - 1;
         if (right_col > this.cols) {
             return false;
-        };
+        }
+
+        if (max_row && max_row < row + widget_grid_data.size_y - 1) {
+            return false;
+        }
 
         this.for_each_cell_occupied(future_wd, function(tcol, trow) {
             var $tw = this.is_widget(tcol, trow);
