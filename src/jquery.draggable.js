@@ -68,12 +68,28 @@
     fn.init = function() {
         this.calculate_positions();
         this.$container.css('position', 'relative');
-        this.enable();
+        this.disabled = false;
+        this.events();
 
         $(window).bind('resize',
             throttle($.proxy(this.calculate_positions, this), 200));
     };
 
+    fn.events = function() {
+        this.$container.on('selectstart', this.on_select_start);
+
+        this.$container.on(pointer_events.start, this.options.items, $.proxy(
+            this.drag_handler, this));
+
+        this.$body.on(pointer_events.end, $.proxy(function(e) {
+            this.is_dragging = false;
+            if (this.disabled) { return; }
+            this.$body.off(pointer_events.move);
+            if (this.drag_start) {
+                this.on_dragstop(e);
+            }
+        }, this));
+    };
 
     fn.get_actual_pos = function($el) {
         var pos = $el.position();
@@ -85,7 +101,7 @@
         if (isTouch) {
             var oe = e.originalEvent;
             e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
-        };
+        }
 
         return {
             left: e.clientX,
@@ -144,7 +160,7 @@
                 $window.scrollTop(nextScrollTop);
                 this.scrollOffset = this.scrollOffset + 30;
             }
-        };
+        }
 
         if (abs_mouse_top <= mouse_up_zone) {
             nextScrollTop = scrollTop - 30;
@@ -152,26 +168,25 @@
                 $window.scrollTop(nextScrollTop);
                 this.scrollOffset = this.scrollOffset - 30;
             }
-        };
-    }
+        }
+    };
 
 
     fn.calculate_positions = function(e) {
         this.window_height = $window.height();
-    }
+    };
 
 
     fn.drag_handler = function(e) {
         var node = e.target.nodeName;
-
-        if (e.which !== 1 && !isTouch) {
+        if (this.disabled || e.which !== 1 && !isTouch) {
             return;
         }
 
         if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT' ||
             node === 'BUTTON') {
             return;
-        };
+        }
 
         var self = this;
         var first = true;
@@ -199,7 +214,7 @@
                 return false;
             }
 
-            if (self.is_dragging == true) {
+            if (self.is_dragging === true) {
                 self.on_dragmove.call(self, mme);
             }
 
@@ -290,30 +305,16 @@
     };
 
     fn.on_select_start = function(e) {
+        if (this.disabled) { return; }
         return false;
-    }
-
-
-    fn.enable = function(){
-        this.$container.on('selectstart', this.on_select_start);
-
-        this.$container.on(pointer_events.start, this.options.items, $.proxy(
-            this.drag_handler, this));
-
-        this.$body.on(pointer_events.end, $.proxy(function(e) {
-            this.is_dragging = false;
-            this.$body.off(pointer_events.move);
-            if (this.drag_start) {
-                this.on_dragstop(e);
-            }
-        }, this));
     };
 
+    fn.enable = function() {
+        this.disabled = false;
+    };
 
-    fn.disable = function(){
-        this.$container.off(pointer_events.start);
-        this.$body.off(pointer_events.end);
-        this.$container.off('selectstart', this.on_select_start);
+    fn.disable = function() {
+        this.disabled = true;
     };
 
 
@@ -321,7 +322,6 @@
         this.disable();
         $.removeData(this.$container, 'drag');
     };
-
 
     //jQuery adapter
     $.fn.drag = function ( options ) {
