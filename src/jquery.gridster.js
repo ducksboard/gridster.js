@@ -2350,6 +2350,10 @@
                         original_row: row
                     }).coords();
 
+        if (!$.isArray(this.gridmap[col])) {
+            this.gridmap[col] = [];
+        }
+
         this.gridmap[col][row] = false;
         this.faux_grid.push(coords);
 
