@@ -2233,7 +2233,7 @@
         opts || (opts = {});
         opts.cols || (opts.cols = this.cols);
         opts.rows || (opts.rows = this.rows);
-        opts.namespace || (opts.namespace = '');
+        opts.namespace || (opts.namespace = this.options.namespace);
         opts.widget_base_dimensions ||
             (opts.widget_base_dimensions = this.options.widget_base_dimensions);
         opts.widget_margins ||
