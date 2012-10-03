@@ -16,6 +16,12 @@ module.exports = function(grunt) {
         src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       },
+
+      dist_extras_js: {
+        src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>', '<file_strip_banner:src/<%= pkg.name %>.extras.js>'],
+        dest: 'dist/<%= pkg.name %>.with-extras.js'
+      },
+
       dist_css: {
         src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
@@ -25,6 +31,12 @@ module.exports = function(grunt) {
         src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
         dest: 'gh-pages/dist/<%= pkg.name %>.js'
       },
+
+      dist_extras_demo_js: {
+        src: ['<banner:meta.banner>', '<file_strip_banner:src/jquery.coords.js>', '<file_strip_banner:src/jquery.collision.js>', 'src/utils.js', '<file_strip_banner:src/jquery.draggable.js>', '<file_strip_banner:src/<%= pkg.name %>.js>', '<file_strip_banner:src/<%= pkg.name %>.extras.js>'],
+        dest: 'gh-pages/dist/<%= pkg.name %>.with-extras.js'
+      },
+
       dist_demo_css: {
         src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
         dest: 'gh-pages/dist/<%= pkg.name %>.css'
@@ -36,9 +48,19 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       },
 
+      dist_extras: {
+        src: ['<banner:meta.banner>', '<config:concat.dist_extras_js.dest>'],
+        dest: 'dist/<%= pkg.name %>.with-extras.min.js'
+      },
+
       dist_demo: {
         src: ['<banner:meta.banner>', '<config:concat.dist_js.dest>'],
         dest: 'gh-pages/dist/<%= pkg.name %>.min.js'
+      },
+
+      dist_extras_demo: {
+        src: ['<banner:meta.banner>', '<config:concat.dist_extras_js.dest>'],
+        dest: 'gh-pages/dist/<%= pkg.name %>.with-extras.min.js'
       }
     },
     mincss: {
