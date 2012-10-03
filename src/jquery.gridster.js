@@ -177,6 +177,7 @@
         this.register_widget($w);
 
         this.add_faux_rows(pos.size_y);
+        this.add_faux_cols(pos.size_x);
 
         this.set_dom_grid_height();
 
@@ -284,7 +285,11 @@
 
         if (size_y > old_size_y) {
             this.add_faux_rows(size_y - old_size_y);
-        };
+        }
+
+        if (size_x > old_size_x) {
+            this.add_faux_cols(size_x - old_size_x);
+        }
 
         $widget.attr({
             'data-col': new_col,
@@ -2366,7 +2371,33 @@
         this.rows = max_rows;
 
         if (this.options.autogenerate_stylesheet) {
-            this.generate_stylesheet({namespace: this.options.namespace});
+            this.generate_stylesheet();
+        }
+
+        return this;
+    };
+
+     /**
+    * Add cols to the faux grid.
+    *
+    * @method add_faux_cols
+    * @param {Number} cols The number of cols you want to add to the faux grid.
+    * @return {Object} Returns the instance of the Gridster class.
+    */
+    fn.add_faux_cols = function(cols) {
+        var actual_cols = this.cols;
+        var max_cols = actual_cols + (cols || 1);
+
+        for (var c = actual_cols; c < max_cols; c++) {
+            for (var r = this.rows; r >= 1; r--) {
+                this.add_faux_cell(r, c);
+            };
+        };
+
+        this.cols = max_cols;
+
+        if (this.options.autogenerate_stylesheet) {
+            this.generate_stylesheet();
         }
 
         return this;
