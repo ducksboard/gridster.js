@@ -13,7 +13,8 @@
         distance: 1,
         limit: true,
         offset_left: 0,
-        autoscroll: true
+        autoscroll: true,
+        ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON']
         // ,drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -76,7 +77,7 @@
     };
 
     fn.events = function() {
-        this.$container.on('selectstart', this.on_select_start);
+        this.$container.on('selectstart', $.proxy(this.on_select_start, this));
 
         this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
@@ -183,8 +184,7 @@
             return;
         }
 
-        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT' ||
-            node === 'BUTTON') {
+        if (this.ignore_drag(e)) {
             return;
         }
 
@@ -306,6 +306,11 @@
 
     fn.on_select_start = function(e) {
         if (this.disabled) { return; }
+
+        if (this.ignore_drag(e)) {
+            return;
+        }
+
         return false;
     };
 
@@ -321,6 +326,10 @@
     fn.destroy = function(){
         this.disable();
         $.removeData(this.$container, 'drag');
+    };
+
+    fn.ignore_drag = function(event) {
+        return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
     };
 
     //jQuery adapter
