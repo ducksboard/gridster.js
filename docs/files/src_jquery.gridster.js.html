@@ -104,7 +104,7 @@
 
     var defaults = {
         namespace: &#x27;&#x27;,
-        widget_selector: &#x27;&gt; li&#x27;,
+        widget_selector: &#x27;li&#x27;,
         widget_margins: [10, 10],
         widget_base_dimensions: [400, 225],
         extra_rows: 0,
@@ -179,7 +179,7 @@
       this.options = $.extend(true, defaults, options);
       this.$el = $(el);
       this.$wrapper = this.$el.parent();
-      this.$widgets = $(this.options.widget_selector, this.$el).addClass(&#x27;gs_w&#x27;);
+      this.$widgets = this.$el.children(this.options.widget_selector).addClass(&#x27;gs_w&#x27;);
       this.widgets = [];
       this.$changed = $([]);
       this.wrapper_width = this.$wrapper.width();
@@ -272,6 +272,7 @@
         this.register_widget($w);
 
         this.add_faux_rows(pos.size_y);
+        this.add_faux_cols(pos.size_x);
 
         this.set_dom_grid_height();
 
@@ -297,7 +298,7 @@
 
         if (size_x &gt; this.cols) {
             size_x = this.cols;
-        };
+        }
 
         var old_cells_occupied = this.get_cells_occupied(wgd);
         var old_size_x = wgd.size_x;
@@ -311,7 +312,7 @@
             var diff = old_col + (size_x - 1) - this.cols;
             var c = old_col - diff;
             new_col = Math.max(1, c);
-        };
+        }
 
         var new_grid_data = {
             col: new_col,
@@ -326,7 +327,7 @@
         $.each(old_cells_occupied.cols, function(i, col) {
             if ($.inArray(col, new_cells_occupied.cols) === -1) {
                 empty_cols.push(col);
-            };
+            }
         });
 
         var occupied_cols = [];
@@ -340,14 +341,14 @@
         $.each(old_cells_occupied.rows, function(i, row) {
             if ($.inArray(row, new_cells_occupied.rows) === -1) {
                 empty_rows.push(row);
-            };
+            }
         });
 
         var occupied_rows = [];
         $.each(new_cells_occupied.rows, function(i, row) {
             if ($.inArray(row, old_cells_occupied.rows) === -1) {
                 occupied_rows.push(row);
-            };
+            }
         });
 
         this.remove_from_gridmap(wgd);
@@ -357,12 +358,12 @@
                 new_col, wgd.row, size_x, Math.min(old_size_y, size_y), $widget
             ];
             this.empty_cells.apply(this, cols_to_empty);
-        };
+        }
 
         if (occupied_rows.length) {
             var rows_to_empty = [new_col, wgd.row, size_x, size_y, $widget];
             this.empty_cells.apply(this, rows_to_empty);
-        };
+        }
 
         wgd.col = new_col;
         wgd.size_x = size_x;
@@ -379,7 +380,11 @@
 
         if (size_y &gt; old_size_y) {
             this.add_faux_rows(size_y - old_size_y);
-        };
+        }
+
+        if (size_x &gt; old_size_x) {
+            this.add_faux_cols(size_x - old_size_x);
+        }
 
         $widget.attr({
             &#x27;data-col&#x27;: new_col,
@@ -432,7 +437,7 @@
 
         $nexts.not($exclude).each($.proxy(function(i, w) {
             var wgd = $(w).coords().grid;
-            if (!(wgd.row &lt;= (row + size_y - 1))) { return; };
+            if (!(wgd.row &lt;= (row + size_y - 1))) { return; }
             var diff =  (row + size_y) - wgd.row;
             this.move_widget_down($(w), diff);
         }, this));
@@ -472,7 +477,7 @@
         this.set_dom_grid_height();
 
         return this;
-    }
+    };
 
 
     &#x2F;**
@@ -490,9 +495,10 @@
         var ga = this.gridmap;
         var cols_l = ga.length;
         var valid_pos = [];
+        var rows_l;
 
         for (var c = 1; c &lt; cols_l; c++) {
-            var rows_l = ga[c].length;
+            rows_l = ga[c].length;
             for (var r = 1; r &lt;= rows_l; r++) {
                 var can_move_to = this.can_move_to({
                     size_x: size_x,
@@ -624,7 +630,7 @@
         $el.data(&#x27;coords&#x27;).grid = wgd;
 
         this.add_to_gridmap(wgd, $el);
-        this.widgets.push($el);
+
         return this;
     };
 
@@ -785,7 +791,7 @@
         &#x2F;&#x2F;break if dragstop has been fired
         if (this.$player === null) {
             return false;
-        };
+        }
 
         var abs_offset = {
             left: ui.position.left + this.baseX,
@@ -968,7 +974,7 @@
         var self = this;
         if (!no_player) {
             this.empty_cells_player_occupies();
-        };
+        }
         var cell = !no_player ? self.colliders_data[0].el.data : {col: col};
         var to_col = cell.col;
         var to_row = row || cell.row;
@@ -1057,7 +1063,7 @@
             if (!a.row) {
                 a = $(a).coords().grid;
                 b = $(b).coords().grid;
-            };
+            }
 
            if (a.row &gt; b.row) {
                return 1;
@@ -1079,7 +1085,7 @@
     *&#x2F;
     fn.sort_by_row_and_col_asc = function(widgets) {
         widgets = widgets.sort(function(a, b) {
-           if (a.row &gt; b.row || a.row == b.row &amp;&amp; a.col &gt; b.col) {
+           if (a.row &gt; b.row || a.row === b.row &amp;&amp; a.col &gt; b.col) {
                return 1;
            }
            return -1;
@@ -1390,7 +1396,7 @@
                 this.move_widget_down(
                  $w, row + phgd.size_y - $w.data(&#x27;coords&#x27;).grid.row);
             }, this));
-        };
+        }
 
     };
 
@@ -1471,14 +1477,14 @@
                 if (this.is_widget(tcol, r) &amp;&amp; !this.is_player_in(tcol, r)) {
                     if (!grid_col[r].is(widget_grid_data.el)) {
                         break;
-                    };
+                    }
                 }
 
                 if (!this.is_player(tcol, r) &amp;&amp;
                     !this.is_placeholder_in(tcol, r) &amp;&amp;
                     !this.is_player_in(tcol, r)) {
                     upper_rows[tcol].push(r);
-                };
+                }
 
                 if (r &lt; min_row) {
                     min_row = r;
@@ -1992,9 +1998,10 @@
     *  the widget.
     * @param {Object} col The col to check.
     * @param {Object} row The row to check.
+    * @param {Number} [max_row] The max row allowed.
     * @return {Boolean} Returns true if all cells are empty, else return false.
     *&#x2F;
-    fn.can_move_to = function(widget_grid_data, col, row) {
+    fn.can_move_to = function(widget_grid_data, col, row, max_row) {
         var ga = this.gridmap;
         var $w = widget_grid_data.el;
         var future_wd = {
@@ -2009,7 +2016,11 @@
         var right_col = col + widget_grid_data.size_x - 1;
         if (right_col &gt; this.cols) {
             return false;
-        };
+        }
+
+        if (max_row &amp;&amp; max_row &lt; row + widget_grid_data.size_y - 1) {
+            return false;
+        }
 
         this.for_each_cell_occupied(future_wd, function(tcol, trow) {
             var $tw = this.is_widget(tcol, trow);
@@ -2282,7 +2293,7 @@
         }
 
         return $widgets;
-    }
+    };
 
 
     &#x2F;**
@@ -2317,7 +2328,7 @@
         opts || (opts = {});
         opts.cols || (opts.cols = this.cols);
         opts.rows || (opts.rows = this.rows);
-        opts.namespace || (opts.namespace = &#x27;&#x27;);
+        opts.namespace || (opts.namespace = this.options.namespace);
         opts.widget_base_dimensions ||
             (opts.widget_base_dimensions = this.options.widget_base_dimensions);
         opts.widget_margins ||
@@ -2434,6 +2445,10 @@
                         original_row: row
                     }).coords();
 
+        if (!$.isArray(this.gridmap[col])) {
+            this.gridmap[col] = [];
+        }
+
         this.gridmap[col][row] = false;
         this.faux_grid.push(coords);
 
@@ -2455,13 +2470,39 @@
         for (var r = max_rows; r &gt; actual_rows; r--) {
             for (var c = this.cols; c &gt;= 1; c--) {
                 this.add_faux_cell(r, c);
-            };
-        };
+            }
+        }
 
         this.rows = max_rows;
 
         if (this.options.autogenerate_stylesheet) {
-            this.generate_stylesheet({namespace: this.options.namespace});
+            this.generate_stylesheet();
+        }
+
+        return this;
+    };
+
+     &#x2F;**
+    * Add cols to the faux grid.
+    *
+    * @method add_faux_cols
+    * @param {Number} cols The number of cols you want to add to the faux grid.
+    * @return {Object} Returns the instance of the Gridster class.
+    *&#x2F;
+    fn.add_faux_cols = function(cols) {
+        var actual_cols = this.cols;
+        var max_cols = actual_cols + (cols || 1);
+
+        for (var c = actual_cols; c &lt; max_cols; c++) {
+            for (var r = this.rows; r &gt;= 1; r--) {
+                this.add_faux_cell(r, c);
+            }
+        }
+
+        this.cols = max_cols;
+
+        if (this.options.autogenerate_stylesheet) {
+            this.generate_stylesheet();
         }
 
         return this;
@@ -2531,7 +2572,7 @@
 
         &#x2F;&#x2F; get all rows that could be occupied by the current widgets
         var max_rows = this.options.extra_rows;
-        this.$widgets.each(function(i, w){
+        this.$widgets.each(function(i, w) {
             max_rows += (+$(w).attr(&#x27;data-sizey&#x27;));
         });
 
@@ -2558,6 +2599,7 @@
      });
     };
 
+    $.Gridster = fn;
 
 }(jQuery, window, document));
 
