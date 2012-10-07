@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-10-03
+/*! gridster.js - v0.1.0 - 2012-10-07
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -365,7 +365,8 @@
         distance: 1,
         limit: true,
         offset_left: 0,
-        autoscroll: true
+        autoscroll: true,
+        ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON']
         // ,drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -428,7 +429,7 @@
     };
 
     fn.events = function() {
-        this.$container.on('selectstart', this.on_select_start);
+        this.$container.on('selectstart', $.proxy(this.on_select_start, this));
 
         this.$container.on(pointer_events.start, this.options.items, $.proxy(
             this.drag_handler, this));
@@ -535,8 +536,7 @@
             return;
         }
 
-        if (node === 'INPUT' || node === 'TEXTAREA' || node === 'SELECT' ||
-            node === 'BUTTON') {
+        if (this.ignore_drag(e)) {
             return;
         }
 
@@ -658,6 +658,11 @@
 
     fn.on_select_start = function(e) {
         if (this.disabled) { return; }
+
+        if (this.ignore_drag(e)) {
+            return;
+        }
+
         return false;
     };
 
@@ -673,6 +678,10 @@
     fn.destroy = function(){
         this.disable();
         $.removeData(this.$container, 'drag');
+    };
+
+    fn.ignore_drag = function(event) {
+        return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
     };
 
     //jQuery adapter
@@ -691,7 +700,7 @@
 
     var defaults = {
         namespace: '',
-        widget_selector: '> li',
+        widget_selector: 'li',
         widget_margins: [10, 10],
         widget_base_dimensions: [400, 225],
         extra_rows: 0,
@@ -766,7 +775,7 @@
       this.options = $.extend(true, defaults, options);
       this.$el = $(el);
       this.$wrapper = this.$el.parent();
-      this.$widgets = $(this.options.widget_selector, this.$el).addClass('gs_w');
+      this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
       this.widgets = [];
       this.$changed = $([]);
       this.wrapper_width = this.$wrapper.width();
@@ -1983,7 +1992,7 @@
                 this.move_widget_down(
                  $w, row + phgd.size_y - $w.data('coords').grid.row);
             }, this));
-        };
+        }
 
     };
 
@@ -2064,14 +2073,14 @@
                 if (this.is_widget(tcol, r) && !this.is_player_in(tcol, r)) {
                     if (!grid_col[r].is(widget_grid_data.el)) {
                         break;
-                    };
+                    }
                 }
 
                 if (!this.is_player(tcol, r) &&
                     !this.is_placeholder_in(tcol, r) &&
                     !this.is_player_in(tcol, r)) {
                     upper_rows[tcol].push(r);
-                };
+                }
 
                 if (r < min_row) {
                     min_row = r;
@@ -2880,7 +2889,7 @@
         }
 
         return $widgets;
-    }
+    };
 
 
     /**
@@ -3057,8 +3066,8 @@
         for (var r = max_rows; r > actual_rows; r--) {
             for (var c = this.cols; c >= 1; c--) {
                 this.add_faux_cell(r, c);
-            };
-        };
+            }
+        }
 
         this.rows = max_rows;
 
@@ -3083,8 +3092,8 @@
         for (var c = actual_cols; c < max_cols; c++) {
             for (var r = this.rows; r >= 1; r--) {
                 this.add_faux_cell(r, c);
-            };
-        };
+            }
+        }
 
         this.cols = max_cols;
 
