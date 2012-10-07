@@ -9,7 +9,7 @@
 
     var defaults = {
         namespace: '',
-        widget_selector: '> li',
+        widget_selector: 'li',
         widget_margins: [10, 10],
         widget_base_dimensions: [400, 225],
         extra_rows: 0,
@@ -84,7 +84,7 @@
       this.options = $.extend(true, defaults, options);
       this.$el = $(el);
       this.$wrapper = this.$el.parent();
-      this.$widgets = $(this.options.widget_selector, this.$el).addClass('gs_w');
+      this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
       this.widgets = [];
       this.$changed = $([]);
       this.wrapper_width = this.$wrapper.width();
