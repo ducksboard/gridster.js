@@ -14,7 +14,8 @@
         limit: true,
         offset_left: 0,
         autoscroll: true,
-        ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON']
+        ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
+        handle: null
         // ,drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -329,6 +330,10 @@
     };
 
     fn.ignore_drag = function(event) {
+        if (this.options.handle) {
+            return !$(event.target).is(this.options.handle);
+        }
+
         return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
     };
 
