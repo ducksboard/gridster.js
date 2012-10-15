@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2012-10-07
+/*! gridster.js - v0.1.0 - 2012-10-15
 * http://gridster.net/
 * Copyright (c) 2012 ducksboard; Licensed MIT */
 
@@ -868,7 +868,7 @@
         this.register_widget($w);
 
         this.add_faux_rows(pos.size_y);
-        this.add_faux_cols(pos.size_x);
+        //this.add_faux_cols(pos.size_x);
 
         this.set_dom_grid_height();
 
