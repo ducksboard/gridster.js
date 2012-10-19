@@ -15,7 +15,7 @@
         offset_left: 0,
         autoscroll: true,
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
-        handle: ''
+        handle: null
         // ,drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -59,7 +59,6 @@
       this.options = $.extend({}, defaults, options);
       this.$body = $(document.body);
       this.$container = $(el);
-      this.$handle = this.options.handle;
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
       this.player_min_left = 0 + this.options.offset_left;
@@ -331,15 +330,11 @@
     };
 
     fn.ignore_drag = function(event) {
-        if (this.$handle.length > 0) {
-            if ($(event.target).is(this.$handle)) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
+        if (this.options.handle) {
+            return !$(event.target).is(this.options.handle);
         }
+
+        return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
     };
 
     //jQuery adapter
