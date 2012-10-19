@@ -109,7 +109,8 @@
         limit: true,
         offset_left: 0,
         autoscroll: true,
-        ignore_dragging: [&#x27;INPUT&#x27;, &#x27;TEXTAREA&#x27;, &#x27;SELECT&#x27;, &#x27;BUTTON&#x27;]
+        ignore_dragging: [&#x27;INPUT&#x27;, &#x27;TEXTAREA&#x27;, &#x27;SELECT&#x27;, &#x27;BUTTON&#x27;],
+        handle: null
         &#x2F;&#x2F; ,drag: function(e){},
         &#x2F;&#x2F; start : function(e, ui){},
         &#x2F;&#x2F; stop : function(e){}
@@ -424,6 +425,10 @@
     };
 
     fn.ignore_drag = function(event) {
+        if (this.options.handle) {
+            return !$(event.target).is(this.options.handle);
+        }
+
         return $.inArray(event.target.nodeName, this.options.ignore_dragging) &gt;= 0;
     };
 
