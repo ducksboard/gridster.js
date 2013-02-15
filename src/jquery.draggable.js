@@ -73,24 +73,26 @@
         this.disabled = false;
         this.events();
 
-        $(window).bind('resize',
-            throttle($.proxy(this.calculate_positions, this), 200));
+        this.on_window_resize = throttle($.proxy(this.calculate_positions, this), 200);
+        $(window).bind('resize', this.on_window_resize);
     };
 
     fn.events = function() {
-        this.$container.on('selectstart', $.proxy(this.on_select_start, this));
+        this.proxied_on_select_start = $.proxy(this.on_select_start, this);
+        this.$container.on('selectstart', this.proxied_on_select_start);
 
-        this.$container.on(pointer_events.start, this.options.items, $.proxy(
-            this.drag_handler, this));
+        this.proxied_drag_handler = $.proxy(this.drag_handler, this);
+        this.$container.on(pointer_events.start, this.options.items, this.proxied_drag_handler);
 
-        this.$body.on(pointer_events.end, $.proxy(function(e) {
+        this.proxied_pointer_events_end = $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
             this.$body.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
-        }, this));
+        }, this);
+        this.$body.on(pointer_events.end, this.proxied_pointer_events_end);
     };
 
     fn.get_actual_pos = function($el) {
@@ -197,7 +199,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on(pointer_events.move, function(mme){
+        this.on_pointer_events_move = function(mme){
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -205,7 +207,7 @@
                 mouse_actual_pos.top - self.mouse_init_pos.top);
             if (!(diff_x > self.options.distance ||
                 diff_y > self.options.distance)
-            ) {
+                ) {
                 return false;
             }
 
@@ -220,7 +222,9 @@
             }
 
             return false;
-        });
+        };
+
+        this.$body.on(pointer_events.move, this.on_pointer_events_move);
 
         return false;
     };
@@ -326,6 +330,13 @@
 
     fn.destroy = function(){
         this.disable();
+
+        this.$container.off('selectstart', this.proxied_on_select_start);
+        this.$container.off(pointer_events.start, this.proxied_drag_handler);
+        this.$body.off(pointer_events.end, this.proxied_pointer_events_end);
+        this.$body.off(pointer_events.move, this.on_pointer_events_move);
+        $(window).unbind('resize', this.on_window_resize);
+
         $.removeData(this.$container, 'drag');
     };
 

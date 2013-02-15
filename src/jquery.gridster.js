@@ -106,9 +106,9 @@
         this.$wrapper.addClass('ready');
         this.draggable();
 
-        this.resize_callback = throttle($.proxy(this.recalculate_faux_grid, this), 200);
+        this.on_window_resize = throttle($.proxy(this.recalculate_faux_grid, this), 200);
 
-        $(window).bind('resize', this.resize_callback);
+        $(window).bind('resize', this.on_window_resize);
     };
 
 
@@ -2529,7 +2529,7 @@
      */
     fn.destroy = function(){
         // remove bound callback on window resize
-        $(window).unbind('resize', this.resize_callback);
+        $(window).unbind('resize', this.on_window_resize);
 
         // TODO: remove draggable bindings
         this.drag_api.destroy();
