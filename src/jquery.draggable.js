@@ -16,7 +16,7 @@
         autoscroll: true,
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
         handle: null
-        // ,drag: function(e){},
+        // drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
     };

@@ -364,7 +364,7 @@
     * occupy.
     * @param {Number} size_y The number of rows that the group of cells
     * occupy.
-    * @param {HTMLElement} $exclude Exclude widgets from being moved.
+    * @param {HTMLElement} exclude Exclude widgets from being moved.
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.remove_empty_cells = function(col, row, size_x, size_y, exclude) {
@@ -665,8 +665,8 @@
     * This function is executed when the player begins to be dragged.
     *
     * @method on_start_drag
-    * @param {Event} The original browser event
-    * @param {Object} A prepared ui object.
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object.
     */
     fn.on_start_drag = function(event, ui) {
 
@@ -716,8 +716,8 @@
     * This function is executed when the player is being dragged.
     *
     * @method on_drag
-    * @param {Event} The original browser event
-    * @param {Object} A prepared ui object.
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object.
     */
     fn.on_drag = function(event, ui) {
         //break if dragstop has been fired
@@ -759,8 +759,8 @@
     * This function is executed when the player stops being dragged.
     *
     * @method on_stop_drag
-    * @param {Event} The original browser event
-    * @param {Object} A prepared ui object.
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object.
     */
     fn.on_stop_drag = function(event, ui) {
         this.$helper.add(this.$player).add(this.$wrapper)
@@ -829,7 +829,7 @@
     */
     fn.on_overlapped_column_change = function(start_callback, stop_callback) {
         if (!this.colliders_data.length) {
-            return;
+            return this;
         }
         var cols = this.get_targeted_columns(
             this.colliders_data[0].el.data.col);
@@ -862,14 +862,14 @@
     *
     * @param {Function} start_callback Function executed when a new row begins
     *  to be overlapped. The row is passed as first argument.
-    * @param {Function} stop_callback Function executed when a row stops being
+    * @param {Function} end_callback Function executed when a row stops being
     *  overlapped. The row is passed as first argument.
     * @method on_overlapped_row_change
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.on_overlapped_row_change = function(start_callback, end_callback) {
         if (!this.colliders_data.length) {
-            return;
+            return this;
         }
         var rows = this.get_targeted_rows(this.colliders_data[0].el.data.row);
         var last_n_rows = this.last_rows.length;
@@ -895,12 +895,11 @@
     /**
     * Sets the current position of the player
     *
-    * @param {Function} start_callback Function executed when a new row begins
-    *  to be overlapped. The row is passed as first argument.
-    * @param {Function} stop_callback Function executed when a row stops being
-    *  overlapped. The row is passed as first argument.
+    * @param {Number} col
+    * @param {Number} row
+    * @param {Boolean} no_player
     * @method set_player
-    * @return {Class} Returns the instance of the Gridster Class.
+    * @return {object}
     */
     fn.set_player = function(col, row, no_player) {
         var self = this;
@@ -951,9 +950,9 @@
     * a upper row and which not.
     *
     * @method widgets_contraints
-    * @param {HTMLElements} $widgets A jQuery wrapped collection of
+    * @param {jQuery} $widgets A jQuery wrapped collection of
     * HTMLElements.
-    * @return {Array} Returns a literal Object with two keys: `can_go_up` &
+    * @return {object} Returns a literal Object with two keys: `can_go_up` &
     * `can_not_go_up`. Each contains a set of HTMLElements.
     */
     fn.widgets_constraints = function($widgets) {
@@ -1071,7 +1070,7 @@
     * each widget) in descending way.
     *
     * @method manage_movements
-    * @param {HTMLElements} $widgets A jQuery collection of HTMLElements
+    * @param {jQuery} $widgets A jQuery collection of HTMLElements
     *  representing the widgets you want to move.
     * @param {Number} to_col The column to which we want to move the widgets.
     * @param {Number} to_row The row to which we want to move the widgets.
@@ -1518,7 +1517,7 @@
     * Get widgets overlapping with the player.
     *
     * @method get_widgets_overlapped
-    * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
+    * @return {jQuery} Returns a jQuery collection of HTMLElements.
     */
     fn.get_widgets_overlapped = function() {
         var $w;
@@ -1551,7 +1550,7 @@
     *
     * @method on_start_overlapping_column
     * @param {Number} col The collided column.
-    * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
+    * @return {jQuery} Returns a jQuery collection of HTMLElements.
     */
     fn.on_start_overlapping_column = function(col) {
         this.set_player(col, false);
@@ -1562,8 +1561,8 @@
     * A callback executed when the player begins to collide with a row.
     *
     * @method on_start_overlapping_row
-    * @param {Number} col The collided row.
-    * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
+    * @param {Number} row The collided row.
+    * @return {jQuery} Returns a jQuery collection of HTMLElements.
     */
     fn.on_start_overlapping_row = function(row) {
         this.set_player(false, row);
@@ -1575,7 +1574,7 @@
     *
     * @method on_stop_overlapping_column
     * @param {Number} col The collided row.
-    * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
+    * @return {jQuery} Returns a jQuery collection of HTMLElements.
     */
     fn.on_stop_overlapping_column = function(col) {
         this.set_player(col, false);
@@ -1593,7 +1592,7 @@
     *
     * @method on_stop_overlapping_row
     * @param {Number} row The collided row.
-    * @return {HTMLElements} Returns a jQuery collection of HTMLElements.
+    * @return {jQuery} Returns a jQuery collection of HTMLElements.
     */
     fn.on_stop_overlapping_row = function(row) {
         this.set_player(false, row);
@@ -1703,9 +1702,9 @@
     * Move down the specified widget and all below it.
     *
     * @method move_widget_down
-    * @param {HTMLElement} $widget The jQuery object representing the widget
+    * @param {jQuery} $widget The jQuery object representing the widget
     *  you want to move.
-    * @param {Number} The number of cells that the widget has to move.
+    * @param {Number} y_units The number of cells that the widget has to move.
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.move_widget_down = function($widget, y_units) {
@@ -1841,7 +1840,7 @@
     *
     * @method widgets_below
     * @param {HTMLElement} $el The jQuery wrapped HTMLElement.
-    * @return {HTMLElements} A jQuery collection of HTMLElements.
+    * @return {jQuery} A jQuery collection of HTMLElements.
     */
     fn.widgets_below = function($el) {
         var el_grid_data = $.isPlainObject($el) ? $el : $el.coords().grid;
