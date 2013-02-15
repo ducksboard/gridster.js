@@ -106,8 +106,9 @@
         this.$wrapper.addClass('ready');
         this.draggable();
 
-        $(window).bind(
-            'resize', throttle($.proxy(this.recalculate_faux_grid, this), 200));
+        this.resize_callback = throttle($.proxy(this.recalculate_faux_grid, this), 200);
+
+        $(window).bind('resize', this.resize_callback);
     };
 
 
@@ -2518,6 +2519,25 @@
         }
 
         return this.generate_faux_grid(this.rows, this.cols);
+    };
+
+    /**
+     * Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks
+     *
+     * @method destroy
+     * @return {undefined}
+     */
+    fn.destroy = function(){
+        // remove bound callback on window resize
+        $(window).unbind('resize', this.resize_callback);
+
+        // TODO: remove draggable bindings
+        this.drag_api.destroy();
+
+        // lastly, remove gridster element
+        // this will additionally cause any data associated to this element to be removed, including this
+        // very gridster instance
+        this.$el.remove();
     };
 
 
