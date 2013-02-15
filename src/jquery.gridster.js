@@ -2531,9 +2531,10 @@
         // remove bound callback on window resize
         $(window).unbind('resize', this.on_window_resize);
 
-        // TODO: remove draggable bindings
-        this.drag_api.destroy();
-
+        if(this.drag_api){
+            this.drag_api.destroy();
+        }
+        
         // lastly, remove gridster element
         // this will additionally cause any data associated to this element to be removed, including this
         // very gridster instance
