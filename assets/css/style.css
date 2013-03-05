@@ -164,6 +164,10 @@ footer {
     text-align: center;
 }
 
+footer iframe {
+    margin-top: 40px;
+}
+
 footer .claim {
     font-size: 1.6em;
     font-style: italic;
