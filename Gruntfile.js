@@ -6,83 +6,97 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     meta: {
       banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
-        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-        ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+              '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+              '<%= pkg.homepage ? "* " + pkg.homepage : "" %>\n' +
+              '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+              ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n\n',
+
+      minibanner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+                  '<%= grunt.template.today("yyyy-mm-dd") %> - ' +
+                  '<%= pkg.homepage ? "* " + pkg.homepage + " - " : "" %>' +
+                  'Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+                  ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */ '
     },
     concat: {
+      options: {
+        stripBanners: true,
+        banner: '<%= meta.banner %>'
+      },
       dist_js: {
-        src: ['<banner:meta.banner>', 'src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
 
       dist_extras_js: {
-        src: ['<banner:meta.banner>', 'src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
         dest: 'dist/<%= pkg.name %>.with-extras.js'
       },
 
       dist_css: {
-        src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
+        src: ['src/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
       },
 
       dist_demo_js: {
-        src: ['<banner:meta.banner>', 'src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
         dest: 'gh-pages/dist/<%= pkg.name %>.js'
       },
 
       dist_extras_demo_js: {
-        src: ['<banner:meta.banner>', 'src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js>', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
         dest: 'gh-pages/dist/<%= pkg.name %>.with-extras.js'
       },
 
       dist_demo_css: {
-        src: ['<banner:meta.banner>', 'src/<%= pkg.name %>.css'],
+        src: ['src/<%= pkg.name %>.css'],
         dest: 'gh-pages/dist/<%= pkg.name %>.css'
       }
     },
     uglify: {
+      options: {
+        banner: '<%= meta.minibanner %>'
+      },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>']
         }
       },
 
       dist_extras: {
         files: {
-          'dist/<%= pkg.name %>.with-extras.min.js': ['dist/<%= pkg.name %>.with-extras.js']
+          'dist/<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
         }
       },
 
       dist_demo: {
         files: {
-          'gh-pages/dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
+          'gh-pages/dist/<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>'],
         }
       },
 
       dist_extras_demo: {
         files: {
-          'gh-pages/dist/<%= pkg.name %>.with-extras.min.js': ['dist/<%= pkg.name %>.with-extras.js']
+          'gh-pages/dist/<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
         }
       }
     },
     cssmin: {
       compress: {
+        options: {
+          keepSpecialComments: 0,
+          banner: '<%= meta.minibanner %>'
+        },
         files: {
           "dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"],
           "gh-pages/dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"]
         }
       }
     },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    jslint: {
+    jshint: {
       files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
     },
     watch: {
-      files: ['<config:lint.files>', 'src/<%= pkg.name %>.css'],
+      files: ['<%= lint.files %>', 'src/<%= pkg.name %>.css'],
       tasks: 'min concat'
     },
     jshint: {
@@ -118,10 +132,15 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib');
-  grunt.loadNpmTasks('grunt-jslint');
+  // grunt.loadNpmTasks('grunt-contrib');
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
   // Default task.
-  grunt.registerTask('default', ['jslint', 'qunit', 'concat', 'uglify', 'cssmin', 'yuidoc']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin', 'yuidoc']);
 
 };
