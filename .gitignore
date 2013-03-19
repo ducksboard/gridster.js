@@ -2,3 +2,4 @@ node_modules/
 gh-pages/
 demo/
 .idea
+.DS_Store
