@@ -1,6 +1,16 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
+  var mocha_options = {
+    // mocha options
+    mocha: {
+      ignoreLeaks: false
+    },
+    reporter: 'Spec',
+    // Indicates whether 'mocha.run()' should be executed in 'bridge.js'
+    run: true
+  };
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -95,28 +105,12 @@ module.exports = function(grunt) {
     jshint: {
       files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
     },
+
     watch: {
       files: ['<%= lint.files %>', 'src/jquery.<%= pkg.name %>.css'],
       tasks: 'min concat'
     },
-    jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        browser: true
-      },
-      globals: {
-        jQuery: true
-      }
-    },
+
     yuidoc: {
       compile: {
         "name": 'gridster.js',
@@ -153,6 +147,23 @@ module.exports = function(grunt) {
         }
     },
 
+    mocha: {
+      // runs all html files (except test2.html) in the test dir
+      // In this example, there's only one, but you can add as many as
+      // you want. You can split them up into different groups here
+      // ex: admin: [ 'test/admin.html' ]
+      // all: ['test/**/!(test2).html'],
+
+      coords: {
+        src: ['test/coords.html'],
+        options: mocha_options
+      },
+      collision: {
+        src: ['test/collision.html'],
+        options: mocha_options
+      }
+    },
+
     watch: {
       files: ['libs/*.js', 'src/*.js', 'src/*.css', 'Gruntfile.js'],
       tasks: ['concat', 'uglify', 'cssmin']
@@ -168,11 +179,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-conventional-changelog');
+  grunt.loadNpmTasks('grunt-mocha');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('build', ['default']);
   grunt.registerTask('docs', ['yuidoc']);
+  grunt.registerTask('test', ['mocha:coords', 'mocha:collision']);
 
   grunt.registerTask('release', ['build', 'bump-only:patch', 'build', 'docs', 'changelog']);
   grunt.registerTask('release:minor', ['build', 'bump-only:minor', 'build', 'docs', 'changelog']);
