@@ -177,7 +177,7 @@
 
         if (self.options.on_overlap_stop || self.options.on_overlap_start) {
             this.manage_colliders_start_stop(colliders_coords,
-                self.options.on_overlap_stop, self.options.on_overlap_start);
+                self.options.on_overlap_start, self.options.on_overlap_stop);
         }
 
         this.last_colliders_coords = colliders_coords;
