@@ -15,6 +15,7 @@
         extra_rows: 0,
         extra_cols: 0,
         min_cols: 1,
+        max_cols: -1,
         min_rows: 15,
         max_size_x: 6,
         autogenerate_stylesheet: true,
@@ -55,6 +56,8 @@
     *    @param {Number} [options.extra_rows] Add more rows in addition to
     *     those that have been calculated.
     *    @param {Number} [options.min_cols] The minimum required columns.
+    *    @param {Number} [options.max_cols] The maximum columns possible (set to -1
+    *     for no maximum).
     *    @param {Number} [options.min_rows] The minimum required rows.
     *    @param {Number} [options.max_size_x] The maximum number of columns
     *     that a widget can span.
@@ -2509,6 +2512,12 @@
         });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
+        var max_cols = this.options.max_cols;
+        if (max_cols >= -1 && max_cols >= min_cols) {
+            if (max_cols < this.cols) {
+                this.cols = max_cols;
+            }
+        }
         this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
