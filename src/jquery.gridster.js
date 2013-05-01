@@ -110,9 +110,7 @@
         this.$wrapper.addClass('ready');
         this.draggable();
 
-        this.on_window_resize = throttle($.proxy(this.recalculate_faux_grid, this), 200);
-
-        $(window).bind('resize', this.on_window_resize);
+        $(window).bind('resize.gridster', throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -2550,9 +2548,9 @@
      */
     fn.destroy = function(){
         // remove bound callback on window resize
-        $(window).unbind('resize', this.on_window_resize);
+        $(window).unbind('.gridster');
 
-        if(this.drag_api){
+        if (this.drag_api) {
             this.drag_api.destroy();
         }
 
