@@ -642,6 +642,7 @@
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
             offset_left: this.options.widget_margins[0],
+            container_width: this.container_width,
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -2502,14 +2503,15 @@
     fn.generate_grid_and_stylesheet = function() {
         var aw = this.$wrapper.width();
         var ah = this.$wrapper.height();
+        var max_cols = this.options.max_cols;
 
         var cols = Math.floor(aw / this.min_widget_width) +
                    this.options.extra_cols;
 
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr('data-col');
-        });
-        actual_cols = Array.prototype.slice.call(actual_cols, 0);
+        }).get();
+
         //needed to pass tests with phantomjs
         actual_cols.length || (actual_cols = [0]);
 
@@ -2522,16 +2524,18 @@
         });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
-        var max_cols = this.options.max_cols;
-        if (max_cols >= -1 && max_cols >= min_cols) {
-            if (max_cols < this.cols) {
-                this.cols = max_cols;
-            }
+
+        if (max_cols > -1 && max_cols >= min_cols && max_cols < this.cols) {
+            this.cols = max_cols;
         }
+
         this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
+
+        this.container_width = (this.cols * this.options.widget_base_dimensions[0]) +
+            (this.cols * this.options.widget_margins[0]) + this.options.widget_margins[0];
 
         if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet();

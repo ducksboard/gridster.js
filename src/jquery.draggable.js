@@ -15,7 +15,8 @@
         offset_left: 0,
         autoscroll: true,
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
-        handle: null
+        handle: null,
+        container_width: 0  // 0 == auto
         // drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -247,7 +248,9 @@
         this.el_init_offset = this.$player.offset();
         this.player_width = this.$player.width();
         this.player_height = this.$player.height();
-        this.player_max_left = (this.$container.width() - this.player_width +
+
+        var container_width = this.options.container_width || this.$container.width();
+        this.player_max_left = (container_width - this.player_width +
             this.options.offset_left);
 
         if (this.options.start) {
