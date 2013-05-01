@@ -31,11 +31,8 @@
         collision: {},
         draggable: {
             distance: 4
-        },
-        style_tag_id_prefix: 'gridster-style-tags-'
+        }
     };
-
-    var instanceCounter = 0;
 
     /**
     * @class Gridster
@@ -86,20 +83,24 @@
     * @constructor
     */
     function Gridster(el, options) {
-      this.options = $.extend(true, defaults, options);
-      this.$el = $(el);
-      this.$wrapper = this.$el.parent();
-      this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
-      this.widgets = [];
-      this.$changed = $([]);
-      this.wrapper_width = this.$wrapper.width();
-      this.min_widget_width = (this.options.widget_margins[0] * 2) +
-        this.options.widget_base_dimensions[0];
-      this.min_widget_height = (this.options.widget_margins[1] * 2) +
-        this.options.widget_base_dimensions[1];
-      this.instanceId = instanceCounter++;
-      this.init();
+        this.options = $.extend(true, defaults, options);
+        this.$el = $(el);
+        this.$wrapper = this.$el.parent();
+        this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
+        this.widgets = [];
+        this.$changed = $([]);
+        this.wrapper_width = this.$wrapper.width();
+        this.min_widget_width = (this.options.widget_margins[0] * 2) +
+          this.options.widget_base_dimensions[0];
+        this.min_widget_height = (this.options.widget_margins[1] * 2) +
+          this.options.widget_base_dimensions[1];
+
+        this.$style_tags = $([]);
+
+        this.init();
     }
+
+    Gridster.generated_stylesheets = [];
 
     var fn = Gridster.prototype;
 
@@ -2280,6 +2281,14 @@
         opts.min_widget_height = (opts.widget_margins[1] * 2) +
             opts.widget_base_dimensions[1];
 
+        // don't duplicate stylesheets for the same configuration
+        var serialized_opts = $.param(opts);
+        if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
+            return false;
+        }
+
+        Gridster.generated_stylesheets.push(serialized_opts);
+
         /* generate CSS styles for cols */
         for (i = opts.cols; i >= 0; i--) {
             styles += (opts.namespace + ' [data-col="'+ (i + 1) + '"] { left:' +
@@ -2325,13 +2334,15 @@
 
       d.getElementsByTagName('head')[0].appendChild(tag);
       tag.setAttribute('type', 'text/css');
-      tag.setAttribute('id', this.options.style_tag_id_prefix + this.instanceId);
 
       if (tag.styleSheet) {
         tag.styleSheet.cssText = css;
       }else{
         tag.appendChild(document.createTextNode(css));
       }
+
+      this.$style_tags = this.$style_tags.add(tag);
+
       return this;
     };
 
@@ -2342,8 +2353,8 @@
     * @method  remove_style_tag
     * @return {Object} Returns the instance of the Gridster class.
     */
-    fn.remove_style_tag = function() {
-        $('#' + this.options.style_tag_id_prefix + this.instanceId).remove();
+    fn.remove_style_tags = function() {
+        this.$style_tags.remove();
     };
 
 
@@ -2558,12 +2569,14 @@
             this.drag_api.destroy();
         }
 
-        this.remove_style_tag();
+        this.remove_style_tags();
 
         // lastly, remove gridster element
         // this will additionally cause any data associated to this element to be removed, including this
         // very gridster instance
         this.$el.remove();
+
+        return this;
     };
 
 
