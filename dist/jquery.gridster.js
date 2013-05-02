@@ -1,10 +1,6 @@
-/*
- * jquery.coords
- * https://github.com/ducksboard/gridster.js
- *
- * Copyright (c) 2012 ducksboard
- * Licensed under the MIT licenses.
- */
+/*! gridster.js - v0.1.0 - 2013-06-13
+* http://gridster.net/
+* Copyright (c) 2013 ducksboard; Licensed MIT */
 
 ;(function($, window, document, undefined){
     /**
@@ -106,14 +102,6 @@
     };
 
 }(jQuery, window, document));
-
-/*
- * jquery.collision
- * https://github.com/ducksboard/gridster.js
- *
- * Copyright (c) 2012 ducksboard
- * Licensed under the MIT licenses.
- */
 
 ;(function($, window, document, undefined){
 
@@ -370,14 +358,6 @@
 
 })(window);
 
-/*
- * jquery.draggable
- * https://github.com/ducksboard/gridster.js
- *
- * Copyright (c) 2012 ducksboard
- * Licensed under the MIT licenses.
- */
-
 ;(function($, window, document, undefined){
 
     var defaults = {
@@ -387,7 +367,8 @@
         offset_left: 0,
         autoscroll: true,
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
-        handle: null
+        handle: null,
+        container_width: 0  // 0 == auto
         // drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
@@ -396,9 +377,9 @@
     var $window = $(window);
     var isTouch = !!('ontouchstart' in window);
     var pointer_events = {
-        start: isTouch ? 'touchstart' : 'mousedown.draggable',
-        move: isTouch ? 'touchmove' : 'mousemove.draggable',
-        end: isTouch ? 'touchend' : 'mouseup.draggable'
+        start: isTouch ? 'touchstart.gridster-draggable' : 'mousedown.gridster-draggable',
+        move: isTouch ? 'touchmove.gridster-draggable' : 'mousemove.gridster-draggable',
+        end: isTouch ? 'touchend.gridster-draggable' : 'mouseup.gridster-draggable'
     };
 
     /**
@@ -445,26 +426,25 @@
         this.disabled = false;
         this.events();
 
-        this.on_window_resize = throttle($.proxy(this.calculate_positions, this), 200);
-        $(window).bind('resize', this.on_window_resize);
+        $(window).bind('resize.gridster-draggable', 
+            throttle($.proxy(this.calculate_positions, this), 200));
     };
 
     fn.events = function() {
-        this.proxied_on_select_start = $.proxy(this.on_select_start, this);
-        this.$container.on('selectstart', this.proxied_on_select_start);
+        this.$container.on('selectstart.gridster-draggable', 
+            $.proxy(this.on_select_start, this));
 
-        this.proxied_drag_handler = $.proxy(this.drag_handler, this);
-        this.$container.on(pointer_events.start, this.options.items, this.proxied_drag_handler);
+        this.$container.on(pointer_events.start, this.options.items,
+            $.proxy(this.drag_handler, this));
 
-        this.proxied_pointer_events_end = $.proxy(function(e) {
+        this.$body.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
             this.$body.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
-        }, this);
-        this.$body.on(pointer_events.end, this.proxied_pointer_events_end);
+        }, this));
     };
 
     fn.get_actual_pos = function($el) {
@@ -571,7 +551,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.on_pointer_events_move = function(mme){
+        this.$body.on(pointer_events.move, function(mme){
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -594,9 +574,7 @@
             }
 
             return false;
-        };
-
-        this.$body.on(pointer_events.move, this.on_pointer_events_move);
+        });
 
         return false;
     };
@@ -622,7 +600,9 @@
         this.el_init_offset = this.$player.offset();
         this.player_width = this.$player.width();
         this.player_height = this.$player.height();
-        this.player_max_left = (this.$container.width() - this.player_width +
+
+        var container_width = this.options.container_width || this.$container.width();
+        this.player_max_left = (container_width - this.player_width +
             this.options.offset_left);
 
         if (this.options.start) {
@@ -703,11 +683,9 @@
     fn.destroy = function(){
         this.disable();
 
-        this.$container.off('selectstart', this.proxied_on_select_start);
-        this.$container.off(pointer_events.start, this.proxied_drag_handler);
-        this.$body.off(pointer_events.end, this.proxied_pointer_events_end);
-        this.$body.off(pointer_events.move, this.on_pointer_events_move);
-        $(window).unbind('resize', this.on_window_resize);
+        this.$container.off('.gridster-draggable');
+        this.$body.off('.gridster-draggable');
+        $(window).off('.gridster-draggable');
 
         $.removeData(this.$container, 'drag');
     };
@@ -732,13 +710,6 @@
 
 }(jQuery, window, document));
 
-/*
- * jquery.gridster
- * https://github.com/ducksboard/gridster.js
- *
- * Copyright (c) 2012 ducksboard
- * Licensed under the MIT licenses.
- */
 ;(function($, window, document, undefined) {
 
     var defaults = {
@@ -765,11 +736,8 @@
         collision: {},
         draggable: {
             distance: 4
-        },
-        style_tag_id_prefix: 'gridster-style-tags-'
+        }
     };
-
-    var instanceCounter = 0;
 
     /**
     * @class Gridster
@@ -820,20 +788,24 @@
     * @constructor
     */
     function Gridster(el, options) {
-      this.options = $.extend(true, defaults, options);
-      this.$el = $(el);
-      this.$wrapper = this.$el.parent();
-      this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
-      this.widgets = [];
-      this.$changed = $([]);
-      this.wrapper_width = this.$wrapper.width();
-      this.min_widget_width = (this.options.widget_margins[0] * 2) +
-        this.options.widget_base_dimensions[0];
-      this.min_widget_height = (this.options.widget_margins[1] * 2) +
-        this.options.widget_base_dimensions[1];
-      this.instanceId = instanceCounter++;
-      this.init();
+        this.options = $.extend(true, defaults, options);
+        this.$el = $(el);
+        this.$wrapper = this.$el.parent();
+        this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs_w');
+        this.widgets = [];
+        this.$changed = $([]);
+        this.wrapper_width = this.$wrapper.width();
+        this.min_widget_width = (this.options.widget_margins[0] * 2) +
+          this.options.widget_base_dimensions[0];
+        this.min_widget_height = (this.options.widget_margins[1] * 2) +
+          this.options.widget_base_dimensions[1];
+
+        this.$style_tags = $([]);
+
+        this.init();
     }
+
+    Gridster.generated_stylesheets = [];
 
     var fn = Gridster.prototype;
 
@@ -844,9 +816,7 @@
         this.$wrapper.addClass('ready');
         this.draggable();
 
-        this.on_window_resize = throttle($.proxy(this.recalculate_faux_grid, this), 200);
-
-        $(window).bind('resize', this.on_window_resize);
+        $(window).bind('resize.gridster', throttle($.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -1378,6 +1348,7 @@
         var self = this;
         var draggable_options = $.extend(true, {}, this.options.draggable, {
             offset_left: this.options.widget_margins[0],
+            container_width: this.container_width,
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -3015,6 +2986,14 @@
         opts.min_widget_height = (opts.widget_margins[1] * 2) +
             opts.widget_base_dimensions[1];
 
+        // don't duplicate stylesheets for the same configuration
+        var serialized_opts = $.param(opts);
+        if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
+            return false;
+        }
+
+        Gridster.generated_stylesheets.push(serialized_opts);
+
         /* generate CSS styles for cols */
         for (i = opts.cols; i >= 0; i--) {
             styles += (opts.namespace + ' [data-col="'+ (i + 1) + '"] { left:' +
@@ -3060,13 +3039,15 @@
 
       d.getElementsByTagName('head')[0].appendChild(tag);
       tag.setAttribute('type', 'text/css');
-      tag.setAttribute('id', this.options.style_tag_id_prefix + this.instanceId);
 
       if (tag.styleSheet) {
         tag.styleSheet.cssText = css;
       }else{
         tag.appendChild(document.createTextNode(css));
       }
+
+      this.$style_tags = this.$style_tags.add(tag);
+
       return this;
     };
 
@@ -3077,8 +3058,8 @@
     * @method  remove_style_tag
     * @return {Object} Returns the instance of the Gridster class.
     */
-    fn.remove_style_tag = function() {
-        $('#' + this.options.style_tag_id_prefix + this.instanceId).remove();
+    fn.remove_style_tags = function() {
+        this.$style_tags.remove();
     };
 
 
@@ -3238,14 +3219,15 @@
     fn.generate_grid_and_stylesheet = function() {
         var aw = this.$wrapper.width();
         var ah = this.$wrapper.height();
+        var max_cols = this.options.max_cols;
 
         var cols = Math.floor(aw / this.min_widget_width) +
                    this.options.extra_cols;
 
         var actual_cols = this.$widgets.map(function() {
             return $(this).attr('data-col');
-        });
-        actual_cols = Array.prototype.slice.call(actual_cols, 0);
+        }).get();
+
         //needed to pass tests with phantomjs
         actual_cols.length || (actual_cols = [0]);
 
@@ -3258,16 +3240,18 @@
         });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
-        var max_cols = this.options.max_cols;
-        if (max_cols >= -1 && max_cols >= min_cols) {
-            if (max_cols < this.cols) {
-                this.cols = max_cols;
-            }
+
+        if (max_cols > -1 && max_cols >= min_cols && max_cols < this.cols) {
+            this.cols = max_cols;
         }
+
         this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
+
+        this.container_width = (this.cols * this.options.widget_base_dimensions[0]) +
+            (this.cols * this.options.widget_margins[0]) + this.options.widget_margins[0];
 
         if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet();
@@ -3284,18 +3268,20 @@
      */
     fn.destroy = function(){
         // remove bound callback on window resize
-        $(window).unbind('resize', this.on_window_resize);
+        $(window).unbind('.gridster');
 
-        if(this.drag_api){
+        if (this.drag_api) {
             this.drag_api.destroy();
         }
 
-        this.remove_style_tag();
+        this.remove_style_tags();
 
         // lastly, remove gridster element
         // this will additionally cause any data associated to this element to be removed, including this
         // very gridster instance
         this.$el.remove();
+
+        return this;
     };
 
 

@@ -129,11 +129,16 @@ module.exports = function(grunt) {
           outdir: "gh-pages/docs/"
         }
       }
+    },
+
+    watch: {
+      files: ['libs/*.js', 'src/*.js', 'Gruntfile.js'],
+      tasks: ['concat', 'uglify', 'cssmin']
     }
   });
 
-  // grunt.loadNpmTasks('grunt-contrib');
 
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
