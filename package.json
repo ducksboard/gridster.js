@@ -21,9 +21,6 @@
       "url": "https://github.com/ducksboard/gridster.js/blob/master/LICENSE"
     }
   ],
-  "dependencies": {
-    "jquery": "~1.5"
-  },
   "keywords": [],
   "devDependencies": {
     "grunt": "~0.4.1",
