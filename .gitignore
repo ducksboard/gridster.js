@@ -1,4 +1,5 @@
 node_modules/
+libs/
 gh-pages/
 demo/
 .idea
