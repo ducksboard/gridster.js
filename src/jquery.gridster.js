@@ -1183,13 +1183,15 @@
     * @return {Boolean} Returns true or false.
     */
     fn.is_empty = function(col, row) {
-        if (typeof this.gridmap[col] !== 'undefined' &&
-            typeof this.gridmap[col][row] !== 'undefined' &&
-            this.gridmap[col][row] === false
-        ) {
-            return true;
-        }
-        return false;
+        if (typeof this.gridmap[col] !== 'undefined') {
+			if(typeof this.gridmap[col][row] !== 'undefined' &&
+				 this.gridmap[col][row] === false
+			) {
+				return true;
+			}
+			return false;
+		}
+		return true;
     };
 
 
