@@ -191,7 +191,7 @@
 
 
 
-    /**
+     /**
     * Change the size of a widget.
     *
     * @method resize_widget
@@ -199,9 +199,10 @@
     *  representing the widget.
     * @param {Number} size_x The number of columns that will occupy the widget.
     * @param {Number} size_y The number of rows that will occupy the widget.
+    * @param {Function} callback Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     */
-    fn.resize_widget = function($widget, size_x, size_y) {
+    fn.resize_widget = function($widget, size_x, size_y, callback) {
         var wgd = $widget.coords().grid;
         size_x || (size_x = wgd.size_x);
         size_y || (size_y = wgd.size_y);
@@ -318,6 +319,10 @@
                 new_col, wgd.row, size_x, size_y, $widget
             ];
             this.remove_empty_cells.apply(this, rows_to_remove_holes);
+        }
+
+        if (callback) {
+            callback.call(this, size_x, size_y);
         }
 
         return $widget;
