@@ -7,6 +7,19 @@ dynamically add and remove elements from the grid.
 
 More at [http://gridster.net/](http://gridster.net/).
 
+Updating Begins
+===============
+
+Hi all, I have begun merging my fork with the main repository
+and am making some much needed fixes in the process.
+
+I am devoting an hour a day until it gets done.
+
+Thanks,
+
+Dustin
+
+
 Public Service Announcement from Dustin Moore (dustmoo)
 =======================================================
 
