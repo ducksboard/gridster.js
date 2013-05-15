@@ -1,6 +1,10 @@
-/*! gridster.js - v0.1.0 - 2013-04-09
-* http://gridster.net/
-* Copyright (c) 2013 ducksboard; Licensed MIT */
+/*
+ * jquery.coords
+ * https://github.com/ducksboard/gridster.js
+ *
+ * Copyright (c) 2012 ducksboard
+ * Licensed under the MIT licenses.
+ */
 
 ;(function($, window, document, undefined){
     /**
@@ -102,6 +106,14 @@
     };
 
 }(jQuery, window, document));
+
+/*
+ * jquery.collision
+ * https://github.com/ducksboard/gridster.js
+ *
+ * Copyright (c) 2012 ducksboard
+ * Licensed under the MIT licenses.
+ */
 
 ;(function($, window, document, undefined){
 
@@ -357,6 +369,14 @@
     };
 
 })(window);
+
+/*
+ * jquery.draggable
+ * https://github.com/ducksboard/gridster.js
+ *
+ * Copyright (c) 2012 ducksboard
+ * Licensed under the MIT licenses.
+ */
 
 ;(function($, window, document, undefined){
 
@@ -712,6 +732,13 @@
 
 }(jQuery, window, document));
 
+/*
+ * jquery.gridster
+ * https://github.com/ducksboard/gridster.js
+ *
+ * Copyright (c) 2012 ducksboard
+ * Licensed under the MIT licenses.
+ */
 ;(function($, window, document, undefined) {
 
     var defaults = {
@@ -722,6 +749,7 @@
         extra_rows: 0,
         extra_cols: 0,
         min_cols: 1,
+        max_cols: -1,
         min_rows: 15,
         max_size_x: 6,
         autogenerate_stylesheet: true,
@@ -764,6 +792,8 @@
     *    @param {Number} [options.extra_rows] Add more rows in addition to
     *     those that have been calculated.
     *    @param {Number} [options.min_cols] The minimum required columns.
+    *    @param {Number} [options.max_cols] The maximum columns possible (set to -1
+    *     for no maximum).
     *    @param {Number} [options.min_rows] The minimum required rows.
     *    @param {Number} [options.max_size_x] The maximum number of columns
     *     that a widget can span.
@@ -895,7 +925,7 @@
 
 
 
-    /**
+     /**
     * Change the size of a widget.
     *
     * @method resize_widget
@@ -903,9 +933,10 @@
     *  representing the widget.
     * @param {Number} size_x The number of columns that will occupy the widget.
     * @param {Number} size_y The number of rows that will occupy the widget.
+    * @param {Function} callback Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     */
-    fn.resize_widget = function($widget, size_x, size_y) {
+    fn.resize_widget = function($widget, size_x, size_y, callback) {
         var wgd = $widget.coords().grid;
         size_x || (size_x = wgd.size_x);
         size_y || (size_y = wgd.size_y);
@@ -1022,6 +1053,10 @@
                 new_col, wgd.row, size_x, size_y, $widget
             ];
             this.remove_empty_cells.apply(this, rows_to_remove_holes);
+        }
+
+        if (callback) {
+            callback.call(this, size_x, size_y);
         }
 
         return $widget;
@@ -3221,6 +3256,12 @@
         });
 
         this.cols = Math.max(min_cols, cols, this.options.min_cols);
+        var max_cols = this.options.max_cols;
+        if (max_cols >= -1 && max_cols >= min_cols) {
+            if (max_cols < this.cols) {
+                this.cols = max_cols;
+            }
+        }
         this.rows = Math.max(max_rows, this.options.min_rows);
 
         this.baseX = ($(window).width() - aw) / 2;
