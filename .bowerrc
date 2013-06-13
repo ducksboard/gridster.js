@@ -1,4 +1,4 @@
 {
   "directory": "libs",
-  "json": "bower.json"
+  "json": "package.json"
 }
