@@ -272,7 +272,7 @@
                         },
                         {
                             "name": "max_cols",
-                            "description": "The maximum columns possible (set to -1\n    for no maximum).",
+                            "description": "The maximum columns possible (set to null\n    for no maximum).",
                             "type": "Number",
                             "optional": true
                         },
