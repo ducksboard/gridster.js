@@ -9,6 +9,7 @@ var win          = Y.config.win,
     bdNode = Y.one('#bd'),
 
     pjax,
+    defaultRoute,
 
     classTabView,
     selectedTab;
@@ -17,6 +18,15 @@ var win          = Y.config.win,
 if (!Y.getLocation().protocol.match(/^https?\:/)) {
     Y.Router.html5 = false;
 }
+
+// Create the default route with middleware which enables syntax highlighting
+// on the loaded content.
+defaultRoute = Y.Pjax.defaultRoute.concat(function (req, res, next) {
+    prettyPrint();
+    bdNode.removeClass('loading');
+
+    next();
+});
 
 pjax = new Y.Pjax({
     container      : '#docs-main',
@@ -28,18 +38,28 @@ pjax = new Y.Pjax({
     root          : '/',
     routes        : [
         // -- / ----------------------------------------------------------------
-        {path: '/(index.html)?', callback: '_defaultRoute'},
+        {
+            path     : '/(index.html)?',
+            callbacks: defaultRoute
+        },
 
         // -- /classes/* -------------------------------------------------------
-        {path: '/classes/:class.html*', callback: 'handleClasses'},
-        {path: '/classes/:class.html*', callback: '_defaultRoute'},
+        {
+            path     : '/classes/:class.html*',
+            callbacks: [defaultRoute, 'handleClasses']
+        },
 
         // -- /files/* ---------------------------------------------------------
-        {path: '/files/*file', callback: 'handleFiles'},
-        {path: '/files/*file', callback: '_defaultRoute'},
+        {
+            path     : '/files/*file',
+            callbacks: [defaultRoute, 'handleFiles']
+        },
 
         // -- /modules/* -------------------------------------------------------
-        {path: '/modules/:module.html*', callback: '_defaultRoute'}
+        {
+            path     : '/modules/:module.html*',
+            callbacks: defaultRoute
+        }
     ]
 });
 
@@ -148,7 +168,7 @@ pjax.initLineNumbers = function () {
 
 pjax.initRoot = function () {
     var terminators = /^(?:classes|files|modules)$/,
-        parts       = pjax._getRoot().split('/'),
+        parts       = pjax._getPathRoot().split('/'),
         root        = [],
         i, len, part;
 
@@ -227,6 +247,11 @@ pjax.updateTabState = function (src) {
     } else {
         tab = Y.one('#classdocs .api-class-tab.' + defaultTab);
 
+        // When the `defaultTab` node isn't found, `localStorage` is stale.
+        if (!tab && defaultTab !== 'index') {
+            tab = Y.one('#classdocs .api-class-tab.index');
+        }
+
         if (classTabView.get('rendered')) {
             Y.Widget.getByNode(tab).set('selected', 1);
         } else {
@@ -256,33 +281,28 @@ pjax.updateVisibility = function () {
 // -- Route Handlers -----------------------------------------------------------
 
 pjax.handleClasses = function (req, res, next) {
-    pjax.onceAfter(['error', 'load'], function (e) {
-        if (e.type === 'pjax:load') {
-            pjax.initClassTabView();
-        }
-    });
+    var status = res.ioResponse.status;
+
+    // Handles success and local filesystem XHRs.
+    if (!status || (status >= 200 && status < 300)) {
+        pjax.initClassTabView();
+    }
 
     next();
 };
 
 pjax.handleFiles = function (req, res, next) {
-    pjax.onceAfter(['error', 'load'], function (e) {
-        if (e.type === 'pjax:load') {
-            pjax.initLineNumbers();
-        }
-    });
+    var status = res.ioResponse.status;
+
+    // Handles success and local filesystem XHRs.
+    if (!status || (status >= 200 && status < 300)) {
+        pjax.initLineNumbers();
+    }
 
     next();
 };
 
 // -- Event Handlers -----------------------------------------------------------
-
-pjax.afterContent = function (e) {
-    // Enable syntax highlighting on the loaded content.
-    prettyPrint();
-
-    bdNode.removeClass('loading');
-};
 
 pjax.onNavigate = function (e) {
     var hash         = e.hash,
@@ -332,13 +352,12 @@ pjax.onTabSelectionChange = function (e) {
 // -- Init ---------------------------------------------------------------------
 
 pjax.on('navigate', pjax.onNavigate);
-pjax.after(['error', 'load'], pjax.afterContent);
 
 pjax.initRoot();
+pjax.upgrade();
 pjax.initClassTabView();
 pjax.initLineNumbers();
 pjax.updateVisibility();
-pjax.upgrade();
 
 Y.APIList.rootPath = pjax.get('root');
 

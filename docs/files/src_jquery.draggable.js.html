@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;jquery.draggable.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <title>src&#x2F;jquery.draggable.js - gridster.js</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -15,12 +15,11 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <!-- <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1> -->
-                <h1><img src="http://ducksboard.com/wp-content/themes/blog-theme-ducksboard/images/ducksboard.png" title=""></h1>
+                <h1><img src="http:&#x2F;&#x2F;ducksboard.com&#x2F;wp-content&#x2F;themes&#x2F;blog-theme-ducksboard&#x2F;images&#x2F;ducksboard.png" title="gridster.js"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: </em>
+            <em>API Docs for: 0.1.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -110,8 +109,9 @@
         offset_left: 0,
         autoscroll: true,
         ignore_dragging: [&#x27;INPUT&#x27;, &#x27;TEXTAREA&#x27;, &#x27;SELECT&#x27;, &#x27;BUTTON&#x27;],
-        handle: null
-        &#x2F;&#x2F; ,drag: function(e){},
+        handle: null,
+        container_width: 0  &#x2F;&#x2F; 0 == auto
+        &#x2F;&#x2F; drag: function(e){},
         &#x2F;&#x2F; start : function(e, ui){},
         &#x2F;&#x2F; stop : function(e){}
     };
@@ -119,9 +119,9 @@
     var $window = $(window);
     var isTouch = !!(&#x27;ontouchstart&#x27; in window);
     var pointer_events = {
-        start: isTouch ? &#x27;touchstart&#x27; : &#x27;mousedown.draggable&#x27;,
-        move: isTouch ? &#x27;touchmove&#x27; : &#x27;mousemove.draggable&#x27;,
-        end: isTouch ? &#x27;touchend&#x27; : &#x27;mouseup.draggable&#x27;
+        start: isTouch ? &#x27;touchstart.gridster-draggable&#x27; : &#x27;mousedown.gridster-draggable&#x27;,
+        move: isTouch ? &#x27;touchmove.gridster-draggable&#x27; : &#x27;mousemove.gridster-draggable&#x27;,
+        end: isTouch ? &#x27;touchend.gridster-draggable&#x27; : &#x27;mouseup.gridster-draggable&#x27;
     };
 
     &#x2F;**
@@ -168,15 +168,16 @@
         this.disabled = false;
         this.events();
 
-        $(window).bind(&#x27;resize&#x27;,
+        $(window).bind(&#x27;resize.gridster-draggable&#x27;,
             throttle($.proxy(this.calculate_positions, this), 200));
     };
 
     fn.events = function() {
-        this.$container.on(&#x27;selectstart&#x27;, $.proxy(this.on_select_start, this));
+        this.$container.on(&#x27;selectstart.gridster-draggable&#x27;,
+            $.proxy(this.on_select_start, this));
 
-        this.$container.on(pointer_events.start, this.options.items, $.proxy(
-            this.drag_handler, this));
+        this.$container.on(pointer_events.start, this.options.items,
+            $.proxy(this.drag_handler, this));
 
         this.$body.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
@@ -300,7 +301,7 @@
                 mouse_actual_pos.top - self.mouse_init_pos.top);
             if (!(diff_x &gt; self.options.distance ||
                 diff_y &gt; self.options.distance)
-            ) {
+                ) {
                 return false;
             }
 
@@ -317,7 +318,7 @@
             return false;
         });
 
-        return false;
+        if (!isTouch) { return false; }
     };
 
 
@@ -341,7 +342,9 @@
         this.el_init_offset = this.$player.offset();
         this.player_width = this.$player.width();
         this.player_height = this.$player.height();
-        this.player_max_left = (this.$container.width() - this.player_width +
+
+        var container_width = this.options.container_width || this.$container.width();
+        this.player_max_left = (container_width - this.player_width +
             this.options.offset_left);
 
         if (this.options.start) {
@@ -421,6 +424,11 @@
 
     fn.destroy = function(){
         this.disable();
+
+        this.$container.off(&#x27;.gridster-draggable&#x27;);
+        this.$body.off(&#x27;.gridster-draggable&#x27;);
+        $(window).off(&#x27;.gridster-draggable&#x27;);
+
         $.removeData(this.$container, &#x27;drag&#x27;);
     };
 
