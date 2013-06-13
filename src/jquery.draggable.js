@@ -74,12 +74,12 @@
         this.disabled = false;
         this.events();
 
-        $(window).bind('resize.gridster-draggable', 
+        $(window).bind('resize.gridster-draggable',
             throttle($.proxy(this.calculate_positions, this), 200));
     };
 
     fn.events = function() {
-        this.$container.on('selectstart.gridster-draggable', 
+        this.$container.on('selectstart.gridster-draggable',
             $.proxy(this.on_select_start, this));
 
         this.$container.on(pointer_events.start, this.options.items,
@@ -224,7 +224,7 @@
             return false;
         });
 
-        return false;
+        if (!isTouch) { return false; }
     };
 
 
