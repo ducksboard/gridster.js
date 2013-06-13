@@ -1384,7 +1384,9 @@
                 return true; //break
             }
 
-            upper_rows[tcol].sort();
+            upper_rows[tcol].sort(function(a, b) {
+                return a - b;
+            });
         });
 
         if (!result) { return false; }
@@ -1439,7 +1441,9 @@
                 return true; //break
             }
 
-            upper_rows[tcol].sort();
+            upper_rows[tcol].sort(function(a, b) {
+                return a - b;
+            });
         });
 
         if (!result) { return false; }
