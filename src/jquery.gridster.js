@@ -55,7 +55,7 @@
     *    @param {Number} [options.extra_rows] Add more rows in addition to
     *     those that have been calculated.
     *    @param {Number} [options.min_cols] The minimum required columns.
-    *    @param {Number} [options.max_cols] The maximum columns possible (set to -1
+    *    @param {Number} [options.max_cols] The maximum columns possible (set to null
     *     for no maximum).
     *    @param {Number} [options.min_rows] The minimum required rows.
     *    @param {Number} [options.max_size_x] The maximum number of columns
