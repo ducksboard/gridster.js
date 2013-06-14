@@ -1,4 +1,4 @@
-/*! gridster.js - v0.1.0 - 2013-06-13
+/*! gridster.js - v0.1.0 - 2013-06-14
 * http://gridster.net/
 * Copyright (c) 2013 ducksboard; Licensed MIT */
 
@@ -3254,8 +3254,10 @@
         this.baseX = ($(window).width() - aw) / 2;
         this.baseY = this.$wrapper.offset().top;
 
-        this.container_width = (this.cols * this.options.widget_base_dimensions[0]) +
-            (this.cols * this.options.widget_margins[0]) + this.options.widget_margins[0];
+        // left and right gutters not included
+        this.container_width = (this.cols *
+            this.options.widget_base_dimensions[0]) + ((this.cols - 1) * 2 *
+            this.options.widget_margins[0]);
 
         if (this.options.autogenerate_stylesheet) {
             this.generate_stylesheet();
