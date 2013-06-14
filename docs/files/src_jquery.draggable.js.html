@@ -344,8 +344,7 @@
         this.player_height = this.$player.height();
 
         var container_width = this.options.container_width || this.$container.width();
-        this.player_max_left = (container_width - this.player_width +
-            this.options.offset_left);
+        this.player_max_left = (container_width - this.player_width);
 
         if (this.options.start) {
             this.options.start.call(this.$player, e, {
