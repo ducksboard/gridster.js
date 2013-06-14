@@ -23,33 +23,33 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>'
       },
       dist_js: {
-        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/jquery.<%= pkg.name %>.js'],
+        dest: 'dist/jquery.<%= pkg.name %>.js'
       },
 
       dist_extras_js: {
-        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
-        dest: 'dist/<%= pkg.name %>.with-extras.js'
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/jquery.<%= pkg.name %>.js', 'src/jquery.<%= pkg.name %>.extras.js'],
+        dest: 'dist/jquery.<%= pkg.name %>.with-extras.js'
       },
 
       dist_css: {
-        src: ['src/<%= pkg.name %>.css'],
-        dest: 'dist/<%= pkg.name %>.css'
+        src: ['src/jquery.<%= pkg.name %>.css'],
+        dest: 'dist/jquery.<%= pkg.name %>.css'
       },
 
       dist_demo_js: {
-        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js'],
-        dest: 'gh-pages/dist/<%= pkg.name %>.js'
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/jquery.<%= pkg.name %>.js'],
+        dest: 'gh-pages/dist/jquery.<%= pkg.name %>.js'
       },
 
       dist_extras_demo_js: {
-        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/<%= pkg.name %>.js', 'src/<%= pkg.name %>.extras.js'],
-        dest: 'gh-pages/dist/<%= pkg.name %>.with-extras.js'
+        src: ['src/jquery.coords.js', 'src/jquery.collision.js', 'src/utils.js', 'src/jquery.draggable.js', 'src/jquery.<%= pkg.name %>.js', 'src/jquery.<%= pkg.name %>.extras.js'],
+        dest: 'gh-pages/dist/jquery.<%= pkg.name %>.with-extras.js'
       },
 
       dist_demo_css: {
-        src: ['src/<%= pkg.name %>.css'],
-        dest: 'gh-pages/dist/<%= pkg.name %>.css'
+        src: ['src/jquery.<%= pkg.name %>.css'],
+        dest: 'gh-pages/dist/jquery.<%= pkg.name %>.css'
       }
     },
     uglify: {
@@ -58,25 +58,25 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>']
+          'dist/jquery.<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>']
         }
       },
 
       dist_extras: {
         files: {
-          'dist/<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
+          'dist/jquery.<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
         }
       },
 
       dist_demo: {
         files: {
-          'gh-pages/dist/<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>'],
+          'gh-pages/dist/jquery.<%= pkg.name %>.min.js': ['<%= concat.dist_js.dest %>'],
         }
       },
 
       dist_extras_demo: {
         files: {
-          'gh-pages/dist/<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
+          'gh-pages/dist/jquery.<%= pkg.name %>.with-extras.min.js': ['<%= concat.dist_extras_js.dest %>']
         }
       }
     },
@@ -87,8 +87,8 @@ module.exports = function(grunt) {
           banner: '<%= meta.minibanner %>'
         },
         files: {
-          "dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"],
-          "gh-pages/dist/<%= pkg.name %>.min.css": ["dist/<%= pkg.name %>.css"]
+          "dist/jquery.<%= pkg.name %>.min.css": ["dist/jquery.<%= pkg.name %>.css"],
+          "gh-pages/dist/jquery.<%= pkg.name %>.min.css": ["dist/jquery.<%= pkg.name %>.css"]
         }
       }
     },
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
       files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
     },
     watch: {
-      files: ['<%= lint.files %>', 'src/<%= pkg.name %>.css'],
+      files: ['<%= lint.files %>', 'src/jquery.<%= pkg.name %>.css'],
       tasks: 'min concat'
     },
     jshint: {
