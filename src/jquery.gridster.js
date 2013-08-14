@@ -716,7 +716,7 @@
         this.collision_api = this.$helper.collision(
             colliders, this.options.collision);
 
-        this.$preview_holder = $('<li />', {
+        this.$preview_holder = $('<' + this.$player.get(0).tagName + ' />', {
               'class': 'preview-holder',
               'data-row': this.$player.attr('data-row'),
               'data-col': this.$player.attr('data-col'),
