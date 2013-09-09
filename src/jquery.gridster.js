@@ -479,6 +479,8 @@
                 callback.call(this, el);
             }
         }, this));
+
+        return this;
     };
 
 
