@@ -2325,7 +2325,7 @@
             styles += (opts.namespace + ' [data-col="'+ (i + 1) + '"] { left:' +
                 ((i * opts.widget_base_dimensions[0]) +
                 (i * opts.widget_margins[0]) +
-                ((i + 1) * opts.widget_margins[0])) + 'px;} ');
+                ((i + 1) * opts.widget_margins[0])) + 'px; }\n');
         }
 
         /* generate CSS styles for rows */
@@ -2333,19 +2333,19 @@
             styles += (opts.namespace + ' [data-row="' + (i + 1) + '"] { top:' +
                 ((i * opts.widget_base_dimensions[1]) +
                 (i * opts.widget_margins[1]) +
-                ((i + 1) * opts.widget_margins[1]) ) + 'px;} ');
+                ((i + 1) * opts.widget_margins[1]) ) + 'px; }\n');
         }
 
         for (var y = 1; y <= opts.rows; y++) {
             styles += (opts.namespace + ' [data-sizey="' + y + '"] { height:' +
                 (y * opts.widget_base_dimensions[1] +
-                (y - 1) * (opts.widget_margins[1] * 2)) + 'px;}');
+                (y - 1) * (opts.widget_margins[1] * 2)) + 'px; }\n');
         }
 
         for (var x = 1; x <= max_size_x; x++) {
             styles += (opts.namespace + ' [data-sizex="' + x + '"] { width:' +
                 (x * opts.widget_base_dimensions[0] +
-                (x - 1) * (opts.widget_margins[0] * 2)) + 'px;}');
+                (x - 1) * (opts.widget_margins[0] * 2)) + 'px; }\n');
         }
 
         return this.add_style_tag(styles);
