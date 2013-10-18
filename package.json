@@ -34,6 +34,7 @@
     "grunt-contrib-cssmin": "~0.5.0",
     "grunt-contrib-yuidoc": "~0.4.0",
     "bower": "~0.9.2",
-    "qunit": "~1.11.0"
+    "qunit": "~1.11.0",
+    "grunt-bump": "0.0.11"
   }
 }
