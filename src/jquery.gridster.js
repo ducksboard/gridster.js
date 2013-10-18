@@ -17,7 +17,7 @@
         min_cols: 1,
         max_cols: null,
         min_rows: 15,
-        max_size_x: 6,
+        max_size_x: false,
         autogenerate_stylesheet: true,
         avoid_overlapped_widgets: true,
         serialize_params: function($w, wgd) {
@@ -191,7 +191,7 @@
 
 
      /**
-    * Change the size of a widget.
+    * Change the size of a widget. Width is limited to the current grid width.
     *
     * @method resize_widget
     * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
@@ -210,18 +210,18 @@
             size_x = this.cols;
         }
 
-        var old_cells_occupied = this.get_cells_occupied(wgd);
-        var old_size_x = wgd.size_x;
         var old_size_y = wgd.size_y;
         var old_col = wgd.col;
         var new_col = old_col;
-        var wider = size_x > old_size_x;
-        var taller = size_y > old_size_y;
 
         if (old_col + size_x - 1 > this.cols) {
             var diff = old_col + (size_x - 1) - this.cols;
             var c = old_col - diff;
             new_col = Math.max(1, c);
+        }
+
+        if (size_y > old_size_y) {
+            this.add_faux_rows(Math.max(size_y - old_size_y, 0));
         }
 
         var new_grid_data = {
@@ -231,7 +231,25 @@
             size_y: size_y
         };
 
-        var new_cells_occupied = this.get_cells_occupied(new_grid_data);
+        this.mutate_widget_in_gridmap($widget, wgd, new_grid_data);
+
+        this.set_dom_grid_height();
+
+        if (callback) {
+            callback.call(this, new_grid_data.size_x, new_grid_data.size_y);
+        }
+
+        return $widget;
+    };
+
+
+    fn.mutate_widget_in_gridmap = function($widget, wgd, new_wgd) {
+
+        var old_size_x = wgd.size_x;
+        var old_size_y = wgd.size_y;
+
+        var old_cells_occupied = this.get_cells_occupied(wgd);
+        var new_cells_occupied = this.get_cells_occupied(new_wgd);
 
         var empty_cols = [];
         $.each(old_cells_occupied.cols, function(i, col) {
@@ -265,48 +283,44 @@
 
         if (occupied_cols.length) {
             var cols_to_empty = [
-                new_col, wgd.row, size_x, Math.min(old_size_y, size_y), $widget
+                new_wgd.col, new_wgd.row, new_wgd.size_x, Math.min(old_size_y, new_wgd.size_y), $widget
             ];
             this.empty_cells.apply(this, cols_to_empty);
         }
 
         if (occupied_rows.length) {
-            var rows_to_empty = [new_col, wgd.row, size_x, size_y, $widget];
+            var rows_to_empty = [new_wgd.col, new_wgd.row, new_wgd.size_x, new_wgd.size_y, $widget];
             this.empty_cells.apply(this, rows_to_empty);
         }
 
-        wgd.col = new_col;
-        wgd.size_x = size_x;
-        wgd.size_y = size_y;
-        this.add_to_gridmap(new_grid_data, $widget);
+        // not the same that wgd = new_wgd;
+        wgd.col = new_wgd.col;
+        wgd.row = new_wgd.row;
+        wgd.size_x = new_wgd.size_x;
+        wgd.size_y = new_wgd.size_y;
+
+        this.add_to_gridmap(new_wgd, $widget);
 
         //update coords instance attributes
         $widget.data('coords').update({
-            width: (size_x * this.options.widget_base_dimensions[0] +
-                ((size_x - 1) * this.options.widget_margins[0]) * 2),
-            height: (size_y * this.options.widget_base_dimensions[1] +
-                ((size_y - 1) * this.options.widget_margins[1]) * 2)
+            width: (new_wgd.size_x * this.options.widget_base_dimensions[0] +
+                ((new_wgd.size_x - 1) * this.options.widget_margins[0]) * 2),
+            height: (new_wgd.size_y * this.options.widget_base_dimensions[1] +
+                ((new_wgd.size_y - 1) * this.options.widget_margins[1]) * 2)
         });
 
-        if (size_y > old_size_y) {
-            this.add_faux_rows(size_y - old_size_y);
-        }
-
-        if (size_x > old_size_x) {
-            this.add_faux_cols(size_x - old_size_x);
-        }
-
         $widget.attr({
-            'data-col': new_col,
-            'data-sizex': size_x,
-            'data-sizey': size_y
+            'data-col': new_wgd.col,
+            'data-row': new_wgd.row,
+            'data-sizex': new_wgd.size_x,
+            'data-sizey': new_wgd.size_y
         });
 
         if (empty_cols.length) {
             var cols_to_remove_holes = [
-                empty_cols[0], wgd.row,
+                empty_cols[0], new_wgd.row,
                 empty_cols.length,
-                Math.min(old_size_y, size_y),
+                Math.min(old_size_y, new_wgd.size_y),
                 $widget
             ];
 
@@ -315,17 +329,16 @@
 
         if (empty_rows.length) {
             var rows_to_remove_holes = [
-                new_col, wgd.row, size_x, size_y, $widget
+                new_wgd.col, new_wgd.row, new_wgd.size_x, new_wgd.size_y, $widget
             ];
             this.remove_empty_cells.apply(this, rows_to_remove_holes);
         }
 
-        if (callback) {
-            callback.call(this, size_x, size_y);
-        }
+        this.move_widget_up($widget);
 
-        return $widget;
+        return this;
     };
+
 
     /**
     * Move down widgets in cells represented by the arguments col, row, size_x,
@@ -2280,7 +2293,7 @@
     */
     fn.generate_stylesheet = function(opts) {
         var styles = '';
-        var max_size_x = this.options.max_size_x;
+        var max_size_x = this.options.max_size_x || this.cols;
         var max_rows = 0;
         var max_cols = 0;
         var i;
