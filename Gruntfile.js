@@ -137,14 +137,20 @@ module.exports = function(grunt) {
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json', 'dist/'], // '-a' for all files
+        commitFiles: ['package.json', 'CHANGELOG.md', 'dist/'], // '-a' for all files
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
-        push: true,
+        push: false,
         pushTo: 'origin',
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
       }
+    },
+
+    changelog: {
+        options: {
+            dest: 'CHANGELOG.md'
+        }
     },
 
     watch: {
@@ -161,15 +167,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-conventional-changelog');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('build', ['default']);
   grunt.registerTask('docs', ['yuidoc']);
 
-  grunt.registerTask('release', ['build', 'bump-only:patch', 'build', 'docs', 'bump-commit']);
-  grunt.registerTask('release:minor', ['build', 'bump-only:minor', 'build', 'docs', 'bump-commit']);
-  grunt.registerTask('release:major', ['build', 'bump-only:major', 'build', 'docs', 'bump-commit']);
-  grunt.registerTask('release:git', ['build', 'bump-only:git', 'build', 'docs', 'bump-commit']);
+  grunt.registerTask('release', ['build', 'bump-only:patch', 'build', 'docs', 'changelog']);
+  grunt.registerTask('release:minor', ['build', 'bump-only:minor', 'build', 'docs', 'changelog']);
+  grunt.registerTask('release:major', ['build', 'bump-only:major', 'build', 'docs', 'changelog']);
+  grunt.registerTask('release:git', ['build', 'bump-only:git', 'build', 'docs', 'changelog', 'bump-commit']);
+  grunt.registerTask('release:commit', ['bump-commit']);
 
 };
