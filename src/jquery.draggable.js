@@ -6,7 +6,7 @@
  * Licensed under the MIT licenses.
  */
 
-;(function($, window, document, undefined){
+;(function($, window, document, undefined) {
 
     var defaults = {
         items: 'li',
@@ -19,9 +19,9 @@
         container_width: 0,  // 0 == auto
         move_element: true,
         helper: false  // or 'clone'
-        // drag: function(e){},
-        // start : function(e, ui){},
-        // stop : function(e){}
+        // drag: function(e) {},
+        // start : function(e, ui) {},
+        // stop : function(e) {}
     };
 
     var $window = $(window);
@@ -130,7 +130,7 @@
         if (this.options.limit) {
             if (left > this.player_max_left) {
                 left = this.player_max_left;
-            }else if(left < this.player_min_left) {
+            } else if(left < this.player_min_left) {
                 left = this.player_min_left;
             }
         }
@@ -216,7 +216,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on(pointer_events.move, function(mme){
+        this.$body.on(pointer_events.move, function(mme) {
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -260,9 +260,10 @@
             this.$helper = this.$player.clone()
                 .appendTo(this.$container).addClass('helper');
             this.helper = true;
-        }else{
+        } else {
             this.helper = false;
         }
+
         this.scrollOffset = 0;
         this.el_init_offset = this.$player.offset();
         this.player_width = this.$player.width();
@@ -337,8 +338,7 @@
         this.disabled = true;
     };
 
-
-    fn.destroy = function(){
+    fn.destroy = function() {
         this.disable();
 
         this.$container.off('.gridster-draggable');

@@ -112,7 +112,8 @@
         this.$wrapper.addClass('ready');
         this.draggable();
 
-        $(window).bind('resize.gridster', throttle($.proxy(this.recalculate_faux_grid, this), 200));
+        $(window).bind('resize.gridster', throttle(
+            $.proxy(this.recalculate_faux_grid, this), 200));
     };
 
 
@@ -692,10 +693,9 @@
     *
     * @method on_start_drag
     * @param {Event} event The original browser event
-    * @param {Object} ui A prepared ui object.
+    * @param {Object} ui A prepared ui object with useful drag-related data
     */
     fn.on_start_drag = function(event, ui) {
-
         this.$helper.add(this.$player).add(this.$wrapper).addClass('dragging');
 
         this.$player.addClass('player');
@@ -716,7 +716,6 @@
 
         this.last_cols = [];
         this.last_rows = [];
-
 
         // see jquery.collision.js
         this.collision_api = this.$helper.collision(
@@ -743,7 +742,7 @@
     *
     * @method on_drag
     * @param {Event} event The original browser event
-    * @param {Object} ui A prepared ui object.
+    * @param {Object} ui A prepared ui object with useful drag-related data
     */
     fn.on_drag = function(event, ui) {
         //break if dragstop has been fired
@@ -786,7 +785,7 @@
     *
     * @method on_stop_drag
     * @param {Event} event The original browser event
-    * @param {Object} ui A prepared ui object.
+    * @param {Object} ui A prepared ui object with useful drag-related data
     */
     fn.on_stop_drag = function(event, ui) {
         this.$helper.add(this.$player).add(this.$wrapper)
@@ -794,7 +793,8 @@
 
         ui.position.left = ui.position.left + this.baseX;
         ui.position.top = ui.position.top + this.baseY;
-        this.colliders_data = this.collision_api.get_closest_colliders(ui.position);
+        this.colliders_data = this.collision_api.get_closest_colliders(
+            ui.position);
 
         this.on_overlapped_column_change(
             this.on_start_overlapping_column,
@@ -1347,8 +1347,9 @@
             }, this));
         }
 
+        var $widgets_under_ph = this.get_widgets_under_player(
+            this.cells_occupied_by_placeholder);
 
-        var $widgets_under_ph = this.get_widgets_under_player(this.cells_occupied_by_placeholder);
         if ($widgets_under_ph.length) {
             $widgets_under_ph.each($.proxy(function(i, widget) {
                 var $w = $(widget);
