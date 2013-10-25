@@ -358,11 +358,7 @@
 
     //jQuery adapter
     $.fn.drag = function ( options ) {
-        return this.each(function () {
-            if (!$.data(this, 'drag')) {
-                $.data(this, 'drag', new Draggable( this, options ));
-            }
-        });
+        return new Draggable(this, options);
     };
 
 
