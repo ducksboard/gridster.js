@@ -289,10 +289,14 @@
             'top' : offset.top
         });
 
+        var last_position = this.last_position || data.position;
+        data.prev_position = last_position;
 
         if (this.options.drag) {
             this.options.drag.call(this.$player, e, data);
         }
+
+        this.last_position = data.position;
         return false;
     };
 
