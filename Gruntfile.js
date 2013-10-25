@@ -154,7 +154,7 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files: ['libs/*.js', 'src/*.js', 'Gruntfile.js'],
+      files: ['libs/*.js', 'src/*.js', 'src/*.css', 'Gruntfile.js'],
       tasks: ['concat', 'uglify', 'cssmin']
     }
   });
