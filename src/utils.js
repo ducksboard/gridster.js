@@ -1,4 +1,12 @@
 ;(function(window, undefined) {
+
+
+    window.delay = function(func, wait) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        return setTimeout(function(){ return func.apply(null, args); }, wait);
+    };
+
+
     /* Debounce and throttle functions taken from underscore.js */
     window.debounce = function(func, wait, immediate) {
         var timeout;
