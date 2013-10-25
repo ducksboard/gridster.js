@@ -9,7 +9,7 @@
 ;(function($, window, document, undefined){
 
     var defaults = {
-        items: '.gs_w',
+        items: 'li',
         distance: 1,
         limit: true,
         offset_left: 0,
