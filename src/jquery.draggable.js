@@ -17,6 +17,7 @@
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
         handle: null,
         container_width: 0  // 0 == auto
+        helper: false  // or 'clone'
         // drag: function(e){},
         // start : function(e, ui){},
         // stop : function(e){}
