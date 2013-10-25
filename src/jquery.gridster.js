@@ -671,8 +671,8 @@
                     .removeClass('player-revert');
 
                 self.$player = $(this);
-                self.$helper = self.options.draggable.helper === 'clone' ?
-                    $(ui.helper) : self.$player;
+                self.$helper = $(ui.$helper);
+
                 self.helper = !self.$helper.is(self.$player);
 
                 self.on_start_drag.call(self, event, ui);

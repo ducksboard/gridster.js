@@ -134,15 +134,30 @@
         }
 
         return {
-            left: left,
-            top: top,
-            mouse_left: mouse_actual_pos.left,
-            mouse_top: mouse_actual_pos.top
+            position: {
+                left: left,
+                top: top
+            },
+            pointer: {
+                left: mouse_actual_pos.left,
+                top: mouse_actual_pos.top,
+                diff_left: diff_x,
+                diff_top: diff_y + this.scrollOffset
+            }
         };
     };
 
 
-    fn.manage_scroll = function(offset) {
+    fn.get_drag_data = function(e) {
+        var offset = this.get_offset(e);
+        offset.$player = this.$player;
+        offset.$helper = this.helper ? this.$helper : this.$player;
+
+        return offset;
+    };
+
+
+    fn.manage_scroll = function(data) {
         /* scroll document */
         var nextScrollTop;
         var scrollTop = $window.scrollTop();
@@ -152,8 +167,8 @@
         var mouse_down_zone = max_window_y - 50;
         var mouse_up_zone = min_window_y + 50;
 
-        var abs_mouse_left = offset.mouse_left;
-        var abs_mouse_top = min_window_y + offset.mouse_top;
+        var abs_mouse_left = data.pointer.left;
+        var abs_mouse_top = min_window_y + data.pointer.top;
 
         var max_player_y = (this.doc_height - this.window_height +
             this.player_height);
@@ -254,18 +269,16 @@
             this.options.offset_left);
 
         if (this.options.start) {
-            this.options.start.call(this.$player, e, {
-                helper: this.helper ? this.$helper : this.$player
-            });
+            this.options.start.call(this.$player, e, this.get_drag_data(e));
         }
         return false;
     };
 
 
     fn.on_dragmove = function(e) {
-        var offset = this.get_offset(e);
+        var data = this.get_drag_data(e);
 
-        this.options.autoscroll && this.manage_scroll(offset);
+        this.options.autoscroll && this.manage_scroll(data);
 
         (this.helper ? this.$helper : this.$player).css({
             'position': 'absolute',
@@ -273,33 +286,20 @@
             'top' : offset.top
         });
 
-        var ui = {
-            'position': {
-                'left': offset.left,
-                'top': offset.top
-            }
-        };
 
         if (this.options.drag) {
-            this.options.drag.call(this.$player, e, ui);
+            this.options.drag.call(this.$player, e, data);
         }
         return false;
     };
 
 
     fn.on_dragstop = function(e) {
-        var offset = this.get_offset(e);
+        var data = this.get_drag_data(e);
         this.drag_start = false;
 
-        var ui = {
-            'position': {
-                'left': offset.left,
-                'top': offset.top
-            }
-        };
-
         if (this.options.stop) {
-            this.options.stop.call(this.$player, e, ui);
+            this.options.stop.call(this.$player, e, data);
         }
 
         if (this.helper) {
