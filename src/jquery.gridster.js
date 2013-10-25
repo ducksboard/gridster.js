@@ -661,13 +661,6 @@
             offset_left: this.options.widget_margins[0],
             container_width: this.container_width,
             start: function(event, ui) {
-                // Ignore drag start if mouse was released outside screen on a previous drag
-                if (self.dragging) {
-                    return;
-                }
-
-                self.dragging = true;
-
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
 
@@ -680,7 +673,6 @@
                 self.$el.trigger('gridster:dragstart');
             },
             stop: function(event, ui) {
-                self.dragging = false;
                 self.on_stop_drag.call(self, event, ui);
                 self.$el.trigger('gridster:dragstop');
             },

@@ -246,8 +246,10 @@
 
     fn.on_dragstart = function(e) {
         e.preventDefault();
-        this.drag_start = true;
-        this.is_dragging = true;
+
+        if (this.is_dragging) { return this; }
+
+        this.drag_start = this.is_dragging = true;
         var offset = this.$container.offset();
         this.baseX = Math.round(offset.left);
         this.baseY = Math.round(offset.top);
