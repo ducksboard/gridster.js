@@ -32,6 +32,13 @@
         draggable: {
             items: '.gs-w',
             distance: 4
+        },
+        resize: {
+            enabled: false,
+            axes: ['x', 'y', 'both'],
+            handle_append_to: '',
+            handle_class: 'gs-resize-handle',
+            max_size: [Infinity, Infinity]
         }
     };
 
@@ -80,6 +87,19 @@
     *    @param {Object} [options.draggable] An Object with all options for
     *     Draggable class you want to overwrite. See Draggable docs for more
     *     info.
+    *       @param {Object} [options.resize] An Object with resize config
+    *        options.
+    *       @param {Boolean} [options.resize.enabled] Set to true to enable
+    *        resizing.
+    *       @param {Array} [options.resize.axes] Axes in which widgets can be
+    *        resized. Possible values: ['x', 'y', 'both'].
+    *       @param {String} [options.resize.handle_append_to] Set a valid CSS
+    *        selector to append resize handles to.
+    *       @param {String} [options.resize.handle_class] CSS class name used
+    *        by resize handles.
+    *       @param {Array} [options.resize.max_size] Limit widget dimensions
+    *        when resizing. Array values should be integers:
+    *        `[max_cols_occupied, max_rows_occupied]`
     *
     * @constructor
     */
@@ -87,7 +107,8 @@
         this.options = $.extend(true, defaults, options);
         this.$el = $(el);
         this.$wrapper = this.$el.parent();
-        this.$widgets = this.$el.children(this.options.widget_selector).addClass('gs-w');
+        this.$widgets = this.$el.children(
+            this.options.widget_selector).addClass('gs-w');
         this.widgets = [];
         this.$changed = $([]);
         this.wrapper_width = this.$wrapper.width();
@@ -106,11 +127,13 @@
     var fn = Gridster.prototype;
 
     fn.init = function() {
+        this.options.resize.enabled && this.setup_resize();
         this.generate_grid_and_stylesheet();
         this.get_widgets_from_DOM();
         this.set_dom_grid_height();
         this.$wrapper.addClass('ready');
         this.draggable();
+        this.options.resize.enabled && this.resizable();
 
         $(window).bind('resize.gridster', throttle(
             $.proxy(this.recalculate_faux_grid, this), 200));
@@ -142,6 +165,33 @@
     };
 
 
+
+    /**
+    * Disables drag-and-drop widget resizing.
+    *
+    * @method disable
+    * @return {Class} Returns instance of gridster Class.
+    */
+    fn.disable_resize = function() {
+        this.$el.addClass('gs-resize-disabled');
+        this.resize_api.disable();
+        return this;
+    };
+
+
+    /**
+    * Enables drag-and-drop widget resizing.
+    *
+    * @method enable
+    * @return {Class} Returns instance of gridster Class.
+    */
+    fn.enable_resize = function() {
+        this.$el.removeClass('gs-resize-disabled');
+        this.resize_api.enable();
+        return this;
+    };
+
+
     /**
     * Add a new widget to the grid.
     *
@@ -152,10 +202,11 @@
     * @param {Number} [size_y] The nº of columns the widget occupies vertically.
     * @param {Number} [col] The column the widget should start in.
     * @param {Number} [row] The row the widget should start in.
+    * @param {Array} [max_size] max_size Maximun size (in units) for width and height.
     * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     */
-    fn.add_widget = function(html, size_x, size_y, col, row) {
+    fn.add_widget = function(html, size_x, size_y, col, row, max_size) {
         var pos;
         size_x || (size_x = 1);
         size_y || (size_y = 1);
@@ -185,14 +236,56 @@
         this.add_faux_rows(pos.size_y);
         //this.add_faux_cols(pos.size_x);
 
+        if (max_size) {
+            this.set_widget_max_size($w, max_size);
+        }
+
         this.set_dom_grid_height();
 
         return $w.fadeIn();
     };
 
 
+    /**
+    * Change widget size limits.
+    *
+    * @method set_widget_max_size
+    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
+    *  representing the widget or an index representing the desired widget.
+    * @param {Array} max_size Maximun size (in units) for width and height.
+    * @return {HTMLElement} Returns instance of gridster Class.
+    */
+    fn.set_widget_max_size = function($widget, max_size) {
+        $widget = typeof $widget === 'number' ?
+            this.$widgets.eq($widget) : $widget;
 
-     /**
+        if (!$widget.length) { return this; }
+
+        var wgd = $widget.data('coords').grid;
+        wgd.max_size_x = max_size[0];
+        wgd.max_size_y = max_size[1];
+
+        return this;
+    };
+
+
+    /**
+    * Append the resize handle into a widget.
+    *
+    * @method add_resize_handle
+    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+    *  representing the widget.
+    * @return {HTMLElement} Returns instance of gridster Class.
+    */
+    fn.add_resize_handle = function($w) {
+        var append_to = this.options.resize.handle_append_to;
+        $(this.resize_handle_tpl).appendTo( append_to ? $(append_to, $w) : $w);
+
+        return this;
+    };
+
+
+    /**
     * Change the size of a widget. Width is limited to the current grid width.
     *
     * @method resize_widget
@@ -200,11 +293,16 @@
     *  representing the widget.
     * @param {Number} size_x The number of columns that will occupy the widget.
     * @param {Number} size_y The number of rows that will occupy the widget.
-    * @param {Function} callback Function executed when the widget is removed.
+    * @param {Boolean} [reposition] Set to false to not move the widget to
+    *  the left if there is insufficient space on the right.
+    *  By default <code>size_x</code> is limited to the space available from
+    *  the column where the widget begins, until the last column to the right.
+    * @param {Function} [callback] Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     */
-    fn.resize_widget = function($widget, size_x, size_y, callback) {
+    fn.resize_widget = function($widget, size_x, size_y, reposition, callback) {
         var wgd = $widget.coords().grid;
+        reposition !== false && (reposition = true);
         size_x || (size_x = wgd.size_x);
         size_y || (size_y = wgd.size_y);
 
@@ -216,7 +314,7 @@
         var old_col = wgd.col;
         var new_col = old_col;
 
-        if (old_col + size_x - 1 > this.cols) {
+        if (reposition && old_col + size_x - 1 > this.cols) {
             var diff = old_col + (size_x - 1) - this.cols;
             var c = old_col - diff;
             new_col = Math.max(1, c);
@@ -245,8 +343,17 @@
     };
 
 
+    /**
+    * Mutate widget dimensions and position in the grid map.
+    *
+    * @method mutate_widget_in_gridmap
+    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+    *  representing the widget to mutate.
+    * @param {Object} wgd Current widget grid data (col, row, size_x, size_y).
+    * @param {Object} new_wgd New widget grid data.
+    * @return {HTMLElement} Returns instance of gridster Class.
+    */
     fn.mutate_widget_in_gridmap = function($widget, wgd, new_wgd) {
-
         var old_size_x = wgd.size_x;
         var old_size_y = wgd.size_y;
 
@@ -302,6 +409,8 @@
         wgd.size_y = new_wgd.size_y;
 
         this.add_to_gridmap(new_wgd, $widget);
+
+        $widget.removeClass('player-revert');
 
         //update coords instance attributes
         $widget.data('coords').update({
@@ -558,12 +667,13 @@
     * @return {Array} Returns the instance of the Gridster class.
     */
     fn.register_widget = function($el) {
-
         var wgd = {
             'col': parseInt($el.attr('data-col'), 10),
             'row': parseInt($el.attr('data-row'), 10),
             'size_x': parseInt($el.attr('data-sizex'), 10),
             'size_y': parseInt($el.attr('data-sizey'), 10),
+            'max_size_x': parseInt($el.attr('data-max-sizex'), 10) || false,
+            'max_size_y': parseInt($el.attr('data-max-sizey'), 10) || false,
             'el': $el
         };
 
@@ -571,8 +681,7 @@
             !this.can_move_to(
              {size_x: wgd.size_x, size_y: wgd.size_y}, wgd.col, wgd.row)
         ) {
-            wgd = this.next_position(wgd.size_x, wgd.size_y);
-            wgd.el = $el;
+            $.extend(wgd, this.next_position(wgd.size_x, wgd.size_y));
             $el.attr({
                 'data-col': wgd.col,
                 'data-row': wgd.row,
@@ -583,11 +692,12 @@
 
         // attach Coord object to player data-coord attribute
         $el.data('coords', $el.coords());
-
         // Extend Coord object with grid position info
         $el.data('coords').grid = wgd;
 
         this.add_to_gridmap(wgd, $el);
+
+        this.options.resize.enabled && this.add_resize_handle($el);
 
         return this;
     };
@@ -661,6 +771,8 @@
         var draggable_options = $.extend(true, {}, this.options.draggable, {
             offset_left: this.options.widget_margins[0],
             container_width: this.container_width,
+            ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON',
+                '.' + this.options.resize.handle_class],
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -684,6 +796,50 @@
           });
 
         this.drag_api = this.$el.drag(draggable_options);
+        return this;
+    };
+
+
+    /**
+    * Bind resize events to get resize working.
+    *
+    * @method resizable
+    * @return {Class} Returns instance of gridster Class.
+    */
+    fn.resizable = function() {
+        this.resize_api = this.$el.drag({
+            items: '.' + this.options.resize.handle_class,
+            offset_left: this.options.widget_margins[0],
+            container_width: this.container_width,
+            move_element: false,
+            start: $.proxy(this.on_start_resize, this),
+            stop: $.proxy(function(event, ui) {
+                delay($.proxy(function() {
+                    this.on_stop_resize(event, ui);
+                }, this), 120);
+            }, this),
+            drag: throttle($.proxy(this.on_resize, this), 60)
+        });
+
+        return this;
+    };
+
+
+    /**
+    * Setup things required for resizing. Like build templates for drag handles.
+    *
+    * @method setup_resize
+    * @return {Class} Returns instance of gridster Class.
+    */
+    fn.setup_resize = function() {
+        this.resize_handle_class = this.options.resize.handle_class;
+        var axes = this.options.resize.axes;
+        var handle_tpl = '<span class="' + this.resize_handle_class + ' ' +
+            this.resize_handle_class + '-{type}" />';
+
+        this.resize_handle_tpl = $.map(axes, function(type) {
+            return handle_tpl.replace('{type}', type);
+        }).join('');
         return this;
     };
 
@@ -839,6 +995,148 @@
         this.cells_occupied_by_player = {};
 
         this.set_dom_grid_height();
+    };
+
+
+
+    /**
+    * This function is executed every time a widget starts to be resized.
+    *
+    * @method on_start_resize
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object with useful drag-related data
+    */
+    fn.on_start_resize = function(event, ui) {
+        this.$resized_widget = ui.$player.closest('.gs-w');
+        this.resize_coords = this.$resized_widget.coords();
+        this.resize_wgd = this.resize_coords.grid;
+        this.resize_initial_width = this.resize_coords.coords.width;
+        this.resize_initial_height = this.resize_coords.coords.height;
+        this.resize_initial_sizex = this.resize_coords.grid.size_x;
+        this.resize_initial_sizey = this.resize_coords.grid.size_y;
+        this.resize_last_sizex = this.resize_initial_sizex;
+        this.resize_last_sizey = this.resize_initial_sizey;
+        this.resize_max_size_x = Math.min(this.resize_wgd.max_size_x ||
+            this.options.resize.max_size[0], this.cols - this.resize_wgd.col + 1);
+        this.resize_max_size_y = this.resize_wgd.max_size_y ||
+            this.options.resize.max_size[1];
+
+        this.resize_dir = {
+            right: ui.$player.is('.' + this.resize_handle_class + '-x'),
+            bottom: ui.$player.is('.' + this.resize_handle_class + '-y')
+        };
+
+        this.$resized_widget.css({
+            'min-width': this.options.widget_base_dimensions[0],
+            'min-height': this.options.widget_base_dimensions[1]
+        });
+
+        var nodeName = this.$resized_widget.get(0).tagName;
+        this.$resize_preview_holder = $('<' + nodeName + ' />', {
+              'class': 'preview-holder resize-preview-holder',
+              'data-row': this.$resized_widget.attr('data-row'),
+              'data-col': this.$resized_widget.attr('data-col'),
+              'css': {
+                  'width': this.resize_initial_width,
+                  'height': this.resize_initial_height
+              }
+        }).appendTo(this.$el);
+
+        this.$resized_widget.addClass('resizing');
+    };
+
+
+    /**
+    * This function is executed every time a widget stops being resized.
+    *
+    * @method on_stop_resize
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object with useful drag-related data
+    */
+    fn.on_stop_resize = function(event, ui) {
+        this.$resized_widget
+            .removeClass('resizing')
+            .css({
+                'width': '',
+                'height': ''
+            });
+
+        delay($.proxy(function() {
+            this.$resize_preview_holder
+                .remove()
+                .css({
+                    'min-width': '',
+                    'min-height': ''
+                });
+        }, this), 300);
+    };
+
+    /**
+    * This function is executed when a widget is being resized.
+    *
+    * @method on_resize
+    * @param {Event} event The original browser event
+    * @param {Object} ui A prepared ui object with useful drag-related data
+    */
+    fn.on_resize = function(event, ui) {
+        var rel_x = (ui.pointer.diff_left);
+        var rel_y = (ui.pointer.diff_top);
+        var wbd_x = this.options.widget_base_dimensions[0];
+        var wbd_y = this.options.widget_base_dimensions[1];
+        var max_width = Infinity;
+        var max_height = Infinity;
+
+        var inc_units_x = Math.ceil((rel_x /
+                (this.options.widget_base_dimensions[0] +
+                    this.options.widget_margins[0] * 2)) - 0.2);
+
+        var inc_units_y = Math.ceil((rel_y /
+                (this.options.widget_base_dimensions[1] +
+                 this.options.widget_margins[1] * 2)) - 0.2);
+
+        var size_x = Math.max(1, this.resize_initial_sizex + inc_units_x);
+        var size_y = Math.max(1, this.resize_initial_sizey + inc_units_y);
+
+        size_x = Math.min(size_x, this.resize_max_size_x);
+        max_width = (this.resize_max_size_x * wbd_x) +
+            ((size_x - 1) * this.options.widget_margins[0] * 2);
+
+        size_y = Math.min(size_y, this.resize_max_size_y);
+        max_height = (this.resize_max_size_y * wbd_y) +
+            ((size_y - 1) * this.options.widget_margins[1] * 2);
+
+
+        if (this.resize_dir.right) {
+            size_y = this.resize_initial_sizey;
+        } else if (this.resize_dir.bottom) {
+            size_x = this.resize_initial_sizex;
+        }
+
+        var css_props = {};
+        !this.resize_dir.bottom && (css_props.width = Math.min(
+            this.resize_initial_width + rel_x, max_width));
+        !this.resize_dir.right && (css_props.height = Math.min(
+            this.resize_initial_height + rel_y, max_height));
+
+        this.$resized_widget.css(css_props);
+
+        if (size_x !== this.resize_last_sizex ||
+            size_y !== this.resize_last_sizey) {
+
+            this.resize_widget(this.$resized_widget, size_x, size_y, false);
+
+            this.$resize_preview_holder.css({
+                'width': '',
+                'height': ''
+            }).attr({
+                'data-row': this.$resized_widget.attr('data-row'),
+                'data-sizex': size_x,
+                'data-sizey': size_y
+            });
+        }
+
+        this.resize_last_sizex = size_x;
+        this.resize_last_sizey = size_y;
     };
 
 
