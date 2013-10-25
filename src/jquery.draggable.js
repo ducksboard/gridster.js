@@ -16,7 +16,8 @@
         autoscroll: true,
         ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'],
         handle: null,
-        container_width: 0  // 0 == auto
+        container_width: 0,  // 0 == auto
+        move_element: true,
         helper: false  // or 'clone'
         // drag: function(e){},
         // start : function(e, ui){},
@@ -283,11 +284,13 @@
 
         this.options.autoscroll && this.manage_scroll(data);
 
-        (this.helper ? this.$helper : this.$player).css({
-            'position': 'absolute',
-            'left' : offset.left,
-            'top' : offset.top
-        });
+        if (this.options.move_element) {
+            (this.helper ? this.$helper : this.$player).css({
+                'position': 'absolute',
+                'left' : data.position.left,
+                'top' : data.position.top
+            });
+        }
 
         var last_position = this.last_position || data.position;
         data.prev_position = last_position;
