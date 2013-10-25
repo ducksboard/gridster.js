@@ -350,7 +350,7 @@
             return !$(event.target).is(this.options.handle);
         }
 
-        return $.inArray(event.target.nodeName, this.options.ignore_dragging) >= 0;
+        return $(event.target).is(this.options.ignore_dragging.join(', '));
     };
 
     //jQuery adapter
