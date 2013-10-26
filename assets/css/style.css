@@ -248,6 +248,10 @@ section header .m_txt{
     line-height: 1.4em;
 }
 
+.m_txt ul li {
+    padding-bottom: 0.2em;
+}
+
 .m_txt :last-child:not(a) {
     padding-bottom: 0;
 }
@@ -339,24 +343,12 @@ section header .m_txt{
     background: #004756;
 }
 
-.demo:hover .gridster {
-    opacity: 1;
-}
-
 .gridster {
-    width: 940px;
+    width: 960px;
     margin: 0 auto;
-
-    opacity: .8;
-
-    -webkit-transition: opacity .6s;
-    -moz-transition: opacity .6s;
-    -o-transition: opacity .6s;
-    -ms-transition: opacity .6s;
-    transition: opacity .6s;
 }
 
-.gridster .gs_w {
+.gridster .gs-w {
     background: #FFF;
     cursor: pointer;
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
@@ -369,7 +361,7 @@ section header .m_txt{
 }
 
 
-.gridster .gs_w.try {
+.gridster .gs-w.try {
     background-image: url(../img/sprite.png);
     background-repeat: no-repeat;
     background-position: 37px -169px;
@@ -432,7 +424,8 @@ article:not(:last-child),
 }
 
 #intro {
-    padding-right: 0;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 #intro > div:last-child{

@@ -24,6 +24,7 @@
         <nav>
             <ul>
                 <li><a href="#intro">What?</a></li>
+                <li><a href="#demos">Demos</a></li>
                 <li><a href="#usage">Usage</a></li>
                 <li><a href="#documentation">Documentation</a></li>
                 <li><a href="#download">Download</a></li>
@@ -50,7 +51,6 @@
 
 
     <section class="demo">
-
         <div class="gridster">
           <ul>
             <li data-row="1" data-col="1" data-sizex="2" data-sizey="1"></li>
@@ -59,7 +59,7 @@
             <li data-row="3" data-col="2" data-sizex="2" data-sizey="1"></li>
             <li data-row="1" data-col="2" data-sizex="2" data-sizey="2"></li>
 
-            <li class="try" data-row="1" data-col="4" data-sizex="1" data-sizey="1"></li>
+            <li class="try" data-row="1" data-col="4" data-sizex="1" data-sizey="1" data-max-sizex="1" data-max-sizey="1"></li>
             <li data-row="2" data-col="4" data-sizex="2" data-sizey="1"></li>
             <li data-row="3" data-col="4" data-sizex="1" data-sizey="1"></li>
 
@@ -72,6 +72,28 @@
         </div>
 
     </section>
+
+
+    <section id="demos">
+        <div class="wrapper">
+            <header>
+                <h2 class="heading-xl">Demos</h2>
+            </header>
+            <article class="m_txt">
+                <ul>
+                    <li><a href="demos/adding-widgets-dynamically.html">Adding widgets dynamically</a></li>
+                    <li><a href="demos/custom-drag-handle">Custom drag handle</a></li>
+                    <li><a href="demos/expandable-widgets.html">Expandable widgets</a></li>
+                    <li><a href="demos/grid-from-serialize.html">Build grid from serialize</a></li>
+                    <li><a href="demos/multiple-grids.html">Multiple gridster instances on the same page</a></li>
+                    <li><a href="demos/resize.html">Resizable widgets</a></li>
+                    <li><a href="demos/resize-limits.html">Resizable widgets with constraints</a></li>
+                    <li><a href="demos/serialize.html">Serialize widgets positions</a></li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
 
     <section id="usage">
         <div class="wrapper">
@@ -148,6 +170,12 @@
                         <li><a href="#draggable_start_opt">draggable.drag</a></li>
                         <li><a href="#draggable_start_opt">draggable.stop</a></li>
 
+                        <li><a href="#resize_enabled_opt">resize.enabled</a></li>
+                        <li><a href="#resize_axes_opt">resize.axes</a></li>
+                        <li><a href="#resize_handle_class_opt">resize.handle_class</a></li>
+                        <li><a href="#resize_handle_append_to_opt">resize.handle_append_to</a></li>
+                        <li><a href="#resize_max_size_opt">resize.max_size</a></li>
+
                         <li><a href="#on_overlap_start_opt">collision.on_overlap_start</a></li>
                         <li><a href="#on_overlap_opt">collision.on_overlap</a></li>
                         <li><a href="#on_overlap_stop_opt">collision.on_overlap_stop</a></li>
@@ -164,10 +192,13 @@
                         <li><a href="#add_widget_method">add_widget</a></li>
                         <li><a href="#resize_widget_method">resize_widget</a></li>
                         <li><a href="#remove_widget_method">remove_widget</a></li>
+                        <li><a href="#remove_all_widgets_method">remove_all_widgets</a></li>
                         <li><a href="#serialize_method">serialize</a></li>
                         <li><a href="#serialize_changed_method">serialize_changed</a></li>
                         <li><a href="#enable_method">enable</a></li>
                         <li><a href="#disable_method">disable</a></li>
+                        <li><a href="#enable_resize_method">enable_resize</a></li>
+                        <li><a href="#disable_resize_method">disable_resize</a></li>
                     </ul>
                 </nav>
             </header>
@@ -178,7 +209,7 @@
                     <h3 id="widget_class_opt" class="heading-l">Options</h3>
                     <p>A gridster configuration object.</p>
 
-                    <h4 id="widget_selector_opt" class="heading-m">widget_selector: <em>"> li"</em></h4>
+                    <h4 id="widget_selector_opt" class="heading-m">widget_selector: <em>"li"</em></h4>
                     <p>Define which elements are the widgets. Can be a CSS Selector string or a jQuery collection of HTMLElements.</p>
 
                     <h4 id="widget_margins_opt" class="heading-m">widget_margins: <em>[10, 10]</em></h4>
@@ -202,11 +233,8 @@
                     <h4 id="min_rows_opt" class="heading-m">min_rows: <em>15</em></h4>
                     <p>The minimum number of rows to create.</p>
 
-                    <h4 id="max_size_x_opt" class="heading-m">max_size_x: <em>6</em></h4>
+                    <h4 id="max_size_x_opt" class="heading-m">max_size_x: <em>false</em></h4>
                     <p>The maximum number of columns that a widget can span.</p>
-
-                    <h4 id="max_size_y_opt" class="heading-m">max_size_y: <em>6</em></h4>
-                    <p>The maximum number of rows that a widget can span.</p>
 
                     <h4 id="autogenerate_stylesheet_opt" class="heading-m">autogenerate_stylesheet: <em>true</em></h4>
                     <p>If true, all the CSS required to position all widgets in their respective columns and rows will be generated automatically and injected to the <code>&lt;head&gt;</code> of the document. You can set this to false and write your own CSS targeting rows and cols via data-attributes like so: <code>[data-col="1"] { left: 10px; }</code>.</p>
@@ -214,7 +242,7 @@
                     <h4 id="avoid_overlapped_widgets_opt" class="heading-m">avoid_overlapped_widgets: <em>true</em></h4>
                     <p>Don't allow widgets loaded from the DOM to overlap. This is helpful if you're loading widget positions form the database and they might be inconsistent.</p>
 
-                    <h4 id="serialize_params_opt" class="heading-m">serialize_params: <em>function($w, wgd) { return { col: wgd.col, row: wgd.row } }</em></h4>
+                    <h4 id="serialize_params_opt" class="heading-m">serialize_params: <em>function($w, wgd) { return { col: wgd.col, row: wgd.row, size_x: wgd.size_x, size_y: wgd.size_y } }</em></h4>
                     <p>A function to return serialized data for each each widget, used when calling the <a href="#serialize_method">serialize method</a>. Two arguments are passed: <code>$w</code>: the jQuery wrapped HTMLElement, and <code>wgd</code>: the grid coords object with keys <code>col</code>, <code>row</code>, <code>size_x</code> and <code>size_y</code>.</p>
 
                     <h4 id="draggable_start_opt" class="heading-m">draggable.start: <em>function(event, ui){}</em></h4>
@@ -225,6 +253,21 @@
 
                     <h4 id="draggable_stop_opt" class="heading-m">draggable.stop: <em>function(event, ui){}</em></h4>
                     <p>A callback for when dragging stops.</p>
+
+                    <h4 id="resize_enabled_opt" class="heading-m">resize.enabled: <em>false</em></h4>
+                    <p>Set to true to enable drag-and-drop widget resizing. This setting doesn't affect to the <code>resize_widget</code> method.</p>
+
+                    <h4 id="resize_axes_opt" class="heading-m">resize.axes: <em>['x', 'y', 'both']</em></h4>
+                    <p>Axes in which widgets can be resized.</p>
+
+                    <h4 id="resize_handle_class_opt" class="heading-m">resize.handle_class: <em>'gs-resize-handle'</em></h4>
+                    <p>CSS class name used by resize handles.</p>
+
+                    <h4 id="resize_handle_append_to_opt" class="heading-m">resize.handle_append_to: <em>''</em></h4>
+                    <p>Set a valid CSS selector to append resize handles to. If value evaluates to false it's appended to the widget.</p>
+
+                    <h4 id="resize_max_size_opt" class="heading-m">resize.max_size: <em>[Infinity, Infinity]</em></h4>
+                    <p>Limit widget dimensions when resizing. Array values should be integers: <code>[max_cols_occupied, max_rows_occupied]</code></p>
 
                     <h4 id="on_overlap_start_opt" class="heading-m">collision.on_overlap_start: <em>function(collider_data) { }</em></h4>
                     <p>A callback for the first time when a widget enters a new grid cell.</p>
@@ -246,7 +289,7 @@
 
                     <h4 class="heading-m">Parameters</h4>
                     <dl>
-                        <dt>html<em>String|HTMLElement</em></dt>
+                        <dt>html <em>String|HTMLElement</em></dt>
                         <dd>The string of HTMLElement that represents the widget is going to be added.</dd>
                         <dt>size_x <em>Number</em></dt>
                         <dd>The number of rows that the widget occupies. Defaults to <em>1</em>.</dd>
@@ -264,19 +307,22 @@
             </article>
 
             <article id="resize_widget_method" class="m_doc_method">
-                <h3>.resize_widget( $widget, [size_x], [size_y] )</h3>
+                <h3>.resize_widget( $widget, [size_x], [size_y], [reposition], [callback] )</h3>
 
                 <div class="m_txt">
-                    <p>Change the size of a widget.</p>
+                    <p>Change the size of a widget. Width is limited to the current grid width.</p>
 
                     <h4 class="heading-m">Parameters</h4>
                     <dl>
-                        <dt>$widget<em>HTMLElement</em></dt>
+                        <dt>$widget <em>HTMLElement</em></dt>
                         <dd>The jQuery wrapped HTMLElement that represents the widget is going to be resized.</dd>
                         <dt>size_x <em>Number</em></dt>
                         <dd>The number of rows that the widget is going to span. Defaults to current size_x.</dd>
                         <dt>size_y <em>Number</em></dt>
                         <dd>The number of columns that the widget is going to span. Defaults to current size_y.</dd>
+                        <dt>reposition <em>Boolean</em></dt>
+                        <dd>Set to false to not move the widget to the left if there is insufficient space on the right.
+                            By default <code>size_x</code> is limited to the space available from the column where the widget begins, until the last column to the right.</dd>
                     </dl>
 
                     <h4 class="heading-m">Returns</h4>
@@ -437,8 +483,30 @@
     gridster = $(".gridster > ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [140, 140],
-        min_cols: 6
+        min_cols: 6,
+        resize: {
+            enabled: true
+        }
     }).data('gridster');
+
+
+    // var collection = [
+    //     ['<li><div class="title">drag</div>Widget content</li>', 1, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 5, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 3, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 2, 1],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 4, 1],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 1, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 2, 1],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 3, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 1, 1],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 2, 2],
+    //     ['<li><div class="title">drag</div>Widget content</li>', 1, 3],
+    // ];
+
+    // $.each(collection, function(i, widget){
+    //     gridster.add_widget.apply(gridster, widget)
+    // });
 
   });
 </script>
