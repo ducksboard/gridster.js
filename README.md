@@ -7,46 +7,39 @@ dynamically add and remove elements from the grid.
 
 More at [http://gridster.net/](http://gridster.net/).
 
-Updating Begins
-===============
+[Releases](https://github.com/ducksboard/gridster.js/releases)
 
-Hi all, I have begun merging my fork with the main repository
-and am making some much needed fixes in the process.
+[CHANGELOG](https://github.com/ducksboard/gridster.js/blob/master/CHANGELOG.md)
 
-I am devoting an hour a day until it gets done.
+Gridster is maintained by Ducksboard occasionally but not actively.
+@dustmoo and @pushmatrix have also write permissions as Gridster maintainers
+they are. Thank you guys!
 
-Thanks,
+## Forks
 
-Dustin
+Mr @dustmoo (maintainer of Gridster) has his own fork of gridster.js
+with some new interesting features like widget-swapping and static widgets.
 
+Can be found here: [dustmoo/gridster.js](https://github.com/dustmoo/gridster.js)
 
-Public Service Announcement from Dustin Moore (dustmoo)
-=======================================================
+@dustmoo is working in his spare time to merge all these changes into
+ducksboard/gridster.js
 
-Gridster is not currently being actively maintained by 
-[Ducksboard](http://ducksboard.com/).
-
-I and others have been given access to the repo to help
- maintain and address issues.
-
-I have created a fork of gridster that supports more advanced
- features, like widget-swapping and static widgets.
-
-It can be found here: https://github.com/dustmoo/gridster.js
-
-Currently the code-base is different and I don't have time to
-reconcile the fork with this repo. 
-
-If anyone would like to help me improve my fork and reconcile 
-it with the main library I would be happy for the help.
+If anyone would like to help @dustmoo improve his fork and reconcile
+it with the main library he would be happy for the help.
 
 
-License
-=======
+## Contributing
+
+Commits should follow these [conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y).
+Changelog is generated from there.
+
+
+## License
 
 Distributed under the MIT license.
 
-Whodunit
-========
+## Whodunit
 
-Gridster is built by [Ducksboard](http://ducksboard.com/).
+Gridster is built by [Ducksboard](http://ducksboard.com/) with the help of all
+these [wonderful people](https://github.com/ducksboard/gridster.js/graphs/contributors).
