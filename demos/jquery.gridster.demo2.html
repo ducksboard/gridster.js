@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+
+  <title>demo</title>
+  <link rel="stylesheet" type="text/css" href="../dist/jquery.gridster.css">
+
+</head>
+<body>
+
+  <div class="gridster">
+    <ul>
+      <li data-row="1" data-col="1" data-sizex="3" data-sizey="3"></li>
+      <li data-row="1" data-col="4" data-sizex="1" data-sizey="3"></li>
+
+      <li data-row="4" data-col="1" data-sizex="1" data-sizey="1"></li>
+      <li data-row="4" data-col="2" data-sizex="1" data-sizey="1"></li>
+      <li data-row="4" data-col="3" data-sizex="1" data-sizey="1"></li>
+      <li data-row="4" data-col="4" data-sizex="1" data-sizey="1"></li>
+    </ul>
+  </div>
+
+  <script type="text/javascript" src="../libs/jquery/jquery.js"></script>
+  <script type="text/javascript" src="../libs/jquery-ui/jquery-ui.js"></script>
+
+  <script src="../dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    var api;
+
+    $(function(){
+
+      api = $(".gridster ul").gridster({
+        draggable: {
+          stop : function(event, ui, self){
+            // $('.overlapped-area').hide();
+            this.$wrapper.addClass('sorting');
+          },
+          start : function(event, ui, self){
+            this.$wrapper.removeClass('sorting');
+            // $('.overlapped-area').show();
+          }
+        },
+        collision : {
+           on_overlap_start: function(collider){
+             // $(collider).data('graph').show();
+             //$(this).data('collision', collider);
+           },
+           on_overlap_stop: function(collider){
+             //$(this).data('collision', null);
+           },
+           on_overlap : function(c){
+             //$(this).data('collision', c);
+           }
+        }
+      }).data('gridster');
+
+    });
+  </script>
+</body>
+</html>

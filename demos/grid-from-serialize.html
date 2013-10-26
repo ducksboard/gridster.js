@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <title>Demo &raquo; Grid from serialize &raquo; gridster.js</title>
+  <link rel="stylesheet" type="text/css" href="../dist/jquery.gridster.css">
+  <link rel="stylesheet" type="text/css" href="assets/demo.css">
+</head>
+
+<body>
+
+    <h1>Build grid from serialized positions</h1>
+
+    <p>Build a entire new grid from previously stored positions obtained with <code>serialize</code> method.</p>
+
+    <div class="controls">
+        <button class="js-seralize">Build from serialize</button>
+    </div>
+
+    <div class="gridster">
+        <ul>
+        </ul>
+    </div>
+
+
+    <script type="text/javascript" src="assets/jquery.js"></script>
+    <script src="../dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <script type="text/javascript">
+      var gridster;
+
+      // same object than generated with gridster.serialize() method
+      var serialization = [
+        {
+            col: 1,
+            row: 1,
+            size_x: 2,
+            size_y: 2
+        },
+        {
+            col: 3,
+            row: 1,
+            size_x: 1,
+            size_y: 2
+        },
+        {
+            col: 4,
+            row: 1,
+            size_x: 1,
+            size_y: 1
+        },
+        {
+            col: 2,
+            row: 3,
+            size_x: 3,
+            size_y: 1
+        },
+        {
+            col: 1,
+            row: 4,
+            size_x: 1,
+            size_y: 1
+        },
+        {
+            col: 1,
+            row: 3,
+            size_x: 1,
+            size_y: 1
+        },
+        {
+            col: 2,
+            row: 4,
+            size_x: 1,
+            size_y: 1
+        },
+        {
+            col: 2,
+            row: 5,
+            size_x: 1,
+            size_y: 1
+        }
+      ];
+
+
+      $(function(){
+
+        gridster = $(".gridster ul").gridster({
+          widget_base_dimensions: [100, 55],
+          widget_margins: [5, 5]
+        }).data('gridster');
+
+
+        $('.js-seralize').on('click', function() {
+            gridster.remove_all_widgets();
+            $.each(serialization, function() {
+                gridster.add_widget('<li />', this.size_x, this.size_y, this.col, this.row);
+            });
+        });
+
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <title>Demo &raquo; Resize &raquo; gridster.js</title>
+  <link rel="stylesheet" type="text/css" href="../dist/jquery.gridster.css">
+  <link rel="stylesheet" type="text/css" href="assets/demo.css">
+</head>
+
+<body>
+
+  <h1>Resize with limits</h1>
+
+  <p>Use <code>resize.max_size</code> config option or <code>data-max-sizex</code> and <code>data-max-sizey</code> HTML attributes to limit widget dimensions when resizing.</p>
+
+  <p>If a global max_size is specified through the config option, can be overwrited in specified widgets with HTML data-attributes or using <code>set_widget_max_size</code> method.</p>
+
+
+  <div class="gridster">
+    <ul>
+      <li data-row="1" data-col="1" data-sizex="2" data-sizey="2" data-max-sizex="2" data-max-sizey="6">
+        0
+        <br>
+        <small>Overwrited to 2, 6</small>
+      </li>
+      <li data-row="1" data-col="3" data-sizex="1" data-sizey="2" data-max-sizex="6" data-max-sizey="2">
+        1
+        <br>
+        <small>Overwrited max-size to 6, 2</small>
+      </li>
+      <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">2</li>
+      <li data-row="3" data-col="2" data-sizex="3" data-sizey="1">3</li>
+      <li data-row="4" data-col="1" data-sizex="1" data-sizey="1">4</li>
+      <li data-row="3" data-col="1" data-sizex="1" data-sizey="1">5</li>
+      <li data-row="4" data-col="2" data-sizex="1" data-sizey="1">6</li>
+      <li data-row="5" data-col="2" data-sizex="1" data-sizey="1">7</li>
+      <li data-row="4" data-col="4" data-sizex="1" data-sizey="1">8</li>
+      <li data-row="1" data-col="5" data-sizex="1" data-sizey="3">9</li>
+      <li data-row="5" data-col="1" data-sizex="1" data-sizey="2">10</li>
+      <li data-row="4" data-col="3" data-sizex="1" data-sizey="2">11</li>
+      <li data-row="5" data-col="4" data-sizex="1" data-sizey="1">12</li>
+      <li data-row="6" data-col="2" data-sizex="3" data-sizey="1">13</li>
+      <li data-row="4" data-col="5" data-sizex="1" data-sizey="2">14</li>
+      <li data-row="6" data-col="5" data-sizex="1" data-sizey="1">15</li>
+      <li data-row="7" data-col="3" data-sizex="1" data-sizey="1">16</li>
+    </ul>
+  </div>
+
+    <script type="text/javascript" src="assets/jquery.js"></script>
+    <script src="../dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      var gridster;
+
+      $(function(){
+
+        gridster = $(".gridster ul").gridster({
+          widget_base_dimensions: [100, 55],
+          widget_margins: [5, 5],
+          helper: 'clone',
+          resize: {
+            enabled: true,
+            max_size: [3, 3]
+          }
+        }).data('gridster');
+
+
+      });
+    </script>
+</body>
+</html>
