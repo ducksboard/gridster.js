@@ -123,7 +123,7 @@ module.exports = function(grunt) {
         "description": 'gridster.js, a drag-and-drop multi-column jQuery grid plugin',
         "version": '0.1.0',
         "url": 'http://gridster.net/',
-        "logo": 'http://ducksboard.com/wp-content/themes/blog-theme-ducksboard/images/ducksboard.png',
+        "logo": 'https://ducksboard.com/static/images/svg/logo-ducksboard-black-small.svg',
         options: {
           paths: "src/",
           outdir: "gh-pages/docs/"
