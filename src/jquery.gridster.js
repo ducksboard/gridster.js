@@ -2899,7 +2899,7 @@
         // lastly, remove gridster element
         // this will additionally cause any data associated to this element to be removed, including this
         // very gridster instance
-        this.$el.remove();
+        this.$wrapper.remove();
 
         return this;
     };

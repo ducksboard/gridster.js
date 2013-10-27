@@ -1,4 +1,4 @@
-/*! gridster.js - v0.2.0 - 2013-10-26
+/*! gridster.js - v0.2.0 - 2013-10-27
 * http://gridster.net/
 * Copyright (c) 2013 ducksboard; Licensed MIT */
 
@@ -385,7 +385,8 @@
     };
 
     var $window = $(window);
-    var isTouch = !!('ontouchstart' in window);
+    var isPhantomJS = navigator.userAgent.indexOf('PhantomJS') >= 0;
+    var isTouch = !!('ontouchstart' in window) && !isPhantomJS;
     var pointer_events = {
         start: isTouch ? 'touchstart.gridster-draggable' : 'mousedown.gridster-draggable',
         move: isTouch ? 'touchmove.gridster-draggable' : 'mousemove.gridster-draggable',
@@ -3618,7 +3619,7 @@
         // lastly, remove gridster element
         // this will additionally cause any data associated to this element to be removed, including this
         // very gridster instance
-        this.$el.remove();
+        this.$wrapper.remove();
 
         return this;
     };

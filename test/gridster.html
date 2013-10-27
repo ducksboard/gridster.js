@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Example Mocha Test</title>
+
+    <link rel="stylesheet" href="../libs/mocha/mocha.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="../dist/jquery.gridster.css" type="text/css" charset="utf-8" />
+    <style>
+        #mocha {
+            position: absolute;
+            top: 500px;
+            left: 0;
+            width: 94%;
+        }
+
+        .gridster ul > li {
+            background: #DDD;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="gridster-wrapper">
+
+    </div>
+
+    <script id="gridster-tpl" type="text/template">
+        <div class="gridster">
+           <ul>
+             <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">0</li>
+             <li data-row="1" data-col="3" data-sizex="1" data-sizey="2">1</li>
+             <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">2</li>
+             <li data-row="3" data-col="2" data-sizex="3" data-sizey="1">3</li>
+             <li data-row="4" data-col="1" data-sizex="1" data-sizey="1">4</li>
+             <li data-row="3" data-col="1" data-sizex="1" data-sizey="1">5</li>
+             <li data-row="4" data-col="2" data-sizex="1" data-sizey="1">6</li>
+             <li data-row="5" data-col="2" data-sizex="1" data-sizey="1">7</li>
+             <li data-row="4" data-col="4" data-sizex="1" data-sizey="1">8</li>
+             <li data-row="1" data-col="5" data-sizex="1" data-sizey="3">9</li>
+           </ul>
+        </div>
+    </script>
+
+
+
+
+    <!-- Required for browser reporter -->
+    <div id="mocha"></div>
+
+    <!-- mocha -->
+    <script src="../libs/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        // This will be overridden by mocha-helper if you run with grunt
+        mocha.setup('bdd');
+    </script>
+
+    <!-- Include your assertion lib of choice -->
+    <script src="../libs/chai/chai.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        // Setup chai
+        var expect = chai.expect;
+    </script>
+
+    <script src="../libs/Syn/dist/syn.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Include anything you want to test -->
+    <script type="text/javascript" src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Spec files -->
+    <script src="spec/gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- run mocha -->
+    <script type="text/javascript" charset="utf-8">
+        // If tests run in a real browser
+        // Can alternatively do a check on window.PHANTOMJS
+        if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+            mocha
+                .run();
+        }
+    </script>
+</body>
+</html>

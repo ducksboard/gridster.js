@@ -3,8 +3,11 @@ module.exports = function(grunt) {
 
   var mocha_options = {
     // mocha options
+    log: true,
+
     mocha: {
-      ignoreLeaks: false
+      ignoreLeaks: false,
+      globals: ['$', 'jQuery*']
     },
     reporter: 'Spec',
     // Indicates whether 'mocha.run()' should be executed in 'bridge.js'
@@ -154,12 +157,16 @@ module.exports = function(grunt) {
       // ex: admin: [ 'test/admin.html' ]
       // all: ['test/**/!(test2).html'],
 
-      coords: {
-        src: ['test/coords.html'],
-        options: mocha_options
-      },
-      collision: {
-        src: ['test/collision.html'],
+      // coords: {
+      //   src: ['test/coords.html'],
+      //   options: mocha_options
+      // },
+      // collision: {
+      //   src: ['test/collision.html'],
+      //   options: mocha_options
+      // },
+      gridster: {
+        src: ['test/gridster.html'],
         options: mocha_options
       }
     },
@@ -185,7 +192,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('build', ['default']);
   grunt.registerTask('docs', ['yuidoc']);
-  grunt.registerTask('test', ['mocha:coords', 'mocha:collision']);
+  grunt.registerTask('test', ['mocha']);
 
   grunt.registerTask('release', ['build', 'bump-only:patch', 'build', 'docs', 'changelog']);
   grunt.registerTask('release:minor', ['build', 'bump-only:minor', 'build', 'docs', 'changelog']);

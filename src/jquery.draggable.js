@@ -25,7 +25,8 @@
     };
 
     var $window = $(window);
-    var isTouch = !!('ontouchstart' in window);
+    var isPhantomJS = navigator.userAgent.indexOf('PhantomJS') >= 0;
+    var isTouch = !!('ontouchstart' in window) && !isPhantomJS;
     var pointer_events = {
         start: isTouch ? 'touchstart.gridster-draggable' : 'mousedown.gridster-draggable',
         move: isTouch ? 'touchmove.gridster-draggable' : 'mousemove.gridster-draggable',
