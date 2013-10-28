@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Gridster - gridster.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="https:&#x2F;&#x2F;ducksboard.com&#x2F;static&#x2F;images&#x2F;svg&#x2F;logo-ducksboard-black-small.svg" title="gridster.js"></h1>
+                <h1><img src="https://ducksboard.com/static/images/svg/logo-ducksboard-black-small.svg" title="gridster.js"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -41,13 +41,13 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="..&#x2F;classes/Collision.html">Collision</a></li>
+                <li><a href="../classes/Collision.html">Collision</a></li>
             
-                <li><a href="..&#x2F;classes/Coords.html">Coords</a></li>
+                <li><a href="../classes/Coords.html">Coords</a></li>
             
-                <li><a href="..&#x2F;classes/Draggable.html">Draggable</a></li>
+                <li><a href="../classes/Draggable.html">Draggable</a></li>
             
-                <li><a href="..&#x2F;classes/Gridster.html">Gridster</a></li>
+                <li><a href="../classes/Gridster.html">Gridster</a></li>
             
             </ul>
 
@@ -107,7 +107,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l45"><code>src&#x2F;jquery.gridster.js:45</code></a>
+            Defined in: <a href="../files/src_jquery.gridster.js.html#l45"><code>src&#x2F;jquery.gridster.js:45</code></a>
         </div>
     
 
@@ -144,6 +144,12 @@
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[otions.resize.resize]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -173,7 +179,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l45"><code>src&#x2F;jquery.gridster.js:45</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l45"><code>src&#x2F;jquery.gridster.js:45</code></a>
         
         </p>
 
@@ -203,6 +209,7 @@
 
                     <div class="param-description">
                         <p>The HTMLelement that contains all the widgets.</p>
+
                     </div>
 
                     
@@ -220,6 +227,7 @@
                     <div class="param-description">
                         <p>An Object with all options you want to
        overwrite:</p>
+
                     </div>
 
                     
@@ -236,6 +244,7 @@
                                     <p>Define who will
     be the draggable widgets. Can be a CSS Selector String or a
     collection of HTMLElements</p>
+
                                 </div>
 
                                 
@@ -252,6 +261,7 @@
                                     <p>Margin between widgets.
     The first index for the horizontal margin (left, right) and
     the second for the vertical margin (top, bottom).</p>
+
                                 </div>
 
                                 
@@ -268,6 +278,7 @@
                                     <p>Base widget dimensions
     in pixels. The first index for the width and the second for the
     height.</p>
+
                                 </div>
 
                                 
@@ -283,6 +294,7 @@
                                 <div class="param-description">
                                     <p>Add more columns in addition to
     those that have been calculated.</p>
+
                                 </div>
 
                                 
@@ -298,6 +310,7 @@
                                 <div class="param-description">
                                     <p>Add more rows in addition to
     those that have been calculated.</p>
+
                                 </div>
 
                                 
@@ -312,6 +325,7 @@
 
                                 <div class="param-description">
                                     <p>The minimum required columns.</p>
+
                                 </div>
 
                                 
@@ -327,6 +341,7 @@
                                 <div class="param-description">
                                     <p>The maximum columns possible (set to null
     for no maximum).</p>
+
                                 </div>
 
                                 
@@ -341,6 +356,7 @@
 
                                 <div class="param-description">
                                     <p>The minimum required rows.</p>
+
                                 </div>
 
                                 
@@ -356,6 +372,7 @@
                                 <div class="param-description">
                                     <p>The maximum number of columns
     that a widget can span.</p>
+
                                 </div>
 
                                 
@@ -374,7 +391,8 @@
     and rows will be generated automatically and injected to the
     <code>&lt;head&gt;</code> of the document. You can set this to false, and write
     your own CSS targeting rows and cols via data-attributes like so:
-    <code>[data-col="1"] { left: 10px; }</code></p>
+    <code>[data-col=&quot;1&quot;] { left: 10px; }</code></p>
+
                                 </div>
 
                                 
@@ -391,6 +409,7 @@
                                     <p>Avoid that widgets loaded
     from the DOM can be overlapped. It is helpful if the positions were
     bad stored in the database or if there was any conflict.</p>
+
                                 </div>
 
                                 
@@ -408,6 +427,7 @@
     for each widget in the serialization. Two arguments are passed:
     <code>$w</code>: the jQuery wrapped HTMLElement, and <code>wgd</code>: the grid
     coords object (<code>col</code>, <code>row</code>, <code>size_x</code>, <code>size_y</code>).</p>
+
                                 </div>
 
                                 
@@ -424,6 +444,7 @@
                                     <p>An Object with all options for
     Collision class you want to overwrite. See Collision docs for
     more info.</p>
+
                                 </div>
 
                                 
@@ -440,6 +461,7 @@
                                     <p>An Object with all options for
     Draggable class you want to overwrite. See Draggable docs for more
     info.</p>
+
                                 </div>
 
                                 
@@ -455,6 +477,7 @@
                                 <div class="param-description">
                                     <p>An Object with resize config
        options.</p>
+
                                 </div>
 
                                 
@@ -526,11 +549,55 @@
                                             </div>
                                         </li>
                                         
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[start]</code>
+                                                <span class="type">Function</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Function executed
+       when resizing starts.
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="param">
+                                            
+                                                <code class="param-name optional">[stop]</code>
+                                                <span class="type">Function</span>
+                                                <span class="flag optional" title="This parameter is optional.">optional</span>
+                                            
+
+                                            <div class="param-description">
+                                                Function executed
+       when resizing stops.
+                                            </div>
+                                        </li>
+                                        
                                     </ul>
                                 
                             </li>
                             
                         </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[otions.resize.resize]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Function executed
+       during the resizing.</p>
+
+                    </div>
+
                     
                 </li>
             
@@ -1231,7 +1298,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2708"><code>src&#x2F;jquery.gridster.js:2708</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2726"><code>src&#x2F;jquery.gridster.js:2726</code></a>
         
         </p>
 
@@ -1243,6 +1310,7 @@
 
     <div class="description">
         <p>Add cell to the faux grid.</p>
+
     </div>
 
     
@@ -1261,6 +1329,7 @@
 
                     <div class="param-description">
                         <p>The row for the new faux cell.</p>
+
                     </div>
 
                     
@@ -1276,6 +1345,7 @@
 
                     <div class="param-description">
                         <p>The col for the new faux cell.</p>
+
                     </div>
 
                     
@@ -1294,7 +1364,8 @@
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -1350,7 +1421,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2765"><code>src&#x2F;jquery.gridster.js:2765</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2783"><code>src&#x2F;jquery.gridster.js:2783</code></a>
         
         </p>
 
@@ -1362,6 +1433,7 @@
 
     <div class="description">
         <p>Add cols to the faux grid.</p>
+
     </div>
 
     
@@ -1380,6 +1452,7 @@
 
                     <div class="param-description">
                         <p>The number of cols you want to add to the faux grid.</p>
+
                     </div>
 
                     
@@ -1398,7 +1471,8 @@
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -1454,7 +1528,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2739"><code>src&#x2F;jquery.gridster.js:2739</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2757"><code>src&#x2F;jquery.gridster.js:2757</code></a>
         
         </p>
 
@@ -1466,6 +1540,7 @@
 
     <div class="description">
         <p>Add rows to the faux grid.</p>
+
     </div>
 
     
@@ -1484,6 +1559,7 @@
 
                     <div class="param-description">
                         <p>The number of rows you want to add to the faux grid.</p>
+
                     </div>
 
                     
@@ -1502,7 +1578,8 @@
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -1558,7 +1635,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l272"><code>src&#x2F;jquery.gridster.js:272</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l278"><code>src&#x2F;jquery.gridster.js:278</code></a>
         
         </p>
 
@@ -1570,6 +1647,7 @@
 
     <div class="description">
         <p>Append the resize handle into a widget.</p>
+
     </div>
 
     
@@ -1589,6 +1667,7 @@
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement
  representing the widget.</p>
+
                     </div>
 
                     
@@ -1607,7 +1686,8 @@
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -1663,7 +1743,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2647"><code>src&#x2F;jquery.gridster.js:2647</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2665"><code>src&#x2F;jquery.gridster.js:2665</code></a>
         
         </p>
 
@@ -1675,6 +1755,7 @@
 
     <div class="description">
         <p>Injects the given CSS as string to the head of the document.</p>
+
     </div>
 
     
@@ -1693,6 +1774,7 @@
 
                     <div class="param-description">
                         <p>The styles to apply.</p>
+
                     </div>
 
                     
@@ -1711,7 +1793,8 @@
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -1773,7 +1856,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l740"><code>src&#x2F;jquery.gridster.js:740</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l746"><code>src&#x2F;jquery.gridster.js:746</code></a>
         
         </p>
 
@@ -1785,6 +1868,7 @@
 
     <div class="description">
         <p>Add a widget to the mapped array of positions.</p>
+
     </div>
 
     
@@ -1804,6 +1888,7 @@
                     <div class="param-description">
                         <p>The grid coords object representing the cells
  to update in the mapped array.</p>
+
                     </div>
 
                     
@@ -1820,6 +1905,7 @@
                     <div class="param-description">
                         <p>The value to set in the specified
  position .</p>
+
                     </div>
 
                     
@@ -1838,7 +1924,8 @@
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -1924,7 +2011,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l195"><code>src&#x2F;jquery.gridster.js:195</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l201"><code>src&#x2F;jquery.gridster.js:201</code></a>
         
         </p>
 
@@ -1936,6 +2023,7 @@
 
     <div class="description">
         <p>Add a new widget to the grid.</p>
+
     </div>
 
     
@@ -1955,6 +2043,7 @@
                     <div class="param-description">
                         <p>The string representing the HTML of the widget
  or the HTMLElement.</p>
+
                     </div>
 
                     
@@ -1971,6 +2060,7 @@
 
                     <div class="param-description">
                         <p>The nº of rows the widget occupies horizontally.</p>
+
                     </div>
 
                     
@@ -1987,6 +2077,7 @@
 
                     <div class="param-description">
                         <p>The nº of columns the widget occupies vertically.</p>
+
                     </div>
 
                     
@@ -2003,6 +2094,7 @@
 
                     <div class="param-description">
                         <p>The column the widget should start in.</p>
+
                     </div>
 
                     
@@ -2019,6 +2111,7 @@
 
                     <div class="param-description">
                         <p>The row the widget should start in.</p>
+
                     </div>
 
                     
@@ -2035,6 +2128,7 @@
 
                     <div class="param-description">
                         <p>max_size Maximun size (in units) for width and height.</p>
+
                     </div>
 
                     
@@ -2053,8 +2147,9 @@
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns the jQuery wrapped HTMLElement representing.
- the widget that was just created.
+                    <p>Returns the jQuery wrapped HTMLElement representing.
+ the widget that was just created.</p>
+
                 
             </div>
         </div>
@@ -2110,7 +2205,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1662"><code>src&#x2F;jquery.gridster.js:1662</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1680"><code>src&#x2F;jquery.gridster.js:1680</code></a>
         
         </p>
 
@@ -2122,6 +2217,7 @@
 
     <div class="description">
         <p>Determines whether the player can move to a position above.</p>
+
     </div>
 
     
@@ -2141,6 +2237,7 @@
                     <div class="param-description">
                         <p>The actual grid coords object of the
  player.</p>
+
                     </div>
 
                     
@@ -2159,8 +2256,9 @@
                     
                         <span class="type">Number | Boolean</span>:
                     
-                    If the player can be moved to an upper row
- returns the row number, else returns false.
+                    <p>If the player can be moved to an upper row
+ returns the row number, else returns false.</p>
+
                 
             </div>
         </div>
@@ -2228,7 +2326,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2082"><code>src&#x2F;jquery.gridster.js:2082</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2100"><code>src&#x2F;jquery.gridster.js:2100</code></a>
         
         </p>
 
@@ -2241,6 +2339,7 @@
     <div class="description">
         <p>Check if the widget can move to the specified row, else returns the
 upper row possible.</p>
+
     </div>
 
     
@@ -2260,6 +2359,7 @@ upper row possible.</p>
                     <div class="param-description">
                         <p>The current grid coords object of the
  widget.</p>
+
                     </div>
 
                     
@@ -2275,6 +2375,7 @@ upper row possible.</p>
 
                     <div class="param-description">
                         <p>The target column.</p>
+
                     </div>
 
                     
@@ -2290,6 +2391,7 @@ upper row possible.</p>
 
                     <div class="param-description">
                         <p>The target row.</p>
+
                     </div>
 
                     
@@ -2308,8 +2410,9 @@ upper row possible.</p>
                     
                         <span class="type">Boolean | Number</span>:
                     
-                    Returns the row number if the widget can move
- to the target position, else returns false.
+                    <p>Returns the row number if the widget can move
+ to the target position, else returns false.</p>
+
                 
             </div>
         </div>
@@ -2365,7 +2468,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1713"><code>src&#x2F;jquery.gridster.js:1713</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1731"><code>src&#x2F;jquery.gridster.js:1731</code></a>
         
         </p>
 
@@ -2377,6 +2480,7 @@ upper row possible.</p>
 
     <div class="description">
         <p>Determines whether a widget can move to a position above.</p>
+
     </div>
 
     
@@ -2396,6 +2500,7 @@ upper row possible.</p>
                     <div class="param-description">
                         <p>The actual grid coords object of the
  widget we want to check.</p>
+
                     </div>
 
                     
@@ -2414,8 +2519,9 @@ upper row possible.</p>
                     
                         <span class="type">Number | Boolean</span>:
                     
-                    If the widget can be moved to an upper row
- returns the row number, else returns false.
+                    <p>If the widget can be moved to an upper row
+ returns the row number, else returns false.</p>
+
                 
             </div>
         </div>
@@ -2489,7 +2595,7 @@ upper row possible.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2257"><code>src&#x2F;jquery.gridster.js:2257</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2275"><code>src&#x2F;jquery.gridster.js:2275</code></a>
         
         </p>
 
@@ -2500,9 +2606,10 @@ upper row possible.</p>
     </div>
 
     <div class="description">
-        <p>Check if it's possible to move a widget to a specific col/row. It takes
+        <p>Check if it&#39;s possible to move a widget to a specific col/row. It takes
 into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. of the grid
  coords object) the widget occupies.</p>
+
     </div>
 
     
@@ -2522,6 +2629,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
                     <div class="param-description">
                         <p>The grid coords object that represents
  the widget.</p>
+
                     </div>
 
                     
@@ -2537,6 +2645,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
                     <div class="param-description">
                         <p>The col to check.</p>
+
                     </div>
 
                     
@@ -2552,6 +2661,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -2568,6 +2678,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
                     <div class="param-description">
                         <p>The max row allowed.</p>
+
                     </div>
 
                     
@@ -2586,7 +2697,8 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true if all cells are empty, else return false.
+                    <p>Returns true if all cells are empty, else return false.</p>
+
                 
             </div>
         </div>
@@ -2632,7 +2744,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2883"><code>src&#x2F;jquery.gridster.js:2883</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2901"><code>src&#x2F;jquery.gridster.js:2901</code></a>
         
         </p>
 
@@ -2644,6 +2756,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
     <div class="description">
         <p>Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks</p>
+
     </div>
 
     
@@ -2702,7 +2815,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l169"><code>src&#x2F;jquery.gridster.js:169</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l175"><code>src&#x2F;jquery.gridster.js:175</code></a>
         
         </p>
 
@@ -2714,6 +2827,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
     <div class="description">
         <p>Disables drag-and-drop widget resizing.</p>
+
     </div>
 
     
@@ -2727,7 +2841,8 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
                     
                         <span class="type">Class</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -2773,7 +2888,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l143"><code>src&#x2F;jquery.gridster.js:143</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l149"><code>src&#x2F;jquery.gridster.js:149</code></a>
         
         </p>
 
@@ -2785,6 +2900,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
     <div class="description">
         <p>Disables dragging.</p>
+
     </div>
 
     
@@ -2798,7 +2914,8 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -2844,7 +2961,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l762"><code>src&#x2F;jquery.gridster.js:762</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l768"><code>src&#x2F;jquery.gridster.js:768</code></a>
         
         </p>
 
@@ -2856,6 +2973,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
 
     <div class="description">
         <p>Make widgets draggable.</p>
+
     </div>
 
     
@@ -2869,7 +2987,8 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -2949,7 +3068,7 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l454"><code>src&#x2F;jquery.gridster.js:454</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l460"><code>src&#x2F;jquery.gridster.js:460</code></a>
         
         </p>
 
@@ -2960,8 +3079,9 @@ into account the dimensions (<code>size_y</code> and <code>size_x</code> attrs. 
     </div>
 
     <div class="description">
-        <p>Move down widgets in cells represented by the arguments col, row, size<em>x,
-size</em>y</p>
+        <p>Move down widgets in cells represented by the arguments col, row, size_x,
+size_y</p>
+
     </div>
 
     
@@ -2980,6 +3100,7 @@ size</em>y</p>
 
                     <div class="param-description">
                         <p>The column where the group of cells begin.</p>
+
                     </div>
 
                     
@@ -2995,6 +3116,7 @@ size</em>y</p>
 
                     <div class="param-description">
                         <p>The row where the group of cells begin.</p>
+
                     </div>
 
                     
@@ -3011,6 +3133,7 @@ size</em>y</p>
                     <div class="param-description">
                         <p>The number of columns that the group of cells
 occupy.</p>
+
                     </div>
 
                     
@@ -3027,6 +3150,7 @@ occupy.</p>
                     <div class="param-description">
                         <p>The number of rows that the group of cells
 occupy.</p>
+
                     </div>
 
                     
@@ -3042,6 +3166,7 @@ occupy.</p>
 
                     <div class="param-description">
                         <p>Exclude widgets from being moved.</p>
+
                     </div>
 
                     
@@ -3060,7 +3185,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3106,7 +3232,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2217"><code>src&#x2F;jquery.gridster.js:2217</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2235"><code>src&#x2F;jquery.gridster.js:2235</code></a>
         
         </p>
 
@@ -3118,6 +3244,7 @@ occupy.</p>
 
     <div class="description">
         <p>Remove from the array of mapped positions the reference to the player.</p>
+
     </div>
 
     
@@ -3131,7 +3258,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3177,7 +3305,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l182"><code>src&#x2F;jquery.gridster.js:182</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l188"><code>src&#x2F;jquery.gridster.js:188</code></a>
         
         </p>
 
@@ -3189,6 +3317,7 @@ occupy.</p>
 
     <div class="description">
         <p>Enables drag-and-drop widget resizing.</p>
+
     </div>
 
     
@@ -3202,7 +3331,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3248,7 +3378,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l156"><code>src&#x2F;jquery.gridster.js:156</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l162"><code>src&#x2F;jquery.gridster.js:162</code></a>
         
         </p>
 
@@ -3260,6 +3390,7 @@ occupy.</p>
 
     <div class="description">
         <p>Enables dragging.</p>
+
     </div>
 
     
@@ -3273,7 +3404,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3335,7 +3467,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2366"><code>src&#x2F;jquery.gridster.js:2366</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2384"><code>src&#x2F;jquery.gridster.js:2384</code></a>
         
         </p>
 
@@ -3348,6 +3480,7 @@ occupy.</p>
     <div class="description">
         <p>Iterate over the cells occupied by a widget executing a function for
 each one.</p>
+
     </div>
 
     
@@ -3367,6 +3500,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The grid coords object that represents the
  widget.</p>
+
                     </div>
 
                     
@@ -3383,6 +3517,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The function to execute on each column
  iteration. Column and row are passed as arguments.</p>
+
                     </div>
 
                     
@@ -3401,7 +3536,8 @@ each one.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3463,7 +3599,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2387"><code>src&#x2F;jquery.gridster.js:2387</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2405"><code>src&#x2F;jquery.gridster.js:2405</code></a>
         
         </p>
 
@@ -3476,6 +3612,7 @@ each one.</p>
     <div class="description">
         <p>Iterate over the columns occupied by a widget executing a function for
 each one.</p>
+
     </div>
 
     
@@ -3495,6 +3632,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The grid coords object that represents
  the widget.</p>
+
                     </div>
 
                     
@@ -3511,6 +3649,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The function to execute on each column
  iteration. The column number is passed as first argument.</p>
+
                     </div>
 
                     
@@ -3529,7 +3668,8 @@ each one.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3591,7 +3731,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2406"><code>src&#x2F;jquery.gridster.js:2406</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2424"><code>src&#x2F;jquery.gridster.js:2424</code></a>
         
         </p>
 
@@ -3604,6 +3744,7 @@ each one.</p>
     <div class="description">
         <p>Iterate over the rows occupied by a widget executing a function for
 each one.</p>
+
     </div>
 
     
@@ -3623,6 +3764,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The grid coords object that represents
  the widget.</p>
+
                     </div>
 
                     
@@ -3639,6 +3781,7 @@ each one.</p>
                     <div class="param-description">
                         <p>The function to execute on each column
  iteration. The row number is passed as first argument.</p>
+
                     </div>
 
                     
@@ -3657,7 +3800,8 @@ each one.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3725,7 +3869,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2473"><code>src&#x2F;jquery.gridster.js:2473</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2491"><code>src&#x2F;jquery.gridster.js:2491</code></a>
         
         </p>
 
@@ -3737,6 +3881,7 @@ each one.</p>
 
     <div class="description">
         <p>Iterate over each widget above the column and row specified.</p>
+
     </div>
 
     
@@ -3755,6 +3900,7 @@ each one.</p>
 
                     <div class="param-description">
                         <p>The column to start iterating.</p>
+
                     </div>
 
                     
@@ -3770,6 +3916,7 @@ each one.</p>
 
                     <div class="param-description">
                         <p>The row to start iterating.</p>
+
                     </div>
 
                     
@@ -3787,6 +3934,7 @@ each one.</p>
                         <p>The function to execute on each widget
  iteration. The value of <code>this</code> inside the function is the jQuery
  wrapped HTMLElement.</p>
+
                     </div>
 
                     
@@ -3805,7 +3953,8 @@ each one.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -3873,7 +4022,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2490"><code>src&#x2F;jquery.gridster.js:2490</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2508"><code>src&#x2F;jquery.gridster.js:2508</code></a>
         
         </p>
 
@@ -3885,6 +4034,7 @@ each one.</p>
 
     <div class="description">
         <p>Iterate over each widget below the column and row specified.</p>
+
     </div>
 
     
@@ -3903,6 +4053,7 @@ each one.</p>
 
                     <div class="param-description">
                         <p>The column to start iterating.</p>
+
                     </div>
 
                     
@@ -3918,6 +4069,7 @@ each one.</p>
 
                     <div class="param-description">
                         <p>The row to start iterating.</p>
+
                     </div>
 
                     
@@ -3935,6 +4087,7 @@ each one.</p>
                         <p>The function to execute on each widget
  iteration. The value of <code>this</code> inside the function is the jQuery wrapped
  HTMLElement.</p>
+
                     </div>
 
                     
@@ -3953,7 +4106,8 @@ each one.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -4015,7 +4169,7 @@ each one.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2684"><code>src&#x2F;jquery.gridster.js:2684</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2702"><code>src&#x2F;jquery.gridster.js:2702</code></a>
         
         </p>
 
@@ -4028,6 +4182,7 @@ each one.</p>
     <div class="description">
         <p>Generates a faux grid to collide with it when a widget is dragged and
 detect row or column that we want to go.</p>
+
     </div>
 
     
@@ -4046,6 +4201,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>Number of columns.</p>
+
                     </div>
 
                     
@@ -4061,6 +4217,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>Number of rows.</p>
+
                     </div>
 
                     
@@ -4079,7 +4236,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -4125,7 +4283,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2830"><code>src&#x2F;jquery.gridster.js:2830</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2848"><code>src&#x2F;jquery.gridster.js:2848</code></a>
         
         </p>
 
@@ -4138,6 +4296,7 @@ detect row or column that we want to go.</p>
     <div class="description">
         <p>Calculate columns and rows to be set based on the configuration
  parameters, grid dimensions, etc ...</p>
+
     </div>
 
     
@@ -4151,7 +4310,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -4213,7 +4373,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2578"><code>src&#x2F;jquery.gridster.js:2578</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2596"><code>src&#x2F;jquery.gridster.js:2596</code></a>
         
         </p>
 
@@ -4225,6 +4385,7 @@ detect row or column that we want to go.</p>
 
     <div class="description">
         <p>It generates the neccessary styles to position the widgets.</p>
+
     </div>
 
     
@@ -4243,6 +4404,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>Number of columns.</p>
+
                     </div>
 
                     
@@ -4258,6 +4420,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>Number of rows.</p>
+
                     </div>
 
                     
@@ -4276,7 +4439,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -4332,7 +4496,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2338"><code>src&#x2F;jquery.gridster.js:2338</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2356"><code>src&#x2F;jquery.gridster.js:2356</code></a>
         
         </p>
 
@@ -4344,6 +4508,7 @@ detect row or column that we want to go.</p>
 
     <div class="description">
         <p>Get all columns and rows that a widget occupies.</p>
+
     </div>
 
     
@@ -4362,6 +4527,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>The grid coords object of the widget.</p>
+
                     </div>
 
                     
@@ -4380,7 +4546,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns an object like <code>{ cols: [], rows: []}</code>.
+                    <p>Returns an object like <code>{ cols: [], rows: []}</code>.</p>
+
                 
             </div>
         </div>
@@ -4426,7 +4593,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2507"><code>src&#x2F;jquery.gridster.js:2507</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2525"><code>src&#x2F;jquery.gridster.js:2525</code></a>
         
         </p>
 
@@ -4438,6 +4605,7 @@ detect row or column that we want to go.</p>
 
     <div class="description">
         <p>Returns the highest occupied cell in the grid.</p>
+
     </div>
 
     
@@ -4451,7 +4619,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns an object with <code>col</code> and <code>row</code> numbers.
+                    <p>Returns an object with <code>col</code> and <code>row</code> numbers.</p>
+
                 
             </div>
         </div>
@@ -4507,7 +4676,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2302"><code>src&#x2F;jquery.gridster.js:2302</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2320"><code>src&#x2F;jquery.gridster.js:2320</code></a>
         
         </p>
 
@@ -4520,6 +4689,7 @@ detect row or column that we want to go.</p>
     <div class="description">
         <p>Given the leftmost column returns all columns that are overlapping
  with the player.</p>
+
     </div>
 
     
@@ -4539,6 +4709,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>The leftmost column.</p>
+
                     </div>
 
                     
@@ -4557,7 +4728,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns an array with column numbers.
+                    <p>Returns an array with column numbers.</p>
+
                 
             </div>
         </div>
@@ -4613,7 +4785,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2321"><code>src&#x2F;jquery.gridster.js:2321</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2339"><code>src&#x2F;jquery.gridster.js:2339</code></a>
         
         </p>
 
@@ -4625,6 +4797,7 @@ detect row or column that we want to go.</p>
 
     <div class="description">
         <p>Given the upper row returns all rows that are overlapping with the player.</p>
+
     </div>
 
     
@@ -4644,6 +4817,7 @@ detect row or column that we want to go.</p>
 
                     <div class="param-description">
                         <p>The upper row.</p>
+
                     </div>
 
                     
@@ -4662,7 +4836,8 @@ detect row or column that we want to go.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns an array with row numbers.
+                    <p>Returns an array with row numbers.</p>
+
                 
             </div>
         </div>
@@ -4730,7 +4905,7 @@ detect row or column that we want to go.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1770"><code>src&#x2F;jquery.gridster.js:1770</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1788"><code>src&#x2F;jquery.gridster.js:1788</code></a>
         
         </p>
 
@@ -4741,8 +4916,9 @@ detect row or column that we want to go.</p>
     </div>
 
     <div class="description">
-        <p>Search a valid row for the widget represented by <code>widget_grid_data' in
-the</code>upper<em>rows<code>array. Iteration starts from row specified in</code>min</em>row`.</p>
+        <p>Search a valid row for the widget represented by <code>widget_grid_data&#39; in
+the</code>upper_rows<code>array. Iteration starts from row specified in</code>min_row`.</p>
+
     </div>
 
     
@@ -4762,6 +4938,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                     <div class="param-description">
                         <p>The actual grid coords object of the
  player.</p>
+
                     </div>
 
                     
@@ -4778,6 +4955,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                     <div class="param-description">
                         <p>An array with columns as index and arrays
  of valid rows as values.</p>
+
                     </div>
 
                     
@@ -4793,6 +4971,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
 
                     <div class="param-description">
                         <p>The upper row from which the iteration will start.</p>
+
                     </div>
 
                     
@@ -4811,8 +4990,9 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                     
                         <span class="type">Number | Boolean</span>:
                     
-                    Returns the upper row valid from the <code>upper_rows</code>
- for the widget in question.
+                    <p>Returns the upper row valid from the <code>upper_rows</code>
+ for the widget in question.</p>
+
                 
             </div>
         </div>
@@ -4858,7 +5038,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2816"><code>src&#x2F;jquery.gridster.js:2816</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2834"><code>src&#x2F;jquery.gridster.js:2834</code></a>
         
         </p>
 
@@ -4870,6 +5050,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
 
     <div class="description">
         <p>Get all widgets in the DOM and register them.</p>
+
     </div>
 
     
@@ -4883,7 +5064,8 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -4929,7 +5111,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1847"><code>src&#x2F;jquery.gridster.js:1847</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1865"><code>src&#x2F;jquery.gridster.js:1865</code></a>
         
         </p>
 
@@ -4941,6 +5123,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
 
     <div class="description">
         <p>Get widgets overlapping with the player.</p>
+
     </div>
 
     
@@ -4954,7 +5137,8 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
                     
                         <span class="type">JQuery</span>:
                     
-                    Returns a jQuery collection of HTMLElements.
+                    <p>Returns a jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -5000,7 +5184,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1579"><code>src&#x2F;jquery.gridster.js:1579</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1597"><code>src&#x2F;jquery.gridster.js:1597</code></a>
         
         </p>
 
@@ -5013,6 +5197,7 @@ the</code>upper<em>rows<code>array. Iteration starts from row specified in</code
     <div class="description">
         <p>Get widgets overlapping with the player or with the object passed
 representing the grid cells.</p>
+
     </div>
 
     
@@ -5026,7 +5211,8 @@ representing the grid cells.</p>
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns a jQuery collection of HTMLElements
+                    <p>Returns a jQuery collection of HTMLElements</p>
+
                 
             </div>
         </div>
@@ -5088,7 +5274,7 @@ representing the grid cells.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1496"><code>src&#x2F;jquery.gridster.js:1496</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1514"><code>src&#x2F;jquery.gridster.js:1514</code></a>
         
         </p>
 
@@ -5100,6 +5286,7 @@ representing the grid cells.</p>
 
     <div class="description">
         <p>Determines if the cell represented by col and row params is empty.</p>
+
     </div>
 
     
@@ -5118,6 +5305,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5133,6 +5321,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -5151,7 +5340,8 @@ representing the grid cells.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5213,7 +5403,7 @@ representing the grid cells.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1517"><code>src&#x2F;jquery.gridster.js:1517</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1535"><code>src&#x2F;jquery.gridster.js:1535</code></a>
         
         </p>
 
@@ -5225,6 +5415,7 @@ representing the grid cells.</p>
 
     <div class="description">
         <p>Determines if the cell represented by col and row params is occupied.</p>
+
     </div>
 
     
@@ -5243,6 +5434,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5258,6 +5450,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -5276,7 +5469,8 @@ representing the grid cells.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5338,7 +5532,7 @@ representing the grid cells.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1469"><code>src&#x2F;jquery.gridster.js:1469</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1487"><code>src&#x2F;jquery.gridster.js:1487</code></a>
         
         </p>
 
@@ -5350,6 +5544,7 @@ representing the grid cells.</p>
 
     <div class="description">
         <p>Determines if the placeholder is currently over the row and col given.</p>
+
     </div>
 
     
@@ -5368,6 +5563,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5383,6 +5579,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -5401,7 +5598,8 @@ representing the grid cells.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5457,7 +5655,7 @@ representing the grid cells.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1483"><code>src&#x2F;jquery.gridster.js:1483</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1501"><code>src&#x2F;jquery.gridster.js:1501</code></a>
         
         </p>
 
@@ -5469,6 +5667,7 @@ representing the grid cells.</p>
 
     <div class="description">
         <p>Determines if the placeholder is currently over the column given.</p>
+
     </div>
 
     
@@ -5487,6 +5686,7 @@ representing the grid cells.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5505,7 +5705,8 @@ representing the grid cells.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5567,7 +5768,7 @@ representing the grid cells.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1437"><code>src&#x2F;jquery.gridster.js:1437</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1455"><code>src&#x2F;jquery.gridster.js:1455</code></a>
         
         </p>
 
@@ -5580,6 +5781,7 @@ representing the grid cells.</p>
     <div class="description">
         <p>Determines if there is a widget in the row and col given. Or if the
 HTMLElement passed as first argument is the player.</p>
+
     </div>
 
     
@@ -5599,6 +5801,7 @@ HTMLElement passed as first argument is the player.</p>
                     <div class="param-description">
                         <p>A jQuery wrapped collection of
 HTMLElements.</p>
+
                     </div>
 
                     
@@ -5615,6 +5818,7 @@ HTMLElements.</p>
 
                     <div class="param-description">
                         <p>The column to which we want to move the widgets.</p>
+
                     </div>
 
                     
@@ -5633,7 +5837,8 @@ HTMLElements.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5695,7 +5900,7 @@ HTMLElements.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1454"><code>src&#x2F;jquery.gridster.js:1454</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1472"><code>src&#x2F;jquery.gridster.js:1472</code></a>
         
         </p>
 
@@ -5708,6 +5913,7 @@ HTMLElements.</p>
     <div class="description">
         <p>Determines if the widget that is being dragged is currently over the row
 and col given.</p>
+
     </div>
 
     
@@ -5726,6 +5932,7 @@ and col given.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5741,6 +5948,7 @@ and col given.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -5759,7 +5967,8 @@ and col given.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -5821,7 +6030,7 @@ and col given.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1537"><code>src&#x2F;jquery.gridster.js:1537</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1555"><code>src&#x2F;jquery.gridster.js:1555</code></a>
         
         </p>
 
@@ -5833,6 +6042,7 @@ and col given.</p>
 
     <div class="description">
         <p>Determines if there is a widget in the cell represented by col/row params.</p>
+
     </div>
 
     
@@ -5851,6 +6061,7 @@ and col given.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5866,6 +6077,7 @@ and col given.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -5884,8 +6096,9 @@ and col given.</p>
                     
                         <span class="type">Boolean | HTMLElement</span>:
                     
-                    Returns false if there is no widget,
-else returns the jQuery HTMLElement
+                    <p>Returns false if there is no widget,
+else returns the jQuery HTMLElement</p>
+
                 
             </div>
         </div>
@@ -5947,7 +6160,7 @@ else returns the jQuery HTMLElement
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1562"><code>src&#x2F;jquery.gridster.js:1562</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1580"><code>src&#x2F;jquery.gridster.js:1580</code></a>
         
         </p>
 
@@ -5960,6 +6173,7 @@ else returns the jQuery HTMLElement
     <div class="description">
         <p>Determines if there is a widget in the cell represented by col/row
 params and if this is under the widget that is being dragged.</p>
+
     </div>
 
     
@@ -5978,6 +6192,7 @@ params and if this is under the widget that is being dragged.</p>
 
                     <div class="param-description">
                         <p>The column to check.</p>
+
                     </div>
 
                     
@@ -5993,6 +6208,7 @@ params and if this is under the widget that is being dragged.</p>
 
                     <div class="param-description">
                         <p>The row to check.</p>
+
                     </div>
 
                     
@@ -6011,7 +6227,8 @@ params and if this is under the widget that is being dragged.</p>
                     
                         <span class="type">Boolean</span>:
                     
-                    Returns true or false.
+                    <p>Returns true or false.</p>
+
                 
             </div>
         </div>
@@ -6079,7 +6296,7 @@ params and if this is under the widget that is being dragged.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1392"><code>src&#x2F;jquery.gridster.js:1392</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1410"><code>src&#x2F;jquery.gridster.js:1410</code></a>
         
         </p>
 
@@ -6092,6 +6309,7 @@ params and if this is under the widget that is being dragged.</p>
     <div class="description">
         <p>Sorts an Array of grid coords objects (representing the grid coords of
 each widget) in descending way.</p>
+
     </div>
 
     
@@ -6111,6 +6329,7 @@ each widget) in descending way.</p>
                     <div class="param-description">
                         <p>A jQuery collection of HTMLElements
  representing the widgets you want to move.</p>
+
                     </div>
 
                     
@@ -6126,6 +6345,7 @@ each widget) in descending way.</p>
 
                     <div class="param-description">
                         <p>The column to which we want to move the widgets.</p>
+
                     </div>
 
                     
@@ -6141,6 +6361,7 @@ each widget) in descending way.</p>
 
                     <div class="param-description">
                         <p>The row to which we want to move the widgets.</p>
+
                     </div>
 
                     
@@ -6159,7 +6380,8 @@ each widget) in descending way.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -6221,7 +6443,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2032"><code>src&#x2F;jquery.gridster.js:2032</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2050"><code>src&#x2F;jquery.gridster.js:2050</code></a>
         
         </p>
 
@@ -6233,6 +6455,7 @@ each widget) in descending way.</p>
 
     <div class="description">
         <p>Move down the specified widget and all below it.</p>
+
     </div>
 
     
@@ -6252,6 +6475,7 @@ each widget) in descending way.</p>
                     <div class="param-description">
                         <p>The jQuery object representing the widget
  you want to move.</p>
+
                     </div>
 
                     
@@ -6267,6 +6491,7 @@ each widget) in descending way.</p>
 
                     <div class="param-description">
                         <p>The number of cells that the widget has to move.</p>
+
                     </div>
 
                     
@@ -6285,7 +6510,8 @@ each widget) in descending way.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -6341,7 +6567,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1941"><code>src&#x2F;jquery.gridster.js:1941</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1959"><code>src&#x2F;jquery.gridster.js:1959</code></a>
         
         </p>
 
@@ -6355,6 +6581,7 @@ each widget) in descending way.</p>
         <p>Move a widget to a specific row. The cell or cells must be empty.
 If the widget has widgets below, all of these widgets will be moved also
 if they can.</p>
+
     </div>
 
     
@@ -6374,6 +6601,7 @@ if they can.</p>
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement of the
 widget is going to be moved.</p>
+
                     </div>
 
                     
@@ -6392,7 +6620,8 @@ widget is going to be moved.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -6454,7 +6683,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1984"><code>src&#x2F;jquery.gridster.js:1984</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2002"><code>src&#x2F;jquery.gridster.js:2002</code></a>
         
         </p>
 
@@ -6466,6 +6695,7 @@ widget is going to be moved.</p>
 
     <div class="description">
         <p>Move up the specified widget and all below it.</p>
+
     </div>
 
     
@@ -6484,6 +6714,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>The widget you want to move.</p>
+
                     </div>
 
                     
@@ -6500,6 +6731,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>The number of cells that the widget has to move.</p>
+
                     </div>
 
                     
@@ -6518,7 +6750,8 @@ widget is going to be moved.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -6586,7 +6819,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l346"><code>src&#x2F;jquery.gridster.js:346</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l352"><code>src&#x2F;jquery.gridster.js:352</code></a>
         
         </p>
 
@@ -6598,6 +6831,7 @@ widget is going to be moved.</p>
 
     <div class="description">
         <p>Mutate widget dimensions and position in the grid map.</p>
+
     </div>
 
     
@@ -6617,6 +6851,7 @@ widget is going to be moved.</p>
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement
  representing the widget to mutate.</p>
+
                     </div>
 
                     
@@ -6631,7 +6866,8 @@ widget is going to be moved.</p>
                     
 
                     <div class="param-description">
-                        <p>Current widget grid data (col, row, size<em>x, size</em>y).</p>
+                        <p>Current widget grid data (col, row, size_x, size_y).</p>
+
                     </div>
 
                     
@@ -6647,6 +6883,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>New widget grid data.</p>
+
                     </div>
 
                     
@@ -6665,7 +6902,8 @@ widget is going to be moved.</p>
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -6727,7 +6965,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l521"><code>src&#x2F;jquery.gridster.js:521</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l527"><code>src&#x2F;jquery.gridster.js:527</code></a>
         
         </p>
 
@@ -6739,6 +6977,7 @@ widget is going to be moved.</p>
 
     <div class="description">
         <p>Get the most left column below to add a new widget.</p>
+
     </div>
 
     
@@ -6757,6 +6996,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>The nº of rows the widget occupies horizontally.</p>
+
                     </div>
 
                     
@@ -6772,6 +7012,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>The nº of columns the widget occupies vertically.</p>
+
                     </div>
 
                     
@@ -6790,8 +7031,9 @@ widget is going to be moved.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns a grid coords object representing the future
- widget coords.
+                    <p>Returns a grid coords object representing the future
+ widget coords.</p>
+
                 
             </div>
         </div>
@@ -6849,7 +7091,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l896"><code>src&#x2F;jquery.gridster.js:896</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l902"><code>src&#x2F;jquery.gridster.js:902</code></a>
         
         </p>
 
@@ -6861,6 +7103,7 @@ widget is going to be moved.</p>
 
     <div class="description">
         <p>This function is executed when the player is being dragged.</p>
+
     </div>
 
     
@@ -6879,6 +7122,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -6894,6 +7138,7 @@ widget is going to be moved.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -6961,7 +7206,7 @@ widget is going to be moved.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1143"><code>src&#x2F;jquery.gridster.js:1143</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1161"><code>src&#x2F;jquery.gridster.js:1161</code></a>
         
         </p>
 
@@ -6974,6 +7219,7 @@ widget is going to be moved.</p>
     <div class="description">
         <p>Executes the callbacks passed as arguments when a column begins to be
 overlapped or stops being overlapped.</p>
+
     </div>
 
     
@@ -6993,6 +7239,7 @@ overlapped or stops being overlapped.</p>
                     <div class="param-description">
                         <p>Function executed when a new column
  begins to be overlapped. The column is passed as first argument.</p>
+
                     </div>
 
                     
@@ -7009,6 +7256,7 @@ overlapped or stops being overlapped.</p>
                     <div class="param-description">
                         <p>Function executed when a column stops
  being overlapped. The column is passed as first argument.</p>
+
                     </div>
 
                     
@@ -7027,7 +7275,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -7089,7 +7338,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1183"><code>src&#x2F;jquery.gridster.js:1183</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1201"><code>src&#x2F;jquery.gridster.js:1201</code></a>
         
         </p>
 
@@ -7102,6 +7351,7 @@ overlapped or stops being overlapped.</p>
     <div class="description">
         <p>Executes the callbacks passed as arguments when a row starts to be
 overlapped or stops being overlapped.</p>
+
     </div>
 
     
@@ -7121,6 +7371,7 @@ overlapped or stops being overlapped.</p>
                     <div class="param-description">
                         <p>Function executed when a new row begins
  to be overlapped. The row is passed as first argument.</p>
+
                     </div>
 
                     
@@ -7137,6 +7388,7 @@ overlapped or stops being overlapped.</p>
                     <div class="param-description">
                         <p>Function executed when a row stops being
  overlapped. The row is passed as first argument.</p>
+
                     </div>
 
                     
@@ -7155,7 +7407,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -7213,7 +7466,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1074"><code>src&#x2F;jquery.gridster.js:1074</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1088"><code>src&#x2F;jquery.gridster.js:1088</code></a>
         
         </p>
 
@@ -7225,6 +7478,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This function is executed when a widget is being resized.</p>
+
     </div>
 
     
@@ -7243,6 +7497,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -7258,6 +7513,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -7321,7 +7577,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l847"><code>src&#x2F;jquery.gridster.js:847</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l853"><code>src&#x2F;jquery.gridster.js:853</code></a>
         
         </p>
 
@@ -7333,6 +7589,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This function is executed when the player begins to be dragged.</p>
+
     </div>
 
     
@@ -7351,6 +7608,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -7366,6 +7624,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -7427,7 +7686,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1879"><code>src&#x2F;jquery.gridster.js:1879</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1897"><code>src&#x2F;jquery.gridster.js:1897</code></a>
         
         </p>
 
@@ -7439,6 +7698,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This callback is executed when the player begins to collide with a column.</p>
+
     </div>
 
     
@@ -7457,6 +7717,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The collided column.</p>
+
                     </div>
 
                     
@@ -7475,7 +7736,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    Returns a jQuery collection of HTMLElements.
+                    <p>Returns a jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -7531,7 +7793,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1891"><code>src&#x2F;jquery.gridster.js:1891</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1909"><code>src&#x2F;jquery.gridster.js:1909</code></a>
         
         </p>
 
@@ -7543,6 +7805,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>A callback executed when the player begins to collide with a row.</p>
+
     </div>
 
     
@@ -7561,6 +7824,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The collided row.</p>
+
                     </div>
 
                     
@@ -7579,7 +7843,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    Returns a jQuery collection of HTMLElements.
+                    <p>Returns a jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -7637,7 +7902,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1002"><code>src&#x2F;jquery.gridster.js:1002</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1008"><code>src&#x2F;jquery.gridster.js:1008</code></a>
         
         </p>
 
@@ -7649,6 +7914,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This function is executed every time a widget starts to be resized.</p>
+
     </div>
 
     
@@ -7667,6 +7933,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -7682,6 +7949,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -7745,7 +8013,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l939"><code>src&#x2F;jquery.gridster.js:939</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l945"><code>src&#x2F;jquery.gridster.js:945</code></a>
         
         </p>
 
@@ -7757,6 +8025,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This function is executed when the player stops being dragged.</p>
+
     </div>
 
     
@@ -7775,6 +8044,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -7790,6 +8060,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -7851,7 +8122,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1903"><code>src&#x2F;jquery.gridster.js:1903</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1921"><code>src&#x2F;jquery.gridster.js:1921</code></a>
         
         </p>
 
@@ -7863,6 +8134,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>A callback executed when the the player ends to collide with a column.</p>
+
     </div>
 
     
@@ -7881,6 +8153,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The collided row.</p>
+
                     </div>
 
                     
@@ -7899,7 +8172,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    Returns a jQuery collection of HTMLElements.
+                    <p>Returns a jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -7955,7 +8229,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1921"><code>src&#x2F;jquery.gridster.js:1921</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1939"><code>src&#x2F;jquery.gridster.js:1939</code></a>
         
         </p>
 
@@ -7967,6 +8241,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This callback is executed when the player ends to collide with a row.</p>
+
     </div>
 
     
@@ -7985,6 +8260,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The collided row.</p>
+
                     </div>
 
                     
@@ -8003,7 +8279,8 @@ overlapped or stops being overlapped.</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    Returns a jQuery collection of HTMLElements.
+                    <p>Returns a jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -8061,7 +8338,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1049"><code>src&#x2F;jquery.gridster.js:1049</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1059"><code>src&#x2F;jquery.gridster.js:1059</code></a>
         
         </p>
 
@@ -8073,6 +8350,7 @@ overlapped or stops being overlapped.</p>
 
     <div class="description">
         <p>This function is executed every time a widget stops being resized.</p>
+
     </div>
 
     
@@ -8091,6 +8369,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>The original browser event</p>
+
                     </div>
 
                     
@@ -8106,6 +8385,7 @@ overlapped or stops being overlapped.</p>
 
                     <div class="param-description">
                         <p>A prepared ui object with useful drag-related data</p>
+
                     </div>
 
                     
@@ -8157,7 +8437,7 @@ overlapped or stops being overlapped.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2792"><code>src&#x2F;jquery.gridster.js:2792</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2810"><code>src&#x2F;jquery.gridster.js:2810</code></a>
         
         </p>
 
@@ -8170,6 +8450,7 @@ overlapped or stops being overlapped.</p>
     <div class="description">
         <p>Recalculates the offsets for the faux grid. You need to use it when
 the browser is resized.</p>
+
     </div>
 
     
@@ -8183,7 +8464,8 @@ the browser is resized.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -8229,7 +8511,7 @@ the browser is resized.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l662"><code>src&#x2F;jquery.gridster.js:662</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l668"><code>src&#x2F;jquery.gridster.js:668</code></a>
         
         </p>
 
@@ -8242,6 +8524,7 @@ the browser is resized.</p>
     <div class="description">
         <p>Creates the grid coords object representing the widget a add it to the
 mapped array of positions.</p>
+
     </div>
 
     
@@ -8255,7 +8538,8 @@ mapped array of positions.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -8311,7 +8595,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l611"><code>src&#x2F;jquery.gridster.js:611</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l617"><code>src&#x2F;jquery.gridster.js:617</code></a>
         
         </p>
 
@@ -8323,6 +8607,7 @@ mapped array of positions.</p>
 
     <div class="description">
         <p>Remove all widgets from the grid.</p>
+
     </div>
 
     
@@ -8341,6 +8626,7 @@ mapped array of positions.</p>
 
                     <div class="param-description">
                         <p>Function executed for each widget removed.</p>
+
                     </div>
 
                     
@@ -8359,7 +8645,8 @@ mapped array of positions.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -8439,7 +8726,7 @@ mapped array of positions.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l489"><code>src&#x2F;jquery.gridster.js:489</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l495"><code>src&#x2F;jquery.gridster.js:495</code></a>
         
         </p>
 
@@ -8450,8 +8737,9 @@ mapped array of positions.</p>
     </div>
 
     <div class="description">
-        <p>Move up widgets below cells represented by the arguments col, row, size<em>x,
-size</em>y.</p>
+        <p>Move up widgets below cells represented by the arguments col, row, size_x,
+size_y.</p>
+
     </div>
 
     
@@ -8470,6 +8758,7 @@ size</em>y.</p>
 
                     <div class="param-description">
                         <p>The column where the group of cells begin.</p>
+
                     </div>
 
                     
@@ -8485,6 +8774,7 @@ size</em>y.</p>
 
                     <div class="param-description">
                         <p>The row where the group of cells begin.</p>
+
                     </div>
 
                     
@@ -8501,6 +8791,7 @@ size</em>y.</p>
                     <div class="param-description">
                         <p>The number of columns that the group of cells
 occupy.</p>
+
                     </div>
 
                     
@@ -8517,6 +8808,7 @@ occupy.</p>
                     <div class="param-description">
                         <p>The number of rows that the group of cells
 occupy.</p>
+
                     </div>
 
                     
@@ -8532,6 +8824,7 @@ occupy.</p>
 
                     <div class="param-description">
                         <p>Exclude widgets from being moved.</p>
+
                     </div>
 
                     
@@ -8550,7 +8843,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -8606,7 +8900,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l727"><code>src&#x2F;jquery.gridster.js:727</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l733"><code>src&#x2F;jquery.gridster.js:733</code></a>
         
         </p>
 
@@ -8618,6 +8912,7 @@ occupy.</p>
 
     <div class="description">
         <p>Remove a widget from the mapped array of positions.</p>
+
     </div>
 
     
@@ -8637,6 +8932,7 @@ occupy.</p>
                     <div class="param-description">
                         <p>The grid coords object representing the cells
  to update in the mapped array.</p>
+
                     </div>
 
                     
@@ -8655,7 +8951,8 @@ occupy.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -8701,7 +8998,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2673"><code>src&#x2F;jquery.gridster.js:2673</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2691"><code>src&#x2F;jquery.gridster.js:2691</code></a>
         
         </p>
 
@@ -8713,6 +9010,7 @@ occupy.</p>
 
     <div class="description">
         <p>Remove the style tag with the associated id from the head of the document</p>
+
     </div>
 
     
@@ -8726,7 +9024,8 @@ occupy.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -8794,7 +9093,7 @@ occupy.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l564"><code>src&#x2F;jquery.gridster.js:564</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l570"><code>src&#x2F;jquery.gridster.js:570</code></a>
         
         </p>
 
@@ -8806,6 +9105,7 @@ occupy.</p>
 
     <div class="description">
         <p>Remove a widget from the grid.</p>
+
     </div>
 
     
@@ -8824,6 +9124,7 @@ occupy.</p>
 
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement you want to remove.</p>
+
                     </div>
 
                     
@@ -8840,6 +9141,7 @@ occupy.</p>
                     <div class="param-description">
                         <p>If true, widgets below the removed one
 will not move up. If a Function is passed it will be used as callback.</p>
+
                     </div>
 
                     
@@ -8855,6 +9157,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>Function executed when the widget is removed.</p>
+
                     </div>
 
                     
@@ -8873,7 +9176,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -8919,7 +9223,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l803"><code>src&#x2F;jquery.gridster.js:803</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l809"><code>src&#x2F;jquery.gridster.js:809</code></a>
         
         </p>
 
@@ -8931,6 +9235,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Bind resize events to get resize working.</p>
+
     </div>
 
     
@@ -8944,7 +9249,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -9024,7 +9330,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l288"><code>src&#x2F;jquery.gridster.js:288</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l294"><code>src&#x2F;jquery.gridster.js:294</code></a>
         
         </p>
 
@@ -9036,6 +9342,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Change the size of a widget. Width is limited to the current grid width.</p>
+
     </div>
 
     
@@ -9055,6 +9362,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement
  representing the widget.</p>
+
                     </div>
 
                     
@@ -9070,6 +9378,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>The number of columns that will occupy the widget.</p>
+
                     </div>
 
                     
@@ -9085,6 +9394,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>The number of rows that will occupy the widget.</p>
+
                     </div>
 
                     
@@ -9104,6 +9414,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
  the left if there is insufficient space on the right.
  By default <code>size_x</code> is limited to the space available from
  the column where the widget begins, until the last column to the right.</p>
+
                     </div>
 
                     
@@ -9120,6 +9431,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>Function executed when the widget is removed.</p>
+
                     </div>
 
                     
@@ -9138,7 +9450,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns $widget.
+                    <p>Returns $widget.</p>
+
                 
             </div>
         </div>
@@ -9194,7 +9507,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l627"><code>src&#x2F;jquery.gridster.js:627</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l633"><code>src&#x2F;jquery.gridster.js:633</code></a>
         
         </p>
 
@@ -9206,6 +9519,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Returns a serialized array of the widgets in the grid.</p>
+
     </div>
 
     
@@ -9227,6 +9541,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
                         <p>The collection of jQuery wrapped
  HTMLElements you want to serialize. If no argument is passed all widgets
  will be serialized.</p>
+
                     </div>
 
                     
@@ -9245,8 +9560,9 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns an Array of Objects with the data specified in
- the serialize_params option.
+                    <p>Returns an Array of Objects with the data specified in
+ the serialize_params option.</p>
+
                 
             </div>
         </div>
@@ -9292,7 +9608,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l649"><code>src&#x2F;jquery.gridster.js:649</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l655"><code>src&#x2F;jquery.gridster.js:655</code></a>
         
         </p>
 
@@ -9305,6 +9621,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
     <div class="description">
         <p>Returns a serialized array of the widgets that have changed their
  position.</p>
+
     </div>
 
     
@@ -9318,8 +9635,9 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns an Array of Objects with the data specified in
- the serialize_params option.
+                    <p>Returns an Array of Objects with the data specified in
+ the serialize_params option.</p>
+
                 
             </div>
         </div>
@@ -9381,7 +9699,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2200"><code>src&#x2F;jquery.gridster.js:2200</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2218"><code>src&#x2F;jquery.gridster.js:2218</code></a>
         
         </p>
 
@@ -9393,6 +9711,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Update the array of mapped positions with the new player position.</p>
+
     </div>
 
     
@@ -9411,6 +9730,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>The new player col.</p>
+
                     </div>
 
                     
@@ -9426,6 +9746,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>The new player row.</p>
+
                     </div>
 
                     
@@ -9444,7 +9765,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -9490,7 +9812,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2565"><code>src&#x2F;jquery.gridster.js:2565</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2583"><code>src&#x2F;jquery.gridster.js:2583</code></a>
         
         </p>
 
@@ -9502,6 +9824,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Set the current height of the parent grid.</p>
+
     </div>
 
     
@@ -9515,7 +9838,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns the instance of the Gridster class.
+                    <p>Returns the instance of the Gridster class.</p>
+
                 
             </div>
         </div>
@@ -9577,7 +9901,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1602"><code>src&#x2F;jquery.gridster.js:1602</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1620"><code>src&#x2F;jquery.gridster.js:1620</code></a>
         
         </p>
 
@@ -9589,6 +9913,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Put placeholder at the row and column specified.</p>
+
     </div>
 
     
@@ -9608,6 +9933,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     <div class="param-description">
                         <p>The column to which we want to move the
  placeholder.</p>
+
                     </div>
 
                     
@@ -9624,6 +9950,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     <div class="param-description">
                         <p>The row to which we want to move the
  placeholder.</p>
+
                     </div>
 
                     
@@ -9642,7 +9969,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -9710,7 +10038,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1219"><code>src&#x2F;jquery.gridster.js:1219</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1237"><code>src&#x2F;jquery.gridster.js:1237</code></a>
         
         </p>
 
@@ -9722,6 +10050,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Sets the current position of the player</p>
+
     </div>
 
     
@@ -9849,7 +10178,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l249"><code>src&#x2F;jquery.gridster.js:249</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l255"><code>src&#x2F;jquery.gridster.js:255</code></a>
         
         </p>
 
@@ -9861,6 +10190,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Change widget size limits.</p>
+
     </div>
 
     
@@ -9880,6 +10210,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement
  representing the widget or an index representing the desired widget.</p>
+
                     </div>
 
                     
@@ -9895,6 +10226,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
                     <div class="param-description">
                         <p>Maximun size (in units) for width and height.</p>
+
                     </div>
 
                     
@@ -9913,7 +10245,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">HTMLElement</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -9959,7 +10292,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l828"><code>src&#x2F;jquery.gridster.js:828</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l834"><code>src&#x2F;jquery.gridster.js:834</code></a>
         
         </p>
 
@@ -9971,6 +10304,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
 
     <div class="description">
         <p>Setup things required for resizing. Like build templates for drag handles.</p>
+
     </div>
 
     
@@ -9984,7 +10318,8 @@ will not move up. If a Function is passed it will be used as callback.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns instance of gridster Class.
+                    <p>Returns instance of gridster Class.</p>
+
                 
             </div>
         </div>
@@ -10040,7 +10375,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1353"><code>src&#x2F;jquery.gridster.js:1353</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1371"><code>src&#x2F;jquery.gridster.js:1371</code></a>
         
         </p>
 
@@ -10053,6 +10388,7 @@ will not move up. If a Function is passed it will be used as callback.</p>
     <div class="description">
         <p>Sorts an Array of grid coords objects by column (representing the grid
 coords of each widget) in ascending way.</p>
+
     </div>
 
     
@@ -10071,6 +10407,7 @@ coords of each widget) in ascending way.</p>
 
                     <div class="param-description">
                         <p>Array of grid coords objects</p>
+
                     </div>
 
                     
@@ -10089,7 +10426,8 @@ coords of each widget) in ascending way.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns the array sorted.
+                    <p>Returns the array sorted.</p>
+
                 
             </div>
         </div>
@@ -10145,7 +10483,7 @@ coords of each widget) in ascending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1333"><code>src&#x2F;jquery.gridster.js:1333</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1351"><code>src&#x2F;jquery.gridster.js:1351</code></a>
         
         </p>
 
@@ -10158,6 +10496,7 @@ coords of each widget) in ascending way.</p>
     <div class="description">
         <p>Sorts an Array of grid coords objects (representing the grid coords of
 each widget) placing first the empty cells upper left.</p>
+
     </div>
 
     
@@ -10176,6 +10515,7 @@ each widget) placing first the empty cells upper left.</p>
 
                     <div class="param-description">
                         <p>Array of grid coords objects</p>
+
                     </div>
 
                     
@@ -10194,7 +10534,8 @@ each widget) placing first the empty cells upper left.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns the array sorted.
+                    <p>Returns the array sorted.</p>
+
                 
             </div>
         </div>
@@ -10250,7 +10591,7 @@ each widget) placing first the empty cells upper left.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1308"><code>src&#x2F;jquery.gridster.js:1308</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1326"><code>src&#x2F;jquery.gridster.js:1326</code></a>
         
         </p>
 
@@ -10263,6 +10604,7 @@ each widget) placing first the empty cells upper left.</p>
     <div class="description">
         <p>Sorts an Array of grid coords objects (representing the grid coords of
 each widget) in ascending way.</p>
+
     </div>
 
     
@@ -10281,6 +10623,7 @@ each widget) in ascending way.</p>
 
                     <div class="param-description">
                         <p>Array of grid coords objects</p>
+
                     </div>
 
                     
@@ -10299,7 +10642,8 @@ each widget) in ascending way.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns the array sorted.
+                    <p>Returns the array sorted.</p>
+
                 
             </div>
         </div>
@@ -10355,7 +10699,7 @@ each widget) in ascending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1373"><code>src&#x2F;jquery.gridster.js:1373</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1391"><code>src&#x2F;jquery.gridster.js:1391</code></a>
         
         </p>
 
@@ -10368,6 +10712,7 @@ each widget) in ascending way.</p>
     <div class="description">
         <p>Sorts an Array of grid coords objects (representing the grid coords of
 each widget) in descending way.</p>
+
     </div>
 
     
@@ -10386,6 +10731,7 @@ each widget) in descending way.</p>
 
                     <div class="param-description">
                         <p>Array of grid coords objects</p>
+
                     </div>
 
                     
@@ -10404,7 +10750,8 @@ each widget) in descending way.</p>
                     
                         <span class="type">Array</span>:
                     
-                    Returns the array sorted.
+                    <p>Returns the array sorted.</p>
+
                 
             </div>
         </div>
@@ -10466,7 +10813,7 @@ each widget) in descending way.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l706"><code>src&#x2F;jquery.gridster.js:706</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l712"><code>src&#x2F;jquery.gridster.js:712</code></a>
         
         </p>
 
@@ -10479,6 +10826,7 @@ each widget) in descending way.</p>
     <div class="description">
         <p>Update in the mapped array of positions the value of cells represented by
 the grid coords object passed in the <code>grid_data</code> param.</p>
+
     </div>
 
     
@@ -10498,6 +10846,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
                     <div class="param-description">
                         <p>The grid coords object representing the cells
  to update in the mapped array.</p>
+
                     </div>
 
                     
@@ -10515,6 +10864,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
                         <p>Pass <code>false</code> or the jQuery wrapped
  HTMLElement, depends if you want to delete an existing position or add
  a new one.</p>
+
                     </div>
 
                     
@@ -10533,7 +10883,8 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
                     
                         <span class="type">Class</span>:
                     
-                    Returns the instance of the Gridster Class.
+                    <p>Returns the instance of the Gridster Class.</p>
+
                 
             </div>
         </div>
@@ -10589,7 +10940,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l2173"><code>src&#x2F;jquery.gridster.js:2173</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l2191"><code>src&#x2F;jquery.gridster.js:2191</code></a>
         
         </p>
 
@@ -10601,6 +10952,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
 
     <div class="description">
         <p>Get widgets below a widget.</p>
+
     </div>
 
     
@@ -10619,6 +10971,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
 
                     <div class="param-description">
                         <p>The jQuery wrapped HTMLElement.</p>
+
                     </div>
 
                     
@@ -10637,7 +10990,8 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    A jQuery collection of HTMLElements.
+                    <p>A jQuery collection of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -10693,7 +11047,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_jquery.gridster.js.html#l1272"><code>src&#x2F;jquery.gridster.js:1272</code></a>
+        <a href="../files/src_jquery.gridster.js.html#l1290"><code>src&#x2F;jquery.gridster.js:1290</code></a>
         
         </p>
 
@@ -10706,6 +11060,7 @@ the grid coords object passed in the <code>grid_data</code> param.</p>
     <div class="description">
         <p>See which of the widgets in the $widgets param collection can go to
 a upper row and which not.</p>
+
     </div>
 
     
@@ -10725,6 +11080,7 @@ a upper row and which not.</p>
                     <div class="param-description">
                         <p>A jQuery wrapped collection of
 HTMLElements.</p>
+
                     </div>
 
                     
@@ -10743,8 +11099,9 @@ HTMLElements.</p>
                     
                         <span class="type">Object</span>:
                     
-                    Returns a literal Object with two keys: <code>can_go_up</code> &amp;
-<code>can_not_go_up</code>. Each contains a set of HTMLElements.
+                    <p>Returns a literal Object with two keys: <code>can_go_up</code> &amp;
+<code>can_not_go_up</code>. Each contains a set of HTMLElements.</p>
+
                 
             </div>
         </div>
@@ -10771,13 +11128,13 @@ HTMLElements.</p>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>
