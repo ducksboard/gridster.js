@@ -1,3 +1,11 @@
+<a name="v0.2.1"></a>
+### v0.2.1 (2013-10-28)
+
+
+#### Features
+
+* **resize:** Add start/stop/resize callbacks ([d4ec7140](http://github.com/ducksboard/gridster.js/commit/d4ec7140f736bc30697c75b54ed3242ddf1d75b9))
+
 <a name="v0.2.0"></a>
 ## v0.2.0 (2013-10-26)
 
