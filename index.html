@@ -89,6 +89,8 @@
                     <li><a href="demos/resize.html">Resizable widgets</a></li>
                     <li><a href="demos/resize-limits.html">Resizable widgets with constraints</a></li>
                     <li><a href="demos/serialize.html">Serialize widgets positions</a></li>
+                    <li><a href="demos/using-drag-callbacks.html">Using drag callbacks</a></li>
+                    <li><a href="demos/using-resize-callbacks.html">Using resize callbacks</a></li>
                 </ul>
             </article>
         </div>
@@ -175,6 +177,9 @@
                         <li><a href="#resize_handle_class_opt">resize.handle_class</a></li>
                         <li><a href="#resize_handle_append_to_opt">resize.handle_append_to</a></li>
                         <li><a href="#resize_max_size_opt">resize.max_size</a></li>
+                        <li><a href="#resize_start_opt">resize.start</a></li>
+                        <li><a href="#resize_resize_opt">resize.resize</a></li>
+                        <li><a href="#resize_stop_opt">resize.stop</a></li>
 
                         <li><a href="#on_overlap_start_opt">collision.on_overlap_start</a></li>
                         <li><a href="#on_overlap_opt">collision.on_overlap</a></li>
@@ -268,6 +273,15 @@
 
                     <h4 id="resize_max_size_opt" class="heading-m">resize.max_size: <em>[Infinity, Infinity]</em></h4>
                     <p>Limit widget dimensions when resizing. Array values should be integers: <code>[max_cols_occupied, max_rows_occupied]</code></p>
+
+                    <h4 id="resize_start_opt" class="heading-m">resize.start: <em>function(e, ui, $widget) {}</em></h4>
+                    <p>A callback executed when resizing starts.</p>
+
+                    <h4 id="resize_resize_opt" class="heading-m">resize.resize: <em>function(e, ui, $widget) {}</em></h4>
+                    <p>A callback executed during the resizing.</p>
+
+                    <h4 id="resize_stop_opt" class="heading-m">resize.stop: <em>function(e, ui, $widget) {}</em></h4>
+                    <p>A callback executed when resizing stops.</p>
 
                     <h4 id="on_overlap_start_opt" class="heading-m">collision.on_overlap_start: <em>function(collider_data) { }</em></h4>
                     <p>A callback for the first time when a widget enters a new grid cell.</p>
