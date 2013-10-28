@@ -100,6 +100,12 @@
     *       @param {Array} [options.resize.max_size] Limit widget dimensions
     *        when resizing. Array values should be integers:
     *        `[max_cols_occupied, max_rows_occupied]`
+    *       @param {Function} [options.resize.start] Function executed
+    *        when resizing starts.
+    *       @param {Function} [otions.resize.resize] Function executed
+    *        during the resizing.
+    *       @param {Function} [options.resize.stop] Function executed
+    *        when resizing stops.
     *
     * @constructor
     */
@@ -1043,6 +1049,10 @@
         }).appendTo(this.$el);
 
         this.$resized_widget.addClass('resizing');
+
+		if (this.options.resize.start) {
+            this.options.resize.start.call(this, event, ui, this.$resized_widget);
+        }
     };
 
 
@@ -1069,6 +1079,10 @@
                     'min-height': ''
                 });
         }, this), 300);
+
+        if (this.options.resize.stop) {
+            this.options.resize.stop.call(this, event, ui, this.$resized_widget);
+        }
     };
 
     /**
@@ -1133,6 +1147,10 @@
                 'data-sizex': size_x,
                 'data-sizey': size_y
             });
+        }
+
+        if (this.options.resize.resize) {
+            this.options.resize.resize.call(this, event, ui, this.$resized_widget);
         }
 
         this.resize_last_sizex = size_x;
