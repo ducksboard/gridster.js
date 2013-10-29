@@ -29,10 +29,13 @@ If anyone would like to help @dustmoo improve his fork and reconcile
 it with the main library he would be happy for the help.
 
 
-## Contributing
+## Contributing to this project
 
-Commits should follow these [conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y).
-Changelog is generated from there.
+Anyone and everyone is welcome to contribute. Please take a moment to review the guidelines for contributing.
+
+* [Bug reports](CONTRIBUTING.md#bugs)
+* [Feature requests](CONTRIBUTING.md#features)
+* [Pull requests](CONTRIBUTING.md#pull-requests)
 
 
 ## License
