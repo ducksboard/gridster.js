@@ -578,7 +578,7 @@
     * @return {Class} Returns the instance of the Gridster Class.
     */
     fn.remove_widget = function(el, silent, callback) {
-        var $el = el instanceof jQuery ? el : $(el);
+        var $el = el instanceof $ ? el : $(el);
         var wgd = $el.coords().grid;
 
         // if silent is a function assume it's a callback
@@ -2363,7 +2363,7 @@
     fn.get_cells_occupied = function(el_grid_data) {
         var cells = { cols: [], rows: []};
         var i;
-        if (arguments[1] instanceof jQuery) {
+        if (arguments[1] instanceof $) {
             el_grid_data = arguments[1].coords().grid;
         }
 
@@ -2447,7 +2447,7 @@
 
         var cr, max;
         var action = type + '/' + direction;
-        if (arguments[2] instanceof jQuery) {
+        if (arguments[2] instanceof $) {
             var el_grid_data = arguments[2].coords().grid;
             col = el_grid_data.col;
             row = el_grid_data.row;

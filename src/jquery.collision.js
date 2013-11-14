@@ -41,7 +41,7 @@
         this.$element = el;
         this.last_colliders = [];
         this.last_colliders_coords = [];
-        if (typeof colliders === 'string' || colliders instanceof jQuery) {
+        if (typeof colliders === 'string' || colliders instanceof $) {
             this.$colliders = $(colliders,
                  this.options.colliders_context).not(this.$element);
         }else{
