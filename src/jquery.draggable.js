@@ -76,13 +76,13 @@
     var fn = Draggable.prototype;
 
     fn.init = function() {
-        this.calculate_positions();
+        this.calculate_dimensions();
         this.$container.css('position', 'relative');
         this.disabled = false;
         this.events();
 
         $(window).bind('resize.gridster-draggable',
-            throttle($.proxy(this.calculate_positions, this), 200));
+            throttle($.proxy(this.calculate_dimensions, this), 200));
     };
 
     fn.events = function() {
@@ -208,12 +208,13 @@
     };
 
 
-    fn.calculate_positions = function(e) {
     fn.manage_scroll = function(data) {
         this.scroll_in('x', data);
         this.scroll_in('y', data);
     };
 
+
+    fn.calculate_dimensions = function(e) {
         this.window_height = $window.height();
         this.window_width = $window.width();
     };
