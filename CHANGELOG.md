@@ -1,3 +1,14 @@
+<a name="v0.3.0"></a>
+## v0.3.0 (2013-11-18)
+
+
+#### Features
+
+* **draggable:**
+  * method to set drag limits dynamically ([d4482ec1](http://github.com/ducksboard/gridster.js/commit/d4482ec1476f8a0b6fb6cdeb25b7774ef678d81c))
+  * support horizontal scrolling while dragging ([ae4921b7](http://github.com/ducksboard/gridster.js/commit/ae4921b70798944211267cacf8a89e62d0818369))
+* **gridster:** increase grid width when dragging or resizing ([b61df653](http://github.com/ducksboard/gridster.js/commit/b61df6535f728970fb8c6f25a208275dbde66550))
+
 <a name="v0.2.1"></a>
 ### v0.2.1 (2013-10-28)
 
