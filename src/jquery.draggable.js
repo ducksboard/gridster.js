@@ -165,6 +165,17 @@
     };
 
 
+    fn.set_limits = function(container_width) {
+        container_width || (container_width = this.$container.width());
+        this.player_max_left = (container_width - this.player_width +
+            - this.options.offset_left);
+
+        this.options.container_width = container_width;
+
+        return this;
+    };
+
+
     fn.scroll_in = function(axis, data) {
         var dir_prop = dir_map[axis];
 
