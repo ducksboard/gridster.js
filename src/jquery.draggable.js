@@ -25,11 +25,16 @@
     };
 
     var $window = $(window);
+    var dir_map = { x : 'left', y : 'top' };
     var isTouch = !!('ontouchstart' in window);
     var pointer_events = {
         start: isTouch ? 'touchstart.gridster-draggable' : 'mousedown.gridster-draggable',
         move: isTouch ? 'touchmove.gridster-draggable' : 'mousemove.gridster-draggable',
         end: isTouch ? 'touchend.gridster-draggable' : 'mouseup.gridster-draggable'
+    };
+
+    var capitalize = function(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
     /**
@@ -123,9 +128,10 @@
             mouse_actual_pos.left - this.mouse_init_pos.left);
         var diff_y = Math.round(mouse_actual_pos.top - this.mouse_init_pos.top);
 
-        var left = Math.round(this.el_init_offset.left + diff_x - this.baseX);
-        var top = Math.round(
-            this.el_init_offset.top + diff_y - this.baseY + this.scrollOffset);
+        var left = Math.round(this.el_init_offset.left +
+            diff_x - this.baseX + this.scroll_offset_x);
+        var top = Math.round(this.el_init_offset.top +
+            diff_y - this.baseY + this.scroll_offset_y);
 
         if (this.options.limit) {
             if (left > this.player_max_left) {
@@ -143,8 +149,8 @@
             pointer: {
                 left: mouse_actual_pos.left,
                 top: mouse_actual_pos.top,
-                diff_left: diff_x,
-                diff_top: diff_y + this.scrollOffset
+                diff_left: diff_x + this.scroll_offset_x,
+                diff_top: diff_y + this.scroll_offset_y
             }
         };
     };
@@ -159,42 +165,57 @@
     };
 
 
-    fn.manage_scroll = function(data) {
-        /* scroll document */
-        var nextScrollTop;
-        var scrollTop = $window.scrollTop();
-        var min_window_y = scrollTop;
-        var max_window_y = min_window_y + this.window_height;
+    fn.scroll_in = function(axis, data) {
+        var dir_prop = dir_map[axis];
 
-        var mouse_down_zone = max_window_y - 50;
-        var mouse_up_zone = min_window_y + 50;
+        var area_size = 50;
+        var scroll_inc = 30;
 
-        var abs_mouse_left = data.pointer.left;
-        var abs_mouse_top = min_window_y + data.pointer.top;
+        var is_x = axis === 'x';
+        var window_size = is_x ? this.window_width : this.window_height;
+        var doc_size = is_x ? $(document).width() : $(document).height();
+        var player_size = is_x ? this.$player.width() : this.$player.height();
 
-        var max_player_y = (this.doc_height - this.window_height +
-            this.player_height);
+        var next_scroll;
+        var scroll_offset = $window['scroll' + capitalize(dir_prop)]();
+        var min_window_pos = scroll_offset;
+        var max_window_pos = min_window_pos + window_size;
 
-        if (abs_mouse_top >= mouse_down_zone) {
-            nextScrollTop = scrollTop + 30;
-            if (nextScrollTop < max_player_y) {
-                $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset + 30;
+        var mouse_next_zone = max_window_pos - area_size;  // down/right
+        var mouse_prev_zone = min_window_pos + area_size;  // up/left
+
+        var abs_mouse_pos = min_window_pos + data.pointer[dir_prop];
+
+        var max_player_pos = (doc_size - window_size + player_size);
+
+        if (abs_mouse_pos >= mouse_next_zone) {
+            next_scroll = scroll_offset + scroll_inc;
+            if (next_scroll < max_player_pos) {
+                $window['scroll' + capitalize(dir_prop)](next_scroll);
+                this['scroll_offset_' + axis] += scroll_inc;
             }
         }
 
-        if (abs_mouse_top <= mouse_up_zone) {
-            nextScrollTop = scrollTop - 30;
-            if (nextScrollTop > 0) {
-                $window.scrollTop(nextScrollTop);
-                this.scrollOffset = this.scrollOffset - 30;
+        if (abs_mouse_pos <= mouse_prev_zone) {
+            next_scroll = scroll_offset - scroll_inc;
+            if (next_scroll > 0) {
+                $window['scroll' + capitalize(dir_prop)](next_scroll);
+                this['scroll_offset_' + axis] -= scroll_inc;
             }
         }
+
+        return this;
     };
 
 
     fn.calculate_positions = function(e) {
+    fn.manage_scroll = function(data) {
+        this.scroll_in('x', data);
+        this.scroll_in('y', data);
+    };
+
         this.window_height = $window.height();
+        this.window_width = $window.width();
     };
 
 
@@ -254,7 +275,7 @@
         var offset = this.$container.offset();
         this.baseX = Math.round(offset.left);
         this.baseY = Math.round(offset.top);
-        this.doc_height = $(document).height();
+        this.initial_container_width = this.options.container_width || this.$container.width();
 
         if (this.options.helper === 'clone') {
             this.$helper = this.$player.clone()
@@ -264,14 +285,13 @@
             this.helper = false;
         }
 
-        this.scrollOffset = 0;
+        this.scroll_offset_y = 0;
+        this.scroll_offset_x = 0;
         this.el_init_offset = this.$player.offset();
         this.player_width = this.$player.width();
         this.player_height = this.$player.height();
 
-        var container_width = this.options.container_width || this.$container.width();
-        this.player_max_left = (container_width - this.player_width +
-            this.options.offset_left);
+        this.set_limits(this.options.container_width);
 
         if (this.options.start) {
             this.options.start.call(this.$player, e, this.get_drag_data(e));
