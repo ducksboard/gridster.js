@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <title>Demo &raquo; Dynamic grid width &raquo; gridster.js</title>
+  <link rel="stylesheet" type="text/css" href="../dist/jquery.gridster.css">
+  <link rel="stylesheet" type="text/css" href="assets/demo.css">
+</head>
+
+<body>
+
+  <h1>Dynamic grid width</h1>
+  <p>Drag or resize some widgets to the right side. Use <code>max_cols</code> option to set a maximum number of columns for the grid.</p>
+
+  <div class="gridster">
+    <ul>
+      <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">0</li>
+      <li data-row="1" data-col="3" data-sizex="1" data-sizey="2">1</li>
+      <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">2</li>
+      <li data-row="3" data-col="2" data-sizex="3" data-sizey="1">3</li>
+      <li data-row="4" data-col="1" data-sizex="1" data-sizey="1">4</li>
+      <li data-row="3" data-col="1" data-sizex="1" data-sizey="1">5</li>
+      <li data-row="4" data-col="2" data-sizex="1" data-sizey="1">6</li>
+      <li data-row="5" data-col="2" data-sizex="1" data-sizey="1">7</li>
+      <li data-row="4" data-col="4" data-sizex="1" data-sizey="1">8</li>
+      <li data-row="1" data-col="5" data-sizex="1" data-sizey="3">9</li>
+    </ul>
+  </div>
+
+    <script type="text/javascript" src="assets/jquery.js"></script>
+    <script src="../dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      var gridster;
+
+      $(function(){
+
+        var log = document.getElementById('log');
+
+        gridster = $(".gridster ul").gridster({
+          widget_base_dimensions: [100, 55],
+          widget_margins: [5, 5],
+          autogrow_cols: true,
+          resize: {
+            enabled: true
+          }
+        }).data('gridster');
+
+
+      });
+    </script>
+</body>
+</html>
