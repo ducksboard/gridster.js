@@ -37,7 +37,7 @@ Guidelines for bug reports:
    latest `master` or development branch in the repository.
 
 3. **Isolate the problem** &mdash; ideally create a [reduced test
-   case](http://css-tricks.com/6263-reduced-test-cases/) and a live example (you can use something like [jsfiddle](http://jsfiddle.net/) or [jsfiddle](http://jsbin.com/)) .
+   case](http://css-tricks.com/6263-reduced-test-cases/) and a live example (you can use something like [jsfiddle](http://jsfiddle.net/) or [jsbin](http://jsbin.com/)) .
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is
@@ -124,7 +124,7 @@ included in the project:
    [interactive rebase](https://help.github.com/articles/interactive-rebase)
    feature to tidy up your commits before making them public.
 
-5. Locally or rebase the upstream development branch into your topic branch:
+5. Merge or rebase the upstream development branch into your topic branch:
 
    ```bash
    git pull --rebase upstream master
