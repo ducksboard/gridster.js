@@ -114,7 +114,7 @@
     * @constructor
     */
     function Gridster(el, options) {
-        this.options = $.extend(true, defaults, options);
+        this.options = $.extend(true, {}, defaults, options);
         this.$el = $(el);
         this.$wrapper = this.$el.parent();
         this.$widgets = this.$el.children(
