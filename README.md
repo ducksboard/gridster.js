@@ -1,6 +1,8 @@
 Gridster.js
 ===========
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ducksboard/gridster.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 Gridster is a jQuery plugin that makes building intuitive draggable
 layouts from elements spanning multiple columns. You can even
 dynamically add and remove elements from the grid.
