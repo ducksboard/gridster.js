@@ -1162,6 +1162,12 @@
                     'min-width': '',
                     'min-height': ''
                 });
+
+            if (this.options.resize.stop) {
+                this.options.resize.stop.call(this, event, ui, this.$resized_widget);
+            }
+
+            this.$el.trigger('gridster:resizestop');
         }, this), 300);
 
         this.set_dom_grid_width();
@@ -1169,12 +1175,6 @@
         if (this.options.autogrow_cols) {
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
-
-        if (this.options.resize.stop) {
-            this.options.resize.stop.call(this, event, ui, this.$resized_widget);
-        }
-
-        this.$el.trigger('gridster:resizestop');
     };
 
     /**
