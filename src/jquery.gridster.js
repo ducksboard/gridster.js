@@ -36,7 +36,7 @@
         },
         resize: {
             enabled: false,
-            axes: ['x', 'y', 'both'],
+            axes: ['both'],
             handle_append_to: '',
             handle_class: 'gs-resize-handle',
             max_size: [Infinity, Infinity]
