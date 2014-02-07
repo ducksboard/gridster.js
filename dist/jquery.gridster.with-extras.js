@@ -1,4 +1,4 @@
-/*! gridster.js - v0.4.1 - 2014-02-07
+/*! gridster.js - v0.4.2 - 2014-02-07
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -1031,7 +1031,10 @@
             this.set_widget_min_size($w, min_size);
         }
 
+        this.set_dom_grid_width();
         this.set_dom_grid_height();
+
+        this.drag_api.set_limits(this.container_width);
 
         return $w.fadeIn();
     };
