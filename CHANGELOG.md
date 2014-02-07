@@ -1,3 +1,11 @@
+<a name="v0.4.2"></a>
+### v0.4.2 (2014-02-07)
+
+
+#### Bug Fixes
+
+* recalculate grid width when adding widgets ([47745978](http://github.com/ducksboard/gridster.js/commit/4774597834300601fc81d5111a31a8c1672c55e1))
+
 <a name="v0.4.1"></a>
 ### v0.4.1 (2014-02-07)
 
