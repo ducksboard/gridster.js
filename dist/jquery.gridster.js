@@ -1,4 +1,4 @@
-/*! gridster.js - v0.4.0 - 2014-02-07
+/*! gridster.js - v0.4.1 - 2014-02-07
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -318,15 +318,9 @@
 
 ;(function(window, undefined) {
 
-
-    window.delay = function(func, wait) {
-        var args = Array.prototype.slice.call(arguments, 2);
-        return setTimeout(function(){ return func.apply(null, args); }, wait);
-    };
-
-    /* Debounce and throttle functions taken from underscore.js
+    /* Delay, debounce and throttle functions taken from underscore.js
      *
-     * Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and 
+     * Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and
      * Investigative Reporters & Editors
      *
      * Permission is hereby granted, free of charge, to any person
@@ -337,7 +331,7 @@
      * copies of the Software, and to permit persons to whom the
      * Software is furnished to do so, subject to the following
      * conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be
      * included in all copies or substantial portions of the Software.
      *
@@ -350,7 +344,12 @@
      * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
      * OTHER DEALINGS IN THE SOFTWARE.
      */
-     
+
+    window.delay = function(func, wait) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        return setTimeout(function(){ return func.apply(null, args); }, wait);
+    };
+
     window.debounce = function(func, wait, immediate) {
         var timeout;
         return function() {
@@ -814,7 +813,8 @@
             axes: ['both'],
             handle_append_to: '',
             handle_class: 'gs-resize-handle',
-            max_size: [Infinity, Infinity]
+            max_size: [Infinity, Infinity],
+            min_size: [1, 1]
         }
     };
 
