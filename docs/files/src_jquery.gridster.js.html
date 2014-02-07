@@ -130,7 +130,7 @@
         },
         resize: {
             enabled: false,
-            axes: [&#x27;x&#x27;, &#x27;y&#x27;, &#x27;both&#x27;],
+            axes: [&#x27;both&#x27;],
             handle_append_to: &#x27;&#x27;,
             handle_class: &#x27;gs-resize-handle&#x27;,
             max_size: [Infinity, Infinity]
@@ -195,6 +195,9 @@
     *       @param {Array} [options.resize.max_size] Limit widget dimensions
     *        when resizing. Array values should be integers:
     *        &#x60;[max_cols_occupied, max_rows_occupied]&#x60;
+    *       @param {Array} [options.resize.min_size] Limit widget dimensions
+    *        when resizing. Array values should be integers:
+    *        &#x60;[min_cols_occupied, min_rows_occupied]&#x60;
     *       @param {Function} [options.resize.start] Function executed
     *        when resizing starts.
     *       @param {Function} [otions.resize.resize] Function executed
@@ -205,7 +208,7 @@
     * @constructor
     *&#x2F;
     function Gridster(el, options) {
-        this.options = $.extend(true, defaults, options);
+        this.options = $.extend(true, {}, defaults, options);
         this.$el = $(el);
         this.$wrapper = this.$el.parent();
         this.$widgets = this.$el.children(
@@ -305,10 +308,11 @@
     * @param {Number} [col] The column the widget should start in.
     * @param {Number} [row] The row the widget should start in.
     * @param {Array} [max_size] max_size Maximun size (in units) for width and height.
+    * @param {Array} [min_size] min_size Minimum size (in units) for width and height.
     * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
     *  the widget that was just created.
     *&#x2F;
-    fn.add_widget = function(html, size_x, size_y, col, row, max_size) {
+    fn.add_widget = function(html, size_x, size_y, col, row, max_size, min_size) {
         var pos;
         size_x || (size_x = 1);
         size_y || (size_y = 1);
@@ -342,9 +346,36 @@
             this.set_widget_max_size($w, max_size);
         }
 
+        if (min_size) {
+            this.set_widget_min_size($w, min_size);
+        }
+
         this.set_dom_grid_height();
 
         return $w.fadeIn();
+    };
+
+
+    &#x2F;**
+    * Change widget size limits.
+    *
+    * @method set_widget_min_size
+    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
+    *  representing the widget or an index representing the desired widget.
+    * @param {Array} min_size Minimum size (in units) for width and height.
+    * @return {HTMLElement} Returns instance of gridster Class.
+    *&#x2F;
+    fn.set_widget_min_size = function($widget, min_size) {
+        $widget = typeof $widget === &#x27;number&#x27; ?
+            this.$widgets.eq($widget) : $widget;
+
+        if (!$widget.length) { return this; }
+
+        var wgd = $widget.data(&#x27;coords&#x27;).grid;
+        wgd.min_size_x = min_size[0];
+        wgd.min_size_y = min_size[1];
+
+        return this;
     };
 
 
@@ -394,48 +425,38 @@
     * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
     *  representing the widget.
     * @param {Number} size_x The number of columns that will occupy the widget.
-    * @param {Number} size_y The number of rows that will occupy the widget.
-    * @param {Boolean} [reposition] Set to false to not move the widget to
-    *  the left if there is insufficient space on the right.
     *  By default &lt;code&gt;size_x&lt;&#x2F;code&gt; is limited to the space available from
     *  the column where the widget begins, until the last column to the right.
+    * @param {Number} size_y The number of rows that will occupy the widget.
     * @param {Function} [callback] Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     *&#x2F;
-    fn.resize_widget = function($widget, size_x, size_y, reposition, callback) {
+    fn.resize_widget = function($widget, size_x, size_y, callback) {
         var wgd = $widget.coords().grid;
         var col = wgd.col;
-        var max_cols = Math.min(this.options.max_cols, this.cols);
-        var max_size_x = Math.min(max_cols, max_cols - col);
-
-        reposition !== false &amp;&amp; (reposition = true);
-        size_x || (size_x = wgd.size_x);
-        size_y || (size_y = wgd.size_y);
-
-        if (size_x &gt; max_size_x) {
-            size_x = max_size_x;
-        }
-
+        var max_cols = this.options.max_cols;
         var old_size_y = wgd.size_y;
         var old_col = wgd.col;
         var new_col = old_col;
 
-        if (reposition &amp;&amp; old_col + size_x - 1 &gt; max_size_x) {
-            var diff = old_col + (size_x - 1) - max_size_x;
-            var c = old_col - diff;
-            new_col = Math.max(1, c);
+        size_x || (size_x = wgd.size_x);
+        size_y || (size_y = wgd.size_y);
+
+        if (max_cols !== Infinity) {
+            size_x = Math.min(size_x, max_cols - col + 1);
         }
 
         if (size_y &gt; old_size_y) {
             this.add_faux_rows(Math.max(size_y - old_size_y, 0));
         }
 
-        if (max_size_x &lt; col + size_x - 1) {
-            this.add_faux_cols(Math.max(size_x - max_size_x, 0));
+        var player_rcol = (col + size_x - 1);
+        if (player_rcol &gt; this.cols) {
+            this.add_faux_cols(player_rcol - this.cols);
         }
 
         var new_grid_data = {
-            col: col,
+            col: new_col,
             row: wgd.row,
             size_x: size_x,
             size_y: size_y
@@ -785,6 +806,8 @@
             &#x27;size_y&#x27;: parseInt($el.attr(&#x27;data-sizey&#x27;), 10),
             &#x27;max_size_x&#x27;: parseInt($el.attr(&#x27;data-max-sizex&#x27;), 10) || false,
             &#x27;max_size_y&#x27;: parseInt($el.attr(&#x27;data-max-sizey&#x27;), 10) || false,
+            &#x27;min_size_x&#x27;: parseInt($el.attr(&#x27;data-min-sizex&#x27;), 10) || false,
+            &#x27;min_size_y&#x27;: parseInt($el.attr(&#x27;data-min-sizey&#x27;), 10) || false,
             &#x27;el&#x27;: $el
         };
 
@@ -1165,6 +1188,12 @@
             this.options.max_cols - this.resize_initial_col + 1);
         this.resize_max_size_y = this.resize_wgd.max_size_y ||
             this.options.resize.max_size[1];
+
+        this.resize_min_size_x = (this.resize_wgd.min_size_x ||
+            this.options.resize.min_size[0] || 1);
+        this.resize_min_size_y = (this.resize_wgd.min_size_y ||
+            this.options.resize.min_size[1] || 1);
+
         this.resize_initial_last_col = this.get_highest_occupied_cell().col;
 
         this.resize_dir = {
@@ -1220,7 +1249,6 @@
                 });
         }, this), 300);
 
-
         this.set_dom_grid_width();
 
         if (this.options.autogrow_cols) {
@@ -1258,14 +1286,17 @@
         var size_x = Math.max(1, this.resize_initial_sizex + inc_units_x);
         var size_y = Math.max(1, this.resize_initial_sizey + inc_units_y);
 
-        size_x = Math.min(size_x, this.resize_max_size_x);
+        size_x = Math.max(Math.min(size_x, this.resize_max_size_x), this.resize_min_size_x);
         max_width = (this.resize_max_size_x * wbd_x) +
             ((size_x - 1) * this.options.widget_margins[0] * 2);
+        min_width = (this.resize_min_size_x * wbd_x) +
+            ((size_x - 1) * this.options.widget_margins[0] * 2);
 
-        size_y = Math.min(size_y, this.resize_max_size_y);
+        size_y = Math.max(Math.min(size_y, this.resize_max_size_y), this.resize_min_size_y);
         max_height = (this.resize_max_size_y * wbd_y) +
             ((size_y - 1) * this.options.widget_margins[1] * 2);
-
+        min_height = (this.resize_min_size_y * wbd_y) +
+          ((size_y - 1) * this.options.widget_margins[1] * 2);
 
         if (this.resize_dir.right) {
             size_y = this.resize_initial_sizey;
@@ -1288,17 +1319,17 @@
 
 
         var css_props = {};
-        !this.resize_dir.bottom &amp;&amp; (css_props.width = Math.min(
-            this.resize_initial_width + rel_x, max_width));
-        !this.resize_dir.right &amp;&amp; (css_props.height = Math.min(
-            this.resize_initial_height + rel_y, max_height));
+        !this.resize_dir.bottom &amp;&amp; (css_props.width = Math.max(Math.min(
+            this.resize_initial_width + rel_x, max_width), min_width));
+        !this.resize_dir.right &amp;&amp; (css_props.height = Math.max(Math.min(
+            this.resize_initial_height + rel_y, max_height), min_height));
 
         this.$resized_widget.css(css_props);
 
         if (size_x !== this.resize_last_sizex ||
             size_y !== this.resize_last_sizey) {
 
-            this.resize_widget(this.$resized_widget, size_x, size_y, false);
+            this.resize_widget(this.$resized_widget, size_x, size_y);
 
             this.$resize_preview_holder.css({
                 &#x27;width&#x27;: &#x27;&#x27;,
