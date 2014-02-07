@@ -257,7 +257,10 @@
             this.set_widget_min_size($w, min_size);
         }
 
+        this.set_dom_grid_width();
         this.set_dom_grid_height();
+
+        this.drag_api.set_limits(this.container_width);
 
         return $w.fadeIn();
     };
