@@ -1,3 +1,11 @@
+<a name="v0.4.3"></a>
+### v0.4.3 (2014-02-11)
+
+
+#### Bug Fixes
+
+* **generated-styles:** cleaning cached serializations properly ([f8b04f29](http://github.com/ducksboard/gridster.js/commit/f8b04f298e12e46ca9b07f0bae0abc6b08ed6e18))
+
 <a name="v0.4.2"></a>
 ### v0.4.2 (2014-02-07)
 
