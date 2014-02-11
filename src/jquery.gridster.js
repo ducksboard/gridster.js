@@ -128,6 +128,7 @@
         this.min_widget_height = (this.options.widget_margins[1] * 2) +
           this.options.widget_base_dimensions[1];
 
+        this.generated_stylesheets = [];
         this.$style_tags = $([]);
 
         this.init();
@@ -2752,6 +2753,7 @@
             return false;
         }
 
+        this.generated_stylesheets.push(serialized_opts);
         Gridster.generated_stylesheets.push(serialized_opts);
 
         /* generate CSS styles for cols */
@@ -2819,7 +2821,14 @@
     * @return {Object} Returns the instance of the Gridster class.
     */
     fn.remove_style_tags = function() {
+        var all_styles = Gridster.generated_stylesheets;
+        var ins_styles = this.generated_stylesheets;
+
         this.$style_tags.remove();
+
+        Gridster.generated_stylesheets = $.map(all_styles, function(s) {
+            if ($.inArray(s, ins_styles) === -1) { return s; }
+        });
     };
 
 
