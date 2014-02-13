@@ -1227,6 +1227,8 @@
 		if (this.options.resize.start) {
             this.options.resize.start.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger(&#x27;gridster:resizestart&#x27;);
     };
 
 
@@ -1263,6 +1265,8 @@
         if (this.options.resize.stop) {
             this.options.resize.stop.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger(&#x27;gridster:resizestop&#x27;);
     };
 
     &#x2F;**
@@ -1349,6 +1353,8 @@
         if (this.options.resize.resize) {
             this.options.resize.resize.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger(&#x27;gridster:resize&#x27;);
 
         this.resize_last_sizex = size_x;
         this.resize_last_sizey = size_y;
