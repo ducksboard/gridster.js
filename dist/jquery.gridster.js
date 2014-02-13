@@ -1,4 +1,4 @@
-/*! gridster.js - v0.4.3 - 2014-02-11
+/*! gridster.js - v0.4.4 - 2014-02-13
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -1907,6 +1907,8 @@
 		if (this.options.resize.start) {
             this.options.resize.start.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger('gridster:resizestart');
     };
 
 
@@ -1943,6 +1945,8 @@
         if (this.options.resize.stop) {
             this.options.resize.stop.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger('gridster:resizestop');
     };
 
     /**
@@ -2029,6 +2033,8 @@
         if (this.options.resize.resize) {
             this.options.resize.resize.call(this, event, ui, this.$resized_widget);
         }
+
+        this.$el.trigger('gridster:resize');
 
         this.resize_last_sizex = size_x;
         this.resize_last_sizey = size_y;

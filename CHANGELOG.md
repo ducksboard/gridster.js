@@ -1,3 +1,11 @@
+<a name="v0.4.4"></a>
+### v0.4.4 (2014-02-13)
+
+
+#### Features
+
+* **resize:** add start/stop/resize event triggers ([7ca8deec](http://github.com/ducksboard/gridster.js/commit/7ca8deec8559d950097a6dc351cb0c6fcef3458d))
+
 <a name="v0.4.3"></a>
 ### v0.4.3 (2014-02-11)
 
