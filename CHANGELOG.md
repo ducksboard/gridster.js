@@ -1,3 +1,17 @@
+<a name="v0.5.0"></a>
+## v0.5.0 (2014-02-14)
+
+
+#### Bug Fixes
+
+* **autogrow:** refining autogrow_cols behavior and grid width issues ([835c2df8](http://github.com/ducksboard/gridster.js/commit/835c2df84419a92b1641b687fcf083f3ff102627))
+* **resize.stop:** Call resize.stop at the latest possible moment ([e21f63a0](http://github.com/ducksboard/gridster.js/commit/e21f63a05a539f5c611eb49cd6861b1e38b36531))
+
+
+#### Features
+
+* **draggable:** Add toggle draggable method. ([073fdc40](http://github.com/ducksboard/gridster.js/commit/073fdc40e0a94dd371646fc54cd420e3ddab0254))
+
 <a name="v0.4.4"></a>
 ### v0.4.4 (2014-02-13)
 
