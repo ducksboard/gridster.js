@@ -41,12 +41,7 @@
         this.$element = el;
         this.last_colliders = [];
         this.last_colliders_coords = [];
-        if (typeof colliders === 'string' || colliders instanceof $) {
-            this.$colliders = $(colliders,
-                 this.options.colliders_context).not(this.$element);
-        }else{
-            this.colliders = $(colliders);
-        }
+        this.set_colliders(colliders);
 
         this.init();
     }
@@ -208,6 +203,16 @@
             return 1;
         });
         return colliders;
+    };
+
+
+    fn.set_colliders = function(colliders) {
+        if (typeof colliders === 'string' || colliders instanceof $) {
+            this.$colliders = $(colliders,
+                 this.options.colliders_context).not(this.$element);
+        }else{
+            this.colliders = $(colliders);
+        }
     };
 
 
