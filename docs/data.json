@@ -57,7 +57,7 @@
                 "Gridster"
             ],
             "file": "src/jquery.collision.js",
-            "line": 19,
+            "line": 20,
             "description": "Detects collisions between a DOM element against other DOM elements or\nCoords objects.",
             "uses": [
                 "Coords"
@@ -79,6 +79,12 @@
                     "type": "Object",
                     "optional": true,
                     "props": [
+                        {
+                            "name": "overlapping_region",
+                            "description": "Determines when collision\n   is valid, depending on the overlapped area. Values can be: 'N', 'S',\n   'W', 'E', 'C' or 'all'. Default is 'C'.",
+                            "type": "String",
+                            "optional": true
+                        },
                         {
                             "name": "on_overlap_start",
                             "description": "Executes a function the first\n   time each `collider ` is overlapped.",
@@ -2216,9 +2222,16 @@
             "description": "Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks",
             "itemtype": "method",
             "name": "destroy",
+            "params": [
+                {
+                    "name": "remove",
+                    "description": "If true, remove gridster from DOM.",
+                    "type": "Boolean"
+                }
+            ],
             "return": {
-                "description": "",
-                "type": "Undefined"
+                "description": "Returns the instance of the Gridster class.",
+                "type": "Object"
             },
             "class": "Gridster"
         }

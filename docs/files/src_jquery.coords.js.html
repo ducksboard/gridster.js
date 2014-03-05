@@ -153,6 +153,9 @@
 
         var d = this.data;
 
+        typeof d.left === &#x27;undefined&#x27; &amp;&amp; (d.left = d.x1);
+        typeof d.top === &#x27;undefined&#x27; &amp;&amp; (d.top = d.y1);
+
         this.coords.x1 = d.left;
         this.coords.y1 = d.top;
         this.coords.x2 = d.left + d.width;
@@ -187,6 +190,10 @@
         return this.coords;
     };
 
+    fn.destroy = function() {
+        this.el.removeData(&#x27;coords&#x27;);
+        delete this.el;
+    };
 
     &#x2F;&#x2F;jQuery adapter
     $.fn.coords = function() {
