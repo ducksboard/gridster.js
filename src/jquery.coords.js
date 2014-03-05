@@ -93,6 +93,10 @@
         return this.coords;
     };
 
+    fn.destroy = function() {
+        this.el.removeData('coords');
+        delete this.el;
+    };
 
     //jQuery adapter
     $.fn.coords = function() {
