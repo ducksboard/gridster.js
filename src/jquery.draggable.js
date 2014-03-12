@@ -18,7 +18,8 @@
         handle: null,
         container_width: 0,  // 0 == auto
         move_element: true,
-        helper: false  // or 'clone'
+        helper: false,  // or 'clone'
+        remove_helper: true
         // drag: function(e) {},
         // start : function(e, ui) {},
         // stop : function(e) {}
@@ -346,7 +347,7 @@
             this.options.stop.call(this.$player, e, data);
         }
 
-        if (this.helper) {
+        if (this.helper && this.options.remove_helper) {
             this.$helper.remove();
         }
 
