@@ -1,4 +1,4 @@
-/*! gridster.js - v0.5.1 - 2014-03-05
+/*! gridster.js - v0.5.1 - 2014-03-13
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -419,7 +419,8 @@
         handle: null,
         container_width: 0,  // 0 == auto
         move_element: true,
-        helper: false  // or 'clone'
+        helper: false,  // or 'clone'
+        remove_helper: true
         // drag: function(e) {},
         // start : function(e, ui) {},
         // stop : function(e) {}
@@ -747,7 +748,7 @@
             this.options.stop.call(this.$player, e, data);
         }
 
-        if (this.helper) {
+        if (this.helper && this.options.remove_helper) {
             this.$helper.remove();
         }
 
