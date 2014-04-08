@@ -131,9 +131,9 @@
         var diff_y = Math.round(mouse_actual_pos.top - this.mouse_init_pos.top);
 
         var left = Math.round(this.el_init_offset.left +
-            diff_x - this.baseX + this.scroll_offset_x);
+            diff_x - this.baseX + window.scrollX - this.win_offset_x);
         var top = Math.round(this.el_init_offset.top +
-            diff_y - this.baseY + this.scroll_offset_y);
+            diff_y - this.baseY + window.scrollY - this.win_offset_y);
 
         if (this.options.limit) {
             if (left > this.player_max_left) {
@@ -151,8 +151,8 @@
             pointer: {
                 left: mouse_actual_pos.left,
                 top: mouse_actual_pos.top,
-                diff_left: diff_x + this.scroll_offset_x,
-                diff_top: diff_y + this.scroll_offset_y
+                diff_left: diff_x + (window.scrollX - this.win_offset_x),
+                diff_top: diff_y + (window.scrollY - this.win_offset_y)
             }
         };
     };
@@ -299,6 +299,8 @@
             this.helper = false;
         }
 
+        this.win_offset_y = window.scrollY;
+        this.win_offset_x = window.scrollX;
         this.scroll_offset_y = 0;
         this.scroll_offset_x = 0;
         this.el_init_offset = this.$player.offset();
