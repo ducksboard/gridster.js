@@ -2795,6 +2795,8 @@
                 (x - 1) * (opts.widget_margins[0] * 2)) + 'px; }\n');
         }
 
+        this.remove_style_tags();
+
         return this.add_style_tag(styles);
     };
 
