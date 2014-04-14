@@ -66,7 +66,7 @@
     */
     function Draggable(el, options) {
       this.options = $.extend({}, defaults, options);
-      this.$body = $(document.body);
+      this.$document = $(document);
       this.$container = $(el);
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
@@ -94,10 +94,10 @@
         this.$container.on(pointer_events.start, this.options.items,
             $.proxy(this.drag_handler, this));
 
-        this.$body.on(pointer_events.end, $.proxy(function(e) {
+        this.$document.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
-            this.$body.off(pointer_events.move);
+            this.$document.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -251,7 +251,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on(pointer_events.move, function(mme) {
+        this.$document.on(pointer_events.move, function(mme) {
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -376,7 +376,7 @@
         this.disable();
 
         this.$container.off('.gridster-draggable');
-        this.$body.off('.gridster-draggable');
+        this.$document.off('.gridster-draggable');
         $(window).off('.gridster-draggable');
 
         $.removeData(this.$container, 'drag');
