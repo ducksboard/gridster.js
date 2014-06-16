@@ -29,9 +29,9 @@
     var dir_map = { x : 'left', y : 'top' };
     var isTouch = !!('ontouchstart' in window);
     var pointer_events = {
-        start: isTouch ? 'touchstart.gridster-draggable' : 'mousedown.gridster-draggable',
-        move: isTouch ? 'touchmove.gridster-draggable' : 'mousemove.gridster-draggable',
-        end: isTouch ? 'touchend.gridster-draggable' : 'mouseup.gridster-draggable'
+        start: 'touchstart.gridster-draggable mousedown.gridster-draggable',
+        move: 'touchmove.gridster-draggable mousemove.gridster-draggable',
+        end: 'touchend.gridster-draggable mouseup.gridster-draggable'
     };
 
     var capitalize = function(str) {
@@ -111,7 +111,7 @@
 
 
     fn.get_mouse_pos = function(e) {
-        if (isTouch) {
+        if (e.originalEvent && e.originalEvent.touches) {
             var oe = e.originalEvent;
             e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
         }
@@ -235,6 +235,7 @@
 
     fn.drag_handler = function(e) {
         var node = e.target.nodeName;
+        // skip if drag is disabled, or click was not done with the mouse primary button
         if (this.disabled || e.which !== 1 && !isTouch) {
             return;
         }
