@@ -108,11 +108,12 @@
         limit: true,
         offset_left: 0,
         autoscroll: true,
-        ignore_dragging: [&#x27;INPUT&#x27;, &#x27;TEXTAREA&#x27;, &#x27;SELECT&#x27;, &#x27;BUTTON&#x27;],
+        ignore_dragging: [&#x27;INPUT&#x27;, &#x27;TEXTAREA&#x27;, &#x27;SELECT&#x27;, &#x27;BUTTON&#x27;], &#x2F;&#x2F; or function
         handle: null,
         container_width: 0,  &#x2F;&#x2F; 0 == auto
         move_element: true,
-        helper: false  &#x2F;&#x2F; or &#x27;clone&#x27;
+        helper: false,  &#x2F;&#x2F; or &#x27;clone&#x27;
+        remove_helper: true
         &#x2F;&#x2F; drag: function(e) {},
         &#x2F;&#x2F; start : function(e, ui) {},
         &#x2F;&#x2F; stop : function(e) {}
@@ -122,9 +123,9 @@
     var dir_map = { x : &#x27;left&#x27;, y : &#x27;top&#x27; };
     var isTouch = !!(&#x27;ontouchstart&#x27; in window);
     var pointer_events = {
-        start: isTouch ? &#x27;touchstart.gridster-draggable&#x27; : &#x27;mousedown.gridster-draggable&#x27;,
-        move: isTouch ? &#x27;touchmove.gridster-draggable&#x27; : &#x27;mousemove.gridster-draggable&#x27;,
-        end: isTouch ? &#x27;touchend.gridster-draggable&#x27; : &#x27;mouseup.gridster-draggable&#x27;
+        start: &#x27;touchstart.gridster-draggable mousedown.gridster-draggable&#x27;,
+        move: &#x27;touchmove.gridster-draggable mousemove.gridster-draggable&#x27;,
+        end: &#x27;touchend.gridster-draggable mouseup.gridster-draggable&#x27;
     };
 
     var capitalize = function(str) {
@@ -159,7 +160,7 @@
     *&#x2F;
     function Draggable(el, options) {
       this.options = $.extend({}, defaults, options);
-      this.$body = $(document.body);
+      this.$document = $(document);
       this.$container = $(el);
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
@@ -187,10 +188,10 @@
         this.$container.on(pointer_events.start, this.options.items,
             $.proxy(this.drag_handler, this));
 
-        this.$body.on(pointer_events.end, $.proxy(function(e) {
+        this.$document.on(pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
-            this.$body.off(pointer_events.move);
+            this.$document.off(pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -204,7 +205,7 @@
 
 
     fn.get_mouse_pos = function(e) {
-        if (isTouch) {
+        if (e.originalEvent &amp;&amp; e.originalEvent.touches) {
             var oe = e.originalEvent;
             e = oe.touches.length ? oe.touches[0] : oe.changedTouches[0];
         }
@@ -224,9 +225,9 @@
         var diff_y = Math.round(mouse_actual_pos.top - this.mouse_init_pos.top);
 
         var left = Math.round(this.el_init_offset.left +
-            diff_x - this.baseX + this.scroll_offset_x);
+            diff_x - this.baseX + $(window).scrollLeft() - this.win_offset_x);
         var top = Math.round(this.el_init_offset.top +
-            diff_y - this.baseY + this.scroll_offset_y);
+            diff_y - this.baseY + $(window).scrollTop() - this.win_offset_y);
 
         if (this.options.limit) {
             if (left &gt; this.player_max_left) {
@@ -244,8 +245,8 @@
             pointer: {
                 left: mouse_actual_pos.left,
                 top: mouse_actual_pos.top,
-                diff_left: diff_x + this.scroll_offset_x,
-                diff_top: diff_y + this.scroll_offset_y
+                diff_left: diff_x + ($(window).scrollLeft() - this.win_offset_x),
+                diff_top: diff_y + ($(window).scrollTop() - this.win_offset_y)
             }
         };
     };
@@ -328,6 +329,7 @@
 
     fn.drag_handler = function(e) {
         var node = e.target.nodeName;
+        &#x2F;&#x2F; skip if drag is disabled, or click was not done with the mouse primary button
         if (this.disabled || e.which !== 1 &amp;&amp; !isTouch) {
             return;
         }
@@ -344,7 +346,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$body.on(pointer_events.move, function(mme) {
+        this.$document.on(pointer_events.move, function(mme) {
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -392,6 +394,8 @@
             this.helper = false;
         }
 
+        this.win_offset_y = $(window).scrollTop();
+        this.win_offset_x = $(window).scrollLeft();
         this.scroll_offset_y = 0;
         this.scroll_offset_x = 0;
         this.el_init_offset = this.$player.offset();
@@ -440,7 +444,7 @@
             this.options.stop.call(this.$player, e, data);
         }
 
-        if (this.helper) {
+        if (this.helper &amp;&amp; this.options.remove_helper) {
             this.$helper.remove();
         }
 
@@ -469,7 +473,7 @@
         this.disable();
 
         this.$container.off(&#x27;.gridster-draggable&#x27;);
-        this.$body.off(&#x27;.gridster-draggable&#x27;);
+        this.$document.off(&#x27;.gridster-draggable&#x27;);
         $(window).off(&#x27;.gridster-draggable&#x27;);
 
         $.removeData(this.$container, &#x27;drag&#x27;);
@@ -478,6 +482,10 @@
     fn.ignore_drag = function(event) {
         if (this.options.handle) {
             return !$(event.target).is(this.options.handle);
+        }
+
+        if ($.isFunction(this.options.ignore_dragging)) {
+            return this.options.ignore_dragging(event);
         }
 
         return $(event.target).is(this.options.ignore_dragging.join(&#x27;, &#x27;));
