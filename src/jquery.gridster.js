@@ -791,24 +791,47 @@
 
 
     /**
-    * Creates the grid coords object representing the widget a add it to the
+    * Convert widgets from DOM elements to "widget grid data" Objects.
+    *
+    * @method dom_to_coords
+    * @param {HTMLElement} $widget The widget to be converted.
+    */
+    fn.dom_to_coords = function($widget) {
+        return {
+            'col': parseInt($widget.attr('data-col'), 10),
+            'row': parseInt($widget.attr('data-row'), 10),
+            'size_x': parseInt($widget.attr('data-sizex'), 10) || 1,
+            'size_y': parseInt($widget.attr('data-sizey'), 10) || 1,
+            'max_size_x': parseInt($widget.attr('data-max-sizex'), 10) || false,
+            'max_size_y': parseInt($widget.attr('data-max-sizey'), 10) || false,
+            'min_size_x': parseInt($widget.attr('data-min-sizex'), 10) || false,
+            'min_size_y': parseInt($widget.attr('data-min-sizey'), 10) || false,
+            'el': $widget
+        };
+    };
+
+
+    /**
+    * Creates the grid coords object representing the widget an add it to the
     * mapped array of positions.
     *
     * @method register_widget
-    * @return {Array} Returns the instance of the Gridster class.
+    * @param {HTMLElement|Object} $el jQuery wrapped HTMLElement representing
+    *  the widget, or an "widget grid data" Object with (col, row, el ...).
+    * @return {Boolean} Returns true if the widget final position is different
+    *  than the original.
     */
     fn.register_widget = function($el) {
-        var wgd = {
-            'col': parseInt($el.attr('data-col'), 10),
-            'row': parseInt($el.attr('data-row'), 10),
-            'size_x': parseInt($el.attr('data-sizex'), 10),
-            'size_y': parseInt($el.attr('data-sizey'), 10),
-            'max_size_x': parseInt($el.attr('data-max-sizex'), 10) || false,
-            'max_size_y': parseInt($el.attr('data-max-sizey'), 10) || false,
-            'min_size_x': parseInt($el.attr('data-min-sizex'), 10) || false,
-            'min_size_y': parseInt($el.attr('data-min-sizey'), 10) || false,
-            'el': $el
-        };
+        var isDOM = $el instanceof jQuery;
+        var wgd = isDOM ? this.dom_to_coords($el) : $el;
+        isDOM || ($el = wgd.el);
+
+        var empty_upper_row = this.can_go_widget_up(wgd);
+        if (empty_upper_row) {
+            wgd.row = empty_upper_row;
+            $el.attr('data-row', empty_upper_row);
+            this.$el.trigger('gridster:positionchanged', [wgd]);
+        }
 
         if (this.options.avoid_overlapped_widgets &&
             !this.can_move_to(
@@ -832,7 +855,7 @@
 
         this.options.resize.enabled && this.add_resize_handle($el);
 
-        return this;
+        return !! empty_upper_row;
     };
 
 
@@ -2991,6 +3014,17 @@
         this.$widgets.each($.proxy(function(i, widget) {
             this.register_widget($(widget));
         }, this));
+
+        widgets_coords = Gridster.sort_by_row_and_col_asc(widgets_coords);
+
+        var changes = $(widgets_coords).map($.proxy(function(i, wgd) {
+            return this.register_widget(wgd) || null;
+        }, this));
+
+        if (changes.length) {
+            this.$el.trigger('gridster:positionschanged');
+        }
+
         return this;
     };
 
