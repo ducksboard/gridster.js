@@ -6,7 +6,15 @@
  * Licensed under the MIT licenses.
  */
 
-;(function($, window, document, undefined){
+;(function(root, factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define('gridster-coords', ['jquery'], factory);
+    } else {
+       root.GridsterCoords = factory(root.$ || root.jQuery);
+    }
+
+}(this, function($) {
     /**
     * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
     * to simulate DOM elements on the screen.
@@ -112,4 +120,6 @@
         return ins;
     };
 
-}(jQuery, window, document));
+    return Coords;
+
+}));

@@ -6,7 +6,16 @@
  * Licensed under the MIT licenses.
  */
 
-;(function($, window, document, undefined){
+;(function(root, factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define('gridster-collision', ['jquery', 'gridster-coords'], factory);
+    } else {
+        root.GridsterCollision = factory(root.$ || root.jQuery,
+            root.GridsterCoords);
+    }
+
+}(this, function($, Coords) {
 
     var defaults = {
         colliders_context: document.body,
@@ -227,5 +236,6 @@
           return new Collision( this, collider, options );
     };
 
+    return Collision;
 
-}(jQuery, window, document));
+}));

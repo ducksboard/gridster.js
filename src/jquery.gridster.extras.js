@@ -1,6 +1,14 @@
-;(function($, window, document, undefined) {
+;(function(root, factory) {
 
-    var fn = $.Gridster;
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery', 'gridster'], factory);
+    } else {
+        root.Gridster = factory(root.$ || root.jQuery, root.Gridster);
+    }
+
+}(this, function($, Gridster) {
+
+    var fn = Gridster.prototype;
 
     fn.widgets_in_col = function(col) {
         if (!this.gridmap[col]) {
@@ -162,4 +170,6 @@
         return false;
     };
 
-}(jQuery, window, document));
+    return Gridster;
+
+}));

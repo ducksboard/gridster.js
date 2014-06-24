@@ -6,7 +6,15 @@
  * Licensed under the MIT licenses.
  */
 
-;(function($, window, document, undefined) {
+;(function(root, factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define('gridster-draggable', ['jquery'], factory);
+    } else {
+        root.GridsterDraggable = factory(root.$ || root.jQuery);
+    }
+
+}(this, function($) {
 
     var defaults = {
         items: 'li',
@@ -402,5 +410,6 @@
         return new Draggable(this, options);
     };
 
+    return Draggable;
 
-}(jQuery, window, document));
+}));

@@ -5,7 +5,17 @@
  * Copyright (c) 2012 ducksboard
  * Licensed under the MIT licenses.
  */
-;(function($, window, document, undefined) {
+
+;(function(root, factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery', 'gridster-draggable', 'gridster-collision'], factory);
+    } else {
+        root.Gridster = factory(root.$ || root.jQuery, root.GridsterDraggable,
+            root.GridsterCollision);
+    }
+
+ }(this, function($, Draggable, Collision) {
 
     var defaults = {
         namespace: '',
@@ -3111,6 +3121,6 @@
         });
     };
 
-    $.Gridster = fn;
+    return Gridster;
 
-}(jQuery, window, document));
+}));
