@@ -315,7 +315,7 @@
 
         if (!col & !row) {
             pos = this.next_position(size_x, size_y);
-        }else{
+        } else {
             pos = {
                 col: col,
                 row: row,
@@ -608,7 +608,7 @@
 
         $nexts.not($exclude).each($.proxy(function(i, w) {
             var wgd = $(w).coords().grid;
-            if (!(wgd.row <= (row + size_y - 1))) { return; }
+            if ( !(wgd.row <= (row + size_y - 1))) { return; }
             var diff =  (row + size_y) - wgd.row;
             this.move_widget_down($(w), diff);
         }, this));
@@ -769,13 +769,11 @@
     */
     fn.serialize = function($widgets) {
         $widgets || ($widgets = this.$widgets);
-        var result = [];
-        $widgets.each($.proxy(function(i, widget) {
-            result.push(this.options.serialize_params(
-                $(widget), $(widget).coords().grid ) );
-        }, this));
 
-        return result;
+        return $widgets.map($.proxy(function(i, widget) {
+            var $w = $(widget);
+            return this.options.serialize_params($w, $w.coords().grid);
+        }, this));
     };
 
 
@@ -1097,6 +1095,7 @@
         }
     };
 
+
     /**
     * This function is executed when the player stops being dragged.
     *
@@ -1162,7 +1161,6 @@
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
     };
-
 
 
     /**
@@ -1266,6 +1264,7 @@
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
     };
+
 
     /**
     * This function is executed when a widget is being resized.
@@ -1513,7 +1512,7 @@
             if (this.can_go_widget_up(wgd)) {
                 $widgets_can_go_up = $widgets_can_go_up.add($w);
                 wgd_can_go_up.push(wgd);
-            }else{
+            } else {
                 wgd_can_not_go_up.push(wgd);
             }
         }, this));
@@ -1827,7 +1826,7 @@
                 ) {
                     upper_rows[tcol].push(r);
                     min_row = r < min_row ? r : min_row;
-                }else{
+                } else {
                     break;
                 }
             }
@@ -1946,7 +1945,7 @@
             if (valid_rows[0] !== p_top_row) {
                 new_row = valid_rows[0] || false;
             }
-        }else{
+        } else {
             if (valid_rows[0] !== p_top_row) {
                 new_row = this.get_consecutive_numbers_index(
                     valid_rows, size_y);
@@ -1970,7 +1969,7 @@
                     break;
                 }
                 first = false;
-            }else{
+            } else {
                 result = [];
                 first = true;
             }
@@ -2248,7 +2247,7 @@
                     !this.is_placeholder_in(tcol, r)
                 ) {
                     urc[tcol].push(r);
-                }else{
+                } else {
                     break;
                 }
             }
@@ -2389,7 +2388,6 @@
 
         return result;
     };
-
 
 
     /**
@@ -2815,21 +2813,21 @@
     * @return {Object} Returns the instance of the Gridster class.
     */
     fn.add_style_tag = function(css) {
-      var d = document;
-      var tag = d.createElement('style');
+        var d = document;
+        var tag = d.createElement('style');
 
-      d.getElementsByTagName('head')[0].appendChild(tag);
-      tag.setAttribute('type', 'text/css');
+        d.getElementsByTagName('head')[0].appendChild(tag);
+        tag.setAttribute('type', 'text/css');
 
-      if (tag.styleSheet) {
-        tag.styleSheet.cssText = css;
-      }else{
-        tag.appendChild(document.createTextNode(css));
-      }
+        if (tag.styleSheet) {
+            tag.styleSheet.cssText = css;
+        } else {
+            tag.appendChild(document.createTextNode(css));
+        }
 
-      this.$style_tags = this.$style_tags.add(tag);
+        this.$style_tags = this.$style_tags.add(tag);
 
-      return this;
+        return this;
     };
 
 
@@ -2977,7 +2975,6 @@
                 left: this.baseX + (coords.data.col -1) * this.min_widget_width,
                 top: this.baseY + (coords.data.row -1) * this.min_widget_height
             });
-
         }, this));
 
         return this;
@@ -3072,11 +3069,11 @@
 
     //jQuery adapter
     $.fn.gridster = function(options) {
-     return this.each(function() {
-       if (!$(this).data('gridster')) {
-         $(this).data('gridster', new Gridster( this, options ));
-       }
-     });
+        return this.each(function() {
+            if (! $(this).data('gridster')) {
+                $(this).data('gridster', new Gridster( this, options ));
+            }
+        });
     };
 
     $.Gridster = fn;
