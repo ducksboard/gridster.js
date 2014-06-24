@@ -128,7 +128,7 @@
         }
 
         if (valid_pos.length >= 1) {
-            return this.sort_by_col_asc(valid_pos)[0];
+            return Gridster.sort_by_col_asc(valid_pos)[0];
         }
 
         return false;

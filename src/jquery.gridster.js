@@ -136,6 +136,94 @@
 
     Gridster.generated_stylesheets = [];
 
+
+    /**
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in ascending way.
+    *
+    * @method sort_by_row_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    Gridster.sort_by_row_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b) {
+            if (!a.row) {
+                a = $(a).coords().grid;
+                b = $(b).coords().grid;
+            }
+
+           if (a.row > b.row) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    /**
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) placing first the empty cells upper left.
+    *
+    * @method sort_by_row_and_col_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    Gridster.sort_by_row_and_col_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b) {
+           if (a.row > b.row || a.row === b.row && a.col > b.col) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    /**
+    * Sorts an Array of grid coords objects by column (representing the grid
+    * coords of each widget) in ascending way.
+    *
+    * @method sort_by_col_asc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    Gridster.sort_by_col_asc = function(widgets) {
+        widgets = widgets.sort(function(a, b) {
+           if (a.col > b.col) {
+               return 1;
+           }
+           return -1;
+        });
+
+        return widgets;
+    };
+
+
+    /**
+    * Sorts an Array of grid coords objects (representing the grid coords of
+    * each widget) in descending way.
+    *
+    * @method sort_by_row_desc
+    * @param {Array} widgets Array of grid coords objects
+    * @return {Array} Returns the array sorted.
+    */
+    Gridster.sort_by_row_desc = function(widgets) {
+        widgets = widgets.sort(function(a, b) {
+            if (a.row + a.size_y < b.row + b.size_y) {
+                return 1;
+            }
+           return -1;
+        });
+        return widgets;
+    };
+
+
+
+    /** Instance Methods **/
+
     var fn = Gridster.prototype;
 
     fn.init = function() {
@@ -600,7 +688,7 @@
         }
 
         if (valid_pos.length) {
-            return this.sort_by_row_and_col_asc(valid_pos)[0];
+            return Gridster.sort_by_row_and_col_asc(valid_pos)[0];
         }
         return false;
     };
@@ -1433,93 +1521,9 @@
         $widgets_can_not_go_up = $widgets.not($widgets_can_go_up);
 
         return {
-            can_go_up: this.sort_by_row_asc(wgd_can_go_up),
-            can_not_go_up: this.sort_by_row_desc(wgd_can_not_go_up)
+            can_go_up: Gridster.sort_by_row_asc(wgd_can_go_up),
+            can_not_go_up: Gridster.sort_by_row_desc(wgd_can_not_go_up)
         };
-    };
-
-
-    /**
-    * Sorts an Array of grid coords objects (representing the grid coords of
-    * each widget) in ascending way.
-    *
-    * @method sort_by_row_asc
-    * @param {Array} widgets Array of grid coords objects
-    * @return {Array} Returns the array sorted.
-    */
-    fn.sort_by_row_asc = function(widgets) {
-        widgets = widgets.sort(function(a, b) {
-            if (!a.row) {
-                a = $(a).coords().grid;
-                b = $(b).coords().grid;
-            }
-
-           if (a.row > b.row) {
-               return 1;
-           }
-           return -1;
-        });
-
-        return widgets;
-    };
-
-
-    /**
-    * Sorts an Array of grid coords objects (representing the grid coords of
-    * each widget) placing first the empty cells upper left.
-    *
-    * @method sort_by_row_and_col_asc
-    * @param {Array} widgets Array of grid coords objects
-    * @return {Array} Returns the array sorted.
-    */
-    fn.sort_by_row_and_col_asc = function(widgets) {
-        widgets = widgets.sort(function(a, b) {
-           if (a.row > b.row || a.row === b.row && a.col > b.col) {
-               return 1;
-           }
-           return -1;
-        });
-
-        return widgets;
-    };
-
-
-    /**
-    * Sorts an Array of grid coords objects by column (representing the grid
-    * coords of each widget) in ascending way.
-    *
-    * @method sort_by_col_asc
-    * @param {Array} widgets Array of grid coords objects
-    * @return {Array} Returns the array sorted.
-    */
-    fn.sort_by_col_asc = function(widgets) {
-        widgets = widgets.sort(function(a, b) {
-           if (a.col > b.col) {
-               return 1;
-           }
-           return -1;
-        });
-
-        return widgets;
-    };
-
-
-    /**
-    * Sorts an Array of grid coords objects (representing the grid coords of
-    * each widget) in descending way.
-    *
-    * @method sort_by_row_desc
-    * @param {Array} widgets Array of grid coords objects
-    * @return {Array} Returns the array sorted.
-    */
-    fn.sort_by_row_desc = function(widgets) {
-        widgets = widgets.sort(function(a, b) {
-            if (a.row + a.size_y < b.row + b.size_y) {
-                return 1;
-            }
-           return -1;
-        });
-        return widgets;
     };
 
 
@@ -2327,7 +2331,7 @@
             });
         });
 
-        return this.sort_by_row_asc($nexts);
+        return Gridster.sort_by_row_asc($nexts);
     };
 
 
