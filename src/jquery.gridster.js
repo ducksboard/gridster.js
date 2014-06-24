@@ -3011,8 +3011,9 @@
     * @return {Object} Returns the instance of the Gridster class.
     */
     fn.get_widgets_from_DOM = function() {
-        this.$widgets.each($.proxy(function(i, widget) {
-            this.register_widget($(widget));
+        var widgets_coords = this.$widgets.map($.proxy(function(i, widget) {
+            var $w = $(widget);
+            return this.dom_to_coords($w);
         }, this));
 
         widgets_coords = Gridster.sort_by_row_and_col_asc(widgets_coords);
