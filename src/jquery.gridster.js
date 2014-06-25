@@ -43,7 +43,8 @@
         collision: {},
         draggable: {
             items: '.gs-w',
-            distance: 4
+            distance: 4,
+            ignore_dragging: Draggable.defaults.ignore_dragging.slice(0)
         },
         resize: {
             enabled: false,
@@ -102,8 +103,10 @@
     *    @param {Object} [options.draggable] An Object with all options for
     *     Draggable class you want to overwrite. See Draggable docs for more
     *     info.
-    *       @param {Object} [options.resize] An Object with resize config
-    *        options.
+    *       @param {Object|Function} [options.draggable.ignore_dragging] Note that
+    *        if you use a Function, and resize is enabled, you should ignore the
+    *        resize handlers manually (options.resize.handle_class).
+    *    @param {Object} [options.resize] An Object with resize config options.
     *       @param {Boolean} [options.resize.enabled] Set to true to enable
     *        resizing.
     *       @param {Array} [options.resize.axes] Axes in which widgets can be
@@ -943,8 +946,6 @@
             offset_top: this.options.widget_margins[1],
             container_width: this.cols * this.min_widget_width,
             limit: true,
-            ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON',
-                '.' + this.options.resize.handle_class],
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -1014,6 +1015,12 @@
         this.resize_handle_tpl = $.map(axes, function(type) {
             return handle_tpl.replace('{type}', type);
         }).join('');
+
+        if ($.isArray(this.options.draggable.ignore_dragging)) {
+            this.options.draggable.ignore_dragging.push(
+                '.' + this.resize_handle_class);
+        }
+
         return this;
     };
 

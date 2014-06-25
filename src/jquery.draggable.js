@@ -62,6 +62,9 @@
     *     the mouse must move before dragging should start.
     *    @param {Boolean} [options.limit] Constrains dragging to the width of
     *     the container
+    *    @param {Object|Function} [options.ignore_dragging] Array of node names
+    *      that sould not trigger dragging, by default is `['INPUT', 'TEXTAREA',
+    *      'SELECT', 'BUTTON']`. If a function is used return true to ignore dragging.
     *    @param {offset_left} [options.offset_left] Offset added to the item
     *     that is being dragged.
     *    @param {Number} [options.drag] Executes a callback when the mouse is
