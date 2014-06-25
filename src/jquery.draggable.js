@@ -82,6 +82,8 @@
       this.init();
     }
 
+    Draggable.defaults = defaults;
+
     var fn = Draggable.prototype;
 
     fn.init = function() {

@@ -59,6 +59,7 @@
         this.init();
     }
 
+    Collision.defaults = defaults;
 
     var fn = Collision.prototype;
 

@@ -147,6 +147,7 @@
         this.options.auto_init && this.init();
     }
 
+    Gridster.defaults = defaults;
     Gridster.generated_stylesheets = [];
 
 
