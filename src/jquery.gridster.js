@@ -31,6 +31,7 @@
         autogrow_cols: false,
         autogenerate_stylesheet: true,
         avoid_overlapped_widgets: true,
+        auto_init: true,
         serialize_params: function($w, wgd) {
             return {
                 col: wgd.col,
@@ -89,6 +90,8 @@
     *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
     *     from the DOM can be overlapped. It is helpful if the positions were
     *     bad stored in the database or if there was any conflict.
+    *    @param {Boolean} [options.auto_init] Automatically call gridster init
+    *     method or not when the plugin is instantiated.
     *    @param {Function} [options.serialize_params] Return the data you want
     *     for each widget in the serialization. Two arguments are passed:
     *     `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid
@@ -141,7 +144,7 @@
         this.generated_stylesheets = [];
         this.$style_tags = $([]);
 
-        this.init();
+        this.options.auto_init && this.init();
     }
 
     Gridster.generated_stylesheets = [];
