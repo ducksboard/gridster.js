@@ -182,6 +182,12 @@
                             "optional": true
                         },
                         {
+                            "name": "ignore_dragging",
+                            "description": "Array of node names\n     that sould not trigger dragging, by default is `['INPUT', 'TEXTAREA',\n     'SELECT', 'BUTTON']`. If a function is used return true to ignore dragging.",
+                            "type": "Object|Function",
+                            "optional": true
+                        },
+                        {
                             "name": "offset_left",
                             "description": "Offset added to the item\n    that is being dragged.",
                             "type": "Offset_left",
@@ -223,7 +229,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/jquery.gridster.js",
-            "line": 57,
+            "line": 59,
             "uses": [
                 "Draggable",
                 "Collision"
@@ -307,6 +313,12 @@
                             "optional": true
                         },
                         {
+                            "name": "auto_init",
+                            "description": "Automatically call gridster init\n    method or not when the plugin is instantiated.",
+                            "type": "Boolean",
+                            "optional": true
+                        },
+                        {
                             "name": "serialize_params",
                             "description": "Return the data you want\n    for each widget in the serialization. Two arguments are passed:\n    `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid\n    coords object (`col`, `row`, `size_x`, `size_y`).",
                             "type": "Function",
@@ -322,11 +334,19 @@
                             "name": "draggable",
                             "description": "An Object with all options for\n    Draggable class you want to overwrite. See Draggable docs for more\n    info.",
                             "type": "Object",
-                            "optional": true
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "ignore_dragging",
+                                    "description": "Note that\n       if you use a Function, and resize is enabled, you should ignore the\n       resize handlers manually (options.resize.handle_class).",
+                                    "type": "Object|Function",
+                                    "optional": true
+                                }
+                            ]
                         },
                         {
                             "name": "resize",
-                            "description": "An Object with resize config\n       options.",
+                            "description": "An Object with resize config options.",
                             "type": "Object",
                             "optional": true,
                             "props": [
@@ -395,7 +415,7 @@
     "classitems": [
         {
             "file": "src/jquery.gridster.js",
-            "line": 150,
+            "line": 157,
             "description": "Sorts an Array of grid coords objects (representing the grid coords of\neach widget) in ascending way.",
             "itemtype": "method",
             "name": "sort_by_row_asc",
@@ -414,7 +434,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 175,
+            "line": 182,
             "description": "Sorts an Array of grid coords objects (representing the grid coords of\neach widget) placing first the empty cells upper left.",
             "itemtype": "method",
             "name": "sort_by_row_and_col_asc",
@@ -433,7 +453,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 195,
+            "line": 202,
             "description": "Sorts an Array of grid coords objects by column (representing the grid\ncoords of each widget) in ascending way.",
             "itemtype": "method",
             "name": "sort_by_col_asc",
@@ -452,7 +472,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 215,
+            "line": 222,
             "description": "Sorts an Array of grid coords objects (representing the grid coords of\neach widget) in descending way.",
             "itemtype": "method",
             "name": "sort_by_row_desc",
@@ -471,12 +491,12 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 235,
+            "line": 242,
             "class": "Gridster"
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 254,
+            "line": 261,
             "description": "Disables dragging.",
             "itemtype": "method",
             "name": "disable",
@@ -488,7 +508,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 267,
+            "line": 274,
             "description": "Enables dragging.",
             "itemtype": "method",
             "name": "enable",
@@ -500,7 +520,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 280,
+            "line": 287,
             "description": "Disables drag-and-drop widget resizing.",
             "itemtype": "method",
             "name": "disable",
@@ -512,7 +532,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 293,
+            "line": 300,
             "description": "Enables drag-and-drop widget resizing.",
             "itemtype": "method",
             "name": "enable",
@@ -524,7 +544,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 306,
+            "line": 313,
             "description": "Add a new widget to the grid.",
             "itemtype": "method",
             "name": "add_widget",
@@ -579,7 +599,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 370,
+            "line": 377,
             "description": "Change widget size limits.",
             "itemtype": "method",
             "name": "set_widget_min_size",
@@ -603,7 +623,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 393,
+            "line": 400,
             "description": "Change widget size limits.",
             "itemtype": "method",
             "name": "set_widget_max_size",
@@ -627,7 +647,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 416,
+            "line": 423,
             "description": "Append the resize handle into a widget.",
             "itemtype": "method",
             "name": "add_resize_handle",
@@ -646,7 +666,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 432,
+            "line": 439,
             "description": "Change the size of a widget. Width is limited to the current grid width.",
             "itemtype": "method",
             "name": "resize_widget",
@@ -681,7 +701,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 489,
+            "line": 496,
             "description": "Mutate widget dimensions and position in the grid map.",
             "itemtype": "method",
             "name": "mutate_widget_in_gridmap",
@@ -710,7 +730,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 597,
+            "line": 604,
             "description": "Move down widgets in cells represented by the arguments col, row, size_x,\nsize_y",
             "itemtype": "method",
             "name": "empty_cells",
@@ -749,7 +769,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 632,
+            "line": 639,
             "description": "Move up widgets below cells represented by the arguments col, row, size_x,\nsize_y.",
             "itemtype": "method",
             "name": "remove_empty_cells",
@@ -788,7 +808,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 664,
+            "line": 671,
             "description": "Get the most left column below to add a new widget.",
             "itemtype": "method",
             "name": "next_position",
@@ -812,7 +832,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 707,
+            "line": 714,
             "description": "Remove a widget from the grid.",
             "itemtype": "method",
             "name": "remove_widget",
@@ -841,7 +861,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 754,
+            "line": 761,
             "description": "Remove all widgets from the grid.",
             "itemtype": "method",
             "name": "remove_all_widgets",
@@ -860,7 +880,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 770,
+            "line": 777,
             "description": "Returns a serialized array of the widgets in the grid.",
             "itemtype": "method",
             "name": "serialize",
@@ -880,7 +900,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 790,
+            "line": 797,
             "description": "Returns a serialized array of the widgets that have changed their\n position.",
             "itemtype": "method",
             "name": "serialize_changed",
@@ -892,7 +912,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 803,
+            "line": 810,
             "description": "Convert widgets from DOM elements to \"widget grid data\" Objects.",
             "itemtype": "method",
             "name": "dom_to_coords",
@@ -907,7 +927,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 824,
+            "line": 831,
             "description": "Creates the grid coords object representing the widget an add it to the\nmapped array of positions.",
             "itemtype": "method",
             "name": "register_widget",
@@ -919,14 +939,14 @@
                 }
             ],
             "return": {
-                "description": "Returns the instance of the Gridster class.",
-                "type": "Array"
+                "description": "Returns true if the widget final position is different\n than the original.",
+                "type": "Boolean"
             },
             "class": "Gridster"
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 870,
+            "line": 879,
             "description": "Update in the mapped array of positions the value of cells represented by\nthe grid coords object passed in the `grid_data` param.",
             "params": [
                 {
@@ -950,7 +970,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 891,
+            "line": 900,
             "description": "Remove a widget from the mapped array of positions.",
             "itemtype": "method",
             "name": "remove_from_gridmap",
@@ -969,7 +989,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 904,
+            "line": 913,
             "description": "Add a widget to the mapped array of positions.",
             "itemtype": "method",
             "name": "add_to_gridmap",
@@ -993,7 +1013,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 926,
+            "line": 935,
             "description": "Make widgets draggable.",
             "uses": [
                 "Draggable"
@@ -1008,7 +1028,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 969,
+            "line": 976,
             "description": "Bind resize events to get resize working.",
             "itemtype": "method",
             "name": "resizable",
@@ -1020,7 +1040,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 996,
+            "line": 1003,
             "description": "Setup things required for resizing. Like build templates for drag handles.",
             "itemtype": "method",
             "name": "setup_resize",
@@ -1032,7 +1052,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1015,
+            "line": 1028,
             "description": "This function is executed when the player begins to be dragged.",
             "itemtype": "method",
             "name": "on_start_drag",
@@ -1052,7 +1072,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1074,
+            "line": 1087,
             "description": "This function is executed when the player is being dragged.",
             "itemtype": "method",
             "name": "on_drag",
@@ -1072,7 +1092,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1130,
+            "line": 1143,
             "description": "This function is executed when the player stops being dragged.",
             "itemtype": "method",
             "name": "on_stop_drag",
@@ -1092,7 +1112,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1197,
+            "line": 1210,
             "description": "This function is executed every time a widget starts to be resized.",
             "itemtype": "method",
             "name": "on_start_resize",
@@ -1112,7 +1132,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1262,
+            "line": 1275,
             "description": "This function is executed every time a widget stops being resized.",
             "itemtype": "method",
             "name": "on_stop_resize",
@@ -1132,7 +1152,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1300,
+            "line": 1313,
             "description": "This function is executed when a widget is being resized.",
             "itemtype": "method",
             "name": "on_resize",
@@ -1152,7 +1172,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1395,
+            "line": 1408,
             "description": "Executes the callbacks passed as arguments when a column begins to be\noverlapped or stops being overlapped.",
             "params": [
                 {
@@ -1176,7 +1196,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1435,
+            "line": 1448,
             "description": "Executes the callbacks passed as arguments when a row starts to be\noverlapped or stops being overlapped.",
             "params": [
                 {
@@ -1200,7 +1220,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1471,
+            "line": 1484,
             "description": "Sets the current position of the player",
             "params": [
                 {
@@ -1229,7 +1249,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1524,
+            "line": 1537,
             "description": "See which of the widgets in the $widgets param collection can go to\na upper row and which not.",
             "itemtype": "method",
             "name": "widgets_contraints",
@@ -1248,7 +1268,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1560,
+            "line": 1573,
             "description": "Sorts an Array of grid coords objects (representing the grid coords of\neach widget) in descending way.",
             "itemtype": "method",
             "name": "manage_movements",
@@ -1277,7 +1297,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1605,
+            "line": 1618,
             "description": "Determines if there is a widget in the row and col given. Or if the\nHTMLElement passed as first argument is the player.",
             "itemtype": "method",
             "name": "is_player",
@@ -1302,7 +1322,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1622,
+            "line": 1635,
             "description": "Determines if the widget that is being dragged is currently over the row\nand col given.",
             "itemtype": "method",
             "name": "is_player_in",
@@ -1326,7 +1346,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1637,
+            "line": 1650,
             "description": "Determines if the placeholder is currently over the row and col given.",
             "itemtype": "method",
             "name": "is_placeholder_in",
@@ -1350,7 +1370,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1651,
+            "line": 1664,
             "description": "Determines if the placeholder is currently over the column given.",
             "itemtype": "method",
             "name": "is_placeholder_in_col",
@@ -1369,7 +1389,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1664,
+            "line": 1677,
             "description": "Determines if the cell represented by col and row params is empty.",
             "itemtype": "method",
             "name": "is_empty",
@@ -1393,7 +1413,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1685,
+            "line": 1698,
             "description": "Determines if the cell represented by col and row params is occupied.",
             "itemtype": "method",
             "name": "is_occupied",
@@ -1417,7 +1437,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1705,
+            "line": 1718,
             "description": "Determines if there is a widget in the cell represented by col/row params.",
             "itemtype": "method",
             "name": "is_widget",
@@ -1441,7 +1461,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1730,
+            "line": 1743,
             "description": "Determines if there is a widget in the cell represented by col/row\nparams and if this is under the widget that is being dragged.",
             "itemtype": "method",
             "name": "is_widget_under_player",
@@ -1465,7 +1485,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1747,
+            "line": 1760,
             "description": "Get widgets overlapping with the player or with the object passed\nrepresenting the grid cells.",
             "itemtype": "method",
             "name": "get_widgets_under_player",
@@ -1477,7 +1497,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1770,
+            "line": 1783,
             "description": "Put placeholder at the row and column specified.",
             "itemtype": "method",
             "name": "set_placeholder",
@@ -1501,7 +1521,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1830,
+            "line": 1843,
             "description": "Determines whether the player can move to a position above.",
             "itemtype": "method",
             "name": "can_go_player_up",
@@ -1520,7 +1540,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1881,
+            "line": 1894,
             "description": "Determines whether a widget can move to a position above.",
             "itemtype": "method",
             "name": "can_go_widget_up",
@@ -1539,7 +1559,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 1938,
+            "line": 1951,
             "description": "Search a valid row for the widget represented by `widget_grid_data' in\nthe `upper_rows` array. Iteration starts from row specified in `min_row`.",
             "itemtype": "method",
             "name": "get_valid_rows",
@@ -1568,7 +1588,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2015,
+            "line": 2028,
             "description": "Get widgets overlapping with the player.",
             "itemtype": "method",
             "name": "get_widgets_overlapped",
@@ -1580,7 +1600,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2047,
+            "line": 2060,
             "description": "This callback is executed when the player begins to collide with a column.",
             "itemtype": "method",
             "name": "on_start_overlapping_column",
@@ -1599,7 +1619,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2059,
+            "line": 2072,
             "description": "A callback executed when the player begins to collide with a row.",
             "itemtype": "method",
             "name": "on_start_overlapping_row",
@@ -1618,7 +1638,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2071,
+            "line": 2084,
             "description": "A callback executed when the the player ends to collide with a column.",
             "itemtype": "method",
             "name": "on_stop_overlapping_column",
@@ -1637,7 +1657,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2089,
+            "line": 2102,
             "description": "This callback is executed when the player ends to collide with a row.",
             "itemtype": "method",
             "name": "on_stop_overlapping_row",
@@ -1656,7 +1676,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2109,
+            "line": 2122,
             "description": "Move a widget to a specific row. The cell or cells must be empty.\nIf the widget has widgets below, all of these widgets will be moved also\nif they can.",
             "itemtype": "method",
             "name": "move_widget_to",
@@ -1675,7 +1695,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2152,
+            "line": 2165,
             "description": "Move up the specified widget and all below it.",
             "itemtype": "method",
             "name": "move_widget_up",
@@ -1700,7 +1720,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2200,
+            "line": 2213,
             "description": "Move down the specified widget and all below it.",
             "itemtype": "method",
             "name": "move_widget_down",
@@ -1724,7 +1744,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2250,
+            "line": 2263,
             "description": "Check if the widget can move to the specified row, else returns the\nupper row possible.",
             "itemtype": "method",
             "name": "can_go_up_to_row",
@@ -1753,7 +1773,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2341,
+            "line": 2354,
             "description": "Get widgets below a widget.",
             "itemtype": "method",
             "name": "widgets_below",
@@ -1772,7 +1792,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2368,
+            "line": 2381,
             "description": "Update the array of mapped positions with the new player position.",
             "itemtype": "method",
             "name": "set_cells_player_occupies",
@@ -1796,7 +1816,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2385,
+            "line": 2398,
             "description": "Remove from the array of mapped positions the reference to the player.",
             "itemtype": "method",
             "name": "empty_cells_player_occupies",
@@ -1808,7 +1828,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2424,
+            "line": 2437,
             "description": "Check if it's possible to move a widget to a specific col/row. It takes\ninto account the dimensions (`size_y` and `size_x` attrs. of the grid\n coords object) the widget occupies.",
             "itemtype": "method",
             "name": "can_move_to",
@@ -1843,7 +1863,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2469,
+            "line": 2482,
             "description": "Given the leftmost column returns all columns that are overlapping\n with the player.",
             "itemtype": "method",
             "name": "get_targeted_columns",
@@ -1863,7 +1883,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2488,
+            "line": 2501,
             "description": "Given the upper row returns all rows that are overlapping with the player.",
             "itemtype": "method",
             "name": "get_targeted_rows",
@@ -1883,7 +1903,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2505,
+            "line": 2518,
             "description": "Get all columns and rows that a widget occupies.",
             "itemtype": "method",
             "name": "get_cells_occupied",
@@ -1902,7 +1922,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2533,
+            "line": 2546,
             "description": "Iterate over the cells occupied by a widget executing a function for\neach one.",
             "itemtype": "method",
             "name": "for_each_cell_occupied",
@@ -1926,7 +1946,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2554,
+            "line": 2567,
             "description": "Iterate over the columns occupied by a widget executing a function for\neach one.",
             "itemtype": "method",
             "name": "for_each_column_occupied",
@@ -1950,7 +1970,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2573,
+            "line": 2586,
             "description": "Iterate over the rows occupied by a widget executing a function for\neach one.",
             "itemtype": "method",
             "name": "for_each_row_occupied",
@@ -1974,7 +1994,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2640,
+            "line": 2653,
             "description": "Iterate over each widget above the column and row specified.",
             "itemtype": "method",
             "name": "for_each_widget_above",
@@ -2003,7 +2023,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2657,
+            "line": 2670,
             "description": "Iterate over each widget below the column and row specified.",
             "itemtype": "method",
             "name": "for_each_widget_below",
@@ -2032,7 +2052,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2674,
+            "line": 2687,
             "description": "Returns the highest occupied cell in the grid.",
             "itemtype": "method",
             "name": "get_highest_occupied_cell",
@@ -2044,7 +2064,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2729,
+            "line": 2742,
             "description": "Set the current height of the parent grid.",
             "itemtype": "method",
             "name": "set_dom_grid_height",
@@ -2056,7 +2076,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2746,
+            "line": 2759,
             "description": "Set the current width of the parent grid.",
             "itemtype": "method",
             "name": "set_dom_grid_width",
@@ -2068,7 +2088,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2767,
+            "line": 2780,
             "description": "It generates the neccessary styles to position the widgets.",
             "itemtype": "method",
             "name": "generate_stylesheet",
@@ -2092,7 +2112,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2839,
+            "line": 2852,
             "description": "Injects the given CSS as string to the head of the document.",
             "itemtype": "method",
             "name": "add_style_tag",
@@ -2111,7 +2131,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2865,
+            "line": 2878,
             "description": "Remove the style tag with the associated id from the head of the document",
             "itemtype": "method",
             "name": "remove_style_tag",
@@ -2123,7 +2143,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2883,
+            "line": 2896,
             "description": "Generates a faux grid to collide with it when a widget is dragged and\ndetect row or column that we want to go.",
             "itemtype": "method",
             "name": "generate_faux_grid",
@@ -2147,7 +2167,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2907,
+            "line": 2920,
             "description": "Add cell to the faux grid.",
             "itemtype": "method",
             "name": "add_faux_cell",
@@ -2171,7 +2191,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2938,
+            "line": 2951,
             "description": "Add rows to the faux grid.",
             "itemtype": "method",
             "name": "add_faux_rows",
@@ -2190,7 +2210,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2964,
+            "line": 2977,
             "description": "Add cols to the faux grid.",
             "itemtype": "method",
             "name": "add_faux_cols",
@@ -2209,7 +2229,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 2992,
+            "line": 3005,
             "description": "Recalculates the offsets for the faux grid. You need to use it when\nthe browser is resized.",
             "itemtype": "method",
             "name": "recalculate_faux_grid",
@@ -2221,7 +2241,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 3015,
+            "line": 3028,
             "description": "Get all widgets in the DOM and register them.",
             "itemtype": "method",
             "name": "get_widgets_from_DOM",
@@ -2233,7 +2253,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 3037,
+            "line": 3054,
             "description": "Calculate columns and rows to be set based on the configuration\n parameters, grid dimensions, etc ...",
             "itemtype": "method",
             "name": "generate_grid_and_stylesheet",
@@ -2245,7 +2265,7 @@
         },
         {
             "file": "src/jquery.gridster.js",
-            "line": 3084,
+            "line": 3101,
             "description": "Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks",
             "itemtype": "method",
             "name": "destroy",
@@ -2266,7 +2286,7 @@
     "warnings": [
         {
             "message": "Missing item type",
-            "line": " src/jquery.gridster.js:235"
+            "line": " src/jquery.gridster.js:242"
         }
     ]
 }

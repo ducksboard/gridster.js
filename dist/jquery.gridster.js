@@ -1,4 +1,4 @@
-/*! gridster.js - v0.5.3 - 2014-06-24
+/*! gridster.js - v0.5.3 - 2014-07-04
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -173,6 +173,7 @@
         this.init();
     }
 
+    Collision.defaults = defaults;
 
     var fn = Collision.prototype;
 
@@ -483,6 +484,9 @@
     *     the mouse must move before dragging should start.
     *    @param {Boolean} [options.limit] Constrains dragging to the width of
     *     the container
+    *    @param {Object|Function} [options.ignore_dragging] Array of node names
+    *      that sould not trigger dragging, by default is `['INPUT', 'TEXTAREA',
+    *      'SELECT', 'BUTTON']`. If a function is used return true to ignore dragging.
     *    @param {offset_left} [options.offset_left] Offset added to the item
     *     that is being dragged.
     *    @param {Number} [options.drag] Executes a callback when the mouse is
@@ -502,6 +506,8 @@
       this.player_min_left = 0 + this.options.offset_left;
       this.init();
     }
+
+    Draggable.defaults = defaults;
 
     var fn = Draggable.prototype;
 
@@ -860,6 +866,7 @@
         autogrow_cols: false,
         autogenerate_stylesheet: true,
         avoid_overlapped_widgets: true,
+        auto_init: true,
         serialize_params: function($w, wgd) {
             return {
                 col: wgd.col,
@@ -871,7 +878,8 @@
         collision: {},
         draggable: {
             items: '.gs-w',
-            distance: 4
+            distance: 4,
+            ignore_dragging: Draggable.defaults.ignore_dragging.slice(0)
         },
         resize: {
             enabled: false,
@@ -918,6 +926,8 @@
     *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
     *     from the DOM can be overlapped. It is helpful if the positions were
     *     bad stored in the database or if there was any conflict.
+    *    @param {Boolean} [options.auto_init] Automatically call gridster init
+    *     method or not when the plugin is instantiated.
     *    @param {Function} [options.serialize_params] Return the data you want
     *     for each widget in the serialization. Two arguments are passed:
     *     `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid
@@ -928,8 +938,10 @@
     *    @param {Object} [options.draggable] An Object with all options for
     *     Draggable class you want to overwrite. See Draggable docs for more
     *     info.
-    *       @param {Object} [options.resize] An Object with resize config
-    *        options.
+    *       @param {Object|Function} [options.draggable.ignore_dragging] Note that
+    *        if you use a Function, and resize is enabled, you should ignore the
+    *        resize handlers manually (options.resize.handle_class).
+    *    @param {Object} [options.resize] An Object with resize config options.
     *       @param {Boolean} [options.resize.enabled] Set to true to enable
     *        resizing.
     *       @param {Array} [options.resize.axes] Axes in which widgets can be
@@ -970,9 +982,10 @@
         this.generated_stylesheets = [];
         this.$style_tags = $([]);
 
-        this.init();
+        this.options.auto_init && this.init();
     }
 
+    Gridster.defaults = defaults;
     Gridster.generated_stylesheets = [];
 
 
@@ -1657,7 +1670,8 @@
     * @method register_widget
     * @param {HTMLElement|Object} $el jQuery wrapped HTMLElement representing
     *  the widget, or an "widget grid data" Object with (col, row, el ...).
-    * @return {Array} Returns the instance of the Gridster class.
+    * @return {Boolean} Returns true if the widget final position is different
+    *  than the original.
     */
     fn.register_widget = function($el) {
         var isDOM = $el instanceof jQuery;
@@ -1668,6 +1682,7 @@
         if (empty_upper_row) {
             wgd.row = empty_upper_row;
             $el.attr('data-row', empty_upper_row);
+            this.$el.trigger('gridster:positionchanged', [wgd]);
         }
 
         if (this.options.avoid_overlapped_widgets &&
@@ -1692,7 +1707,7 @@
 
         this.options.resize.enabled && this.add_resize_handle($el);
 
-        return this;
+        return !! empty_upper_row;
     };
 
 
@@ -1766,8 +1781,6 @@
             offset_top: this.options.widget_margins[1],
             container_width: this.cols * this.min_widget_width,
             limit: true,
-            ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON',
-                '.' + this.options.resize.handle_class],
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');
@@ -1837,6 +1850,12 @@
         this.resize_handle_tpl = $.map(axes, function(type) {
             return handle_tpl.replace('{type}', type);
         }).join('');
+
+        if ($.isArray(this.options.draggable.ignore_dragging)) {
+            this.options.draggable.ignore_dragging.push(
+                '.' + this.resize_handle_class);
+        }
+
         return this;
     };
 
@@ -3855,9 +3874,13 @@
 
         widgets_coords = Gridster.sort_by_row_and_col_asc(widgets_coords);
 
-        $(widgets_coords).each($.proxy(function(i, wgd) {
-            this.register_widget(wgd);
+        var changes = $(widgets_coords).map($.proxy(function(i, wgd) {
+            return this.register_widget(wgd) || null;
         }, this));
+
+        if (changes.length) {
+            this.$el.trigger('gridster:positionschanged');
+        }
 
         return this;
     };
