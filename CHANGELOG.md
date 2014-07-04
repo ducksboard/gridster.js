@@ -1,3 +1,19 @@
+<a name="v0.5.3"></a>
+### v0.5.3 (2014-07-04)
+
+
+#### Bug Fixes
+
+* **gridster:**
+  * custom `ignore_dragging` overwrites the default value ([6bcfa6e1](http://github.com/ducksboard/gridster.js/commit/6bcfa6e16e4a88cbb5efff1ce29308737884a89d))
+  * sort widgets appropriately when reading them from DOM ([5c6d25cb](http://github.com/ducksboard/gridster.js/commit/5c6d25cbbe3de021806408f3cff6cb1e139c0a25))
+
+
+#### Features
+
+* make gridster AMD compatible ([589d7fd5](http://github.com/ducksboard/gridster.js/commit/589d7fd509a570fd02666c2f8231545211d6c83f))
+* **gridster:** move widget up when added if there is space available ([8ec307b6](http://github.com/ducksboard/gridster.js/commit/8ec307b6f7173e94610409adcb1671372cc2c67d))
+
 <a name="v0.5.2"></a>
 ### v0.5.2 (2014-06-16)
 
