@@ -1,3 +1,11 @@
+<a name="v0.5.4"></a>
+### v0.5.4 (2014-07-16)
+
+
+#### Bug Fixes
+
+* **gridster:** serialize returns an Array object, not a jQuery object ([93df6cf6](http://github.com/ducksboard/gridster.js/commit/93df6cf6907fd0fb8787b3d068c9a9c467dcc020), closes [#394](http://github.com/ducksboard/gridster.js/issues/394))
+
 <a name="v0.5.3"></a>
 ### v0.5.3 (2014-07-04)
 
