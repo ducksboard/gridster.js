@@ -1,4 +1,4 @@
-/*! gridster.js - v0.5.3 - 2014-07-04
+/*! gridster.js - v0.5.4 - 2014-07-16
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -1625,7 +1625,7 @@
         return $widgets.map($.proxy(function(i, widget) {
             var $w = $(widget);
             return this.options.serialize_params($w, $w.coords().grid);
-        }, this));
+        }, this)).get();
     };
 
 
