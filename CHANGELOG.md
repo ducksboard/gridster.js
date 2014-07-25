@@ -1,3 +1,11 @@
+<a name="v0.5.5"></a>
+### v0.5.5 (2014-07-25)
+
+
+#### Bug Fixes
+
+* **gridster:** fire `positionschanged` when widget orig position changes ([9926ceff](http://github.com/ducksboard/gridster.js/commit/9926ceff59cba49c71542e45aa095be35eb1df58))
+
 <a name="v0.5.4"></a>
 ### v0.5.4 (2014-07-16)
 
