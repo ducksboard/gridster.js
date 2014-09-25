@@ -884,7 +884,7 @@
         return $widgets.map($.proxy(function(i, widget) {
             var $w = $(widget);
             return this.options.serialize_params($w, $w.coords().grid);
-        }, this));
+        }, this)).get();
     };
 
 
@@ -935,6 +935,7 @@
     fn.register_widget = function($el) {
         var isDOM = $el instanceof jQuery;
         var wgd = isDOM ? this.dom_to_coords($el) : $el;
+        var posChanged = false;
         isDOM || ($el = wgd.el);
 
         var empty_upper_row = this.can_go_widget_up(wgd);
@@ -942,6 +943,7 @@
             wgd.row = empty_upper_row;
             $el.attr(&#x27;data-row&#x27;, empty_upper_row);
             this.$el.trigger(&#x27;gridster:positionchanged&#x27;, [wgd]);
+            posChanged = true;
         }
 
         if (this.options.avoid_overlapped_widgets &amp;&amp;
@@ -955,6 +957,7 @@
                 &#x27;data-sizex&#x27;: wgd.size_x,
                 &#x27;data-sizey&#x27;: wgd.size_y
             });
+            posChanged = true;
         }
 
         &#x2F;&#x2F; attach Coord object to player data-coord attribute
@@ -966,7 +969,7 @@
 
         this.options.resize.enabled &amp;&amp; this.add_resize_handle($el);
 
-        return !! empty_upper_row;
+        return posChanged;
     };
 
 

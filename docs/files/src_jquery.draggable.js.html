@@ -130,15 +130,15 @@
     var $window = $(window);
     var dir_map = { x : &#x27;left&#x27;, y : &#x27;top&#x27; };
     var isTouch = !!(&#x27;ontouchstart&#x27; in window);
-    var pointer_events = {
-        start: &#x27;touchstart.gridster-draggable mousedown.gridster-draggable&#x27;,
-        move: &#x27;touchmove.gridster-draggable mousemove.gridster-draggable&#x27;,
-        end: &#x27;touchend.gridster-draggable mouseup.gridster-draggable&#x27;
-    };
 
     var capitalize = function(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
+
+    var idCounter = 0;
+    var uniqId = function() {
+        return ++idCounter + &#x27;&#x27;;
+    }
 
     &#x2F;**
     * Basic drag implementation for DOM elements inside a container.
@@ -176,6 +176,8 @@
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
       this.player_min_left = 0 + this.options.offset_left;
+      this.id = uniqId();
+      this.ns = &#x27;.gridster-draggable-&#x27; + this.id;
       this.init();
     }
 
@@ -190,21 +192,31 @@
         this.disabled = false;
         this.events();
 
-        $(window).bind(&#x27;resize.gridster-draggable&#x27;,
+        $(window).bind(this.nsEvent(&#x27;resize&#x27;),
             throttle($.proxy(this.calculate_dimensions, this), 200));
     };
 
+    fn.nsEvent = function(ev) {
+        return (ev || &#x27;&#x27;) + this.ns;
+    };
+
     fn.events = function() {
-        this.$container.on(&#x27;selectstart.gridster-draggable&#x27;,
+        this.pointer_events = {
+            start: this.nsEvent(&#x27;touchstart&#x27;) + &#x27; &#x27; + this.nsEvent(&#x27;mousedown&#x27;),
+            move: this.nsEvent(&#x27;touchmove&#x27;) + &#x27; &#x27; + this.nsEvent(&#x27;mousemove&#x27;),
+            end: this.nsEvent(&#x27;touchend&#x27;) + &#x27; &#x27; + this.nsEvent(&#x27;mouseup&#x27;),
+        };
+
+        this.$container.on(this.nsEvent(&#x27;selectstart&#x27;),
             $.proxy(this.on_select_start, this));
 
-        this.$container.on(pointer_events.start, this.options.items,
+        this.$container.on(this.pointer_events.start, this.options.items,
             $.proxy(this.drag_handler, this));
 
-        this.$document.on(pointer_events.end, $.proxy(function(e) {
+        this.$document.on(this.pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
-            this.$document.off(pointer_events.move);
+            this.$document.off(this.pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -359,7 +371,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$document.on(pointer_events.move, function(mme) {
+        this.$document.on(this.pointer_events.move, function(mme) {
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -485,9 +497,9 @@
     fn.destroy = function() {
         this.disable();
 
-        this.$container.off(&#x27;.gridster-draggable&#x27;);
-        this.$document.off(&#x27;.gridster-draggable&#x27;);
-        $(window).off(&#x27;.gridster-draggable&#x27;);
+        this.$container.off(this.ns);
+        this.$document.off(this.ns);
+        $(window).off(this.ns);
 
         $.removeData(this.$container, &#x27;drag&#x27;);
     };

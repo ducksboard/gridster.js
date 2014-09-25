@@ -1,4 +1,4 @@
-/*! gridster.js - v0.5.4 - 2014-07-16
+/*! gridster.js - v0.5.6 - 2014-09-25
 * http://gridster.net/
 * Copyright (c) 2014 ducksboard; Licensed MIT */
 
@@ -458,15 +458,15 @@
     var $window = $(window);
     var dir_map = { x : 'left', y : 'top' };
     var isTouch = !!('ontouchstart' in window);
-    var pointer_events = {
-        start: 'touchstart.gridster-draggable mousedown.gridster-draggable',
-        move: 'touchmove.gridster-draggable mousemove.gridster-draggable',
-        end: 'touchend.gridster-draggable mouseup.gridster-draggable'
-    };
 
     var capitalize = function(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
+
+    var idCounter = 0;
+    var uniqId = function() {
+        return ++idCounter + '';
+    }
 
     /**
     * Basic drag implementation for DOM elements inside a container.
@@ -504,6 +504,8 @@
       this.$dragitems = $(this.options.items, this.$container);
       this.is_dragging = false;
       this.player_min_left = 0 + this.options.offset_left;
+      this.id = uniqId();
+      this.ns = '.gridster-draggable-' + this.id;
       this.init();
     }
 
@@ -518,21 +520,31 @@
         this.disabled = false;
         this.events();
 
-        $(window).bind('resize.gridster-draggable',
+        $(window).bind(this.nsEvent('resize'),
             throttle($.proxy(this.calculate_dimensions, this), 200));
     };
 
+    fn.nsEvent = function(ev) {
+        return (ev || '') + this.ns;
+    };
+
     fn.events = function() {
-        this.$container.on('selectstart.gridster-draggable',
+        this.pointer_events = {
+            start: this.nsEvent('touchstart') + ' ' + this.nsEvent('mousedown'),
+            move: this.nsEvent('touchmove') + ' ' + this.nsEvent('mousemove'),
+            end: this.nsEvent('touchend') + ' ' + this.nsEvent('mouseup'),
+        };
+
+        this.$container.on(this.nsEvent('selectstart'),
             $.proxy(this.on_select_start, this));
 
-        this.$container.on(pointer_events.start, this.options.items,
+        this.$container.on(this.pointer_events.start, this.options.items,
             $.proxy(this.drag_handler, this));
 
-        this.$document.on(pointer_events.end, $.proxy(function(e) {
+        this.$document.on(this.pointer_events.end, $.proxy(function(e) {
             this.is_dragging = false;
             if (this.disabled) { return; }
-            this.$document.off(pointer_events.move);
+            this.$document.off(this.pointer_events.move);
             if (this.drag_start) {
                 this.on_dragstop(e);
             }
@@ -687,7 +699,7 @@
         this.mouse_init_pos = this.get_mouse_pos(e);
         this.offsetY = this.mouse_init_pos.top - this.el_init_pos.top;
 
-        this.$document.on(pointer_events.move, function(mme) {
+        this.$document.on(this.pointer_events.move, function(mme) {
             var mouse_actual_pos = self.get_mouse_pos(mme);
             var diff_x = Math.abs(
                 mouse_actual_pos.left - self.mouse_init_pos.left);
@@ -813,9 +825,9 @@
     fn.destroy = function() {
         this.disable();
 
-        this.$container.off('.gridster-draggable');
-        this.$document.off('.gridster-draggable');
-        $(window).off('.gridster-draggable');
+        this.$container.off(this.ns);
+        this.$document.off(this.ns);
+        $(window).off(this.ns);
 
         $.removeData(this.$container, 'drag');
     };
@@ -1676,6 +1688,7 @@
     fn.register_widget = function($el) {
         var isDOM = $el instanceof jQuery;
         var wgd = isDOM ? this.dom_to_coords($el) : $el;
+        var posChanged = false;
         isDOM || ($el = wgd.el);
 
         var empty_upper_row = this.can_go_widget_up(wgd);
@@ -1683,6 +1696,7 @@
             wgd.row = empty_upper_row;
             $el.attr('data-row', empty_upper_row);
             this.$el.trigger('gridster:positionchanged', [wgd]);
+            posChanged = true;
         }
 
         if (this.options.avoid_overlapped_widgets &&
@@ -1696,6 +1710,7 @@
                 'data-sizex': wgd.size_x,
                 'data-sizey': wgd.size_y
             });
+            posChanged = true;
         }
 
         // attach Coord object to player data-coord attribute
@@ -1707,7 +1722,7 @@
 
         this.options.resize.enabled && this.add_resize_handle($el);
 
-        return !! empty_upper_row;
+        return posChanged;
     };
 
 
