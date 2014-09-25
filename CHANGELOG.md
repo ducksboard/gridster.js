@@ -1,3 +1,11 @@
+<a name="v0.5.6"></a>
+### v0.5.6 (2014-09-25)
+
+
+#### Bug Fixes
+
+* **draggable:** namespace events with unique ids ([79aff38c](http://github.com/ducksboard/gridster.js/commit/79aff38c60cc6ce2c0f0160bd3c6f93cb2511642))
+
 <a name="v0.5.5"></a>
 ### v0.5.5 (2014-07-25)
 
