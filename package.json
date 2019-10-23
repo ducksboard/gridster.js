@@ -33,7 +33,7 @@
     "grunt-contrib-watch": "~0.3.1",
     "grunt-contrib-cssmin": "~0.5.0",
     "grunt-contrib-yuidoc": "~0.4.0",
-    "bower": "~0.9.2",
+    "bower": "~1.8.8",
     "qunitjs": "~1.11.0",
     "grunt-bump": "0.0.11",
     "grunt-conventional-changelog": "~1.0.0"
